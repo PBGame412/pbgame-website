@@ -170,6 +170,17 @@
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .column {
+            width: 30%;
+            background-color: #5c0f14;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            text-align: center;
         }
 
         footer {
@@ -335,6 +346,11 @@
             .youtube-button {
                 padding: 12px 0;
             }
+
+            .column {
+                width: 100%;
+                margin-bottom: 10px;
+            }
         }
     </style>
 </head>
@@ -365,7 +381,18 @@
     </div>
 
     <div class="contact-info">
-        <h3>Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!</h3>
+        <div class="column">
+            <h3>O mnie</h3>
+            <p>Witam! Mam na imię Przemysław i tworzę filmy na YouTube!</p>
+        </div>
+        <div class="column">
+            <h3>Kontakt</h3>
+            <p>Masz pytania? Napisz do mnie!</p>
+        </div>
+        <div class="column">
+            <h3>Social Media</h3>
+            <p>Obserwuj mnie na Twitterze, Instagramie!</p>
+        </div>
     </div>
 
     <footer>
@@ -435,7 +462,7 @@
         const contactInfo = document.querySelector(".contact-info");
 
         aboutLink.onclick = () => {
-            contactInfo.style.display = "block";
+            contactInfo.style.display = "flex";  // Ustawienie stylu na 'flex' dla kolumn
             contactInfo.style.opacity = "1";
             contactInfo.style.transform = "translateY(0)";
         }
