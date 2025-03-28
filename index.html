@@ -143,7 +143,7 @@
             transform: scale(1.05);
         }
 
-        /* Formularz logowania */
+        /* Formularz rejestracji i logowania */
         .auth-form {
             background-color: #4e1e22;
             padding: 20px;
@@ -258,6 +258,8 @@
         <input type="email" id="email" placeholder="Wprowadź email">
         <input type="password" id="password" placeholder="Wprowadź hasło">
         <button id="authButton">Zarejestruj</button>
+
+        <button id="loginButton" style="margin-top: 10px;">Zaloguj się</button>
     </div>
 
     <!-- Sekcja "O mnie" (na początku ukryta z animacją) -->
@@ -272,51 +274,72 @@
 
     <!-- Skrypt JavaScript do pokazania sekcji "O mnie" oraz logowania/rejestracji -->
     <script>
-        const aboutLink = document.querySelector("nav a");
-        const contactInfo = document.querySelector(".contact-info");
         const authLink = document.getElementById("authLink");
         const authForm = document.getElementById("authForm");
         const authButton = document.getElementById("authButton");
+        const loginButton = document.getElementById("loginButton");
         const formTitle = document.getElementById("formTitle");
-        
-        // Obsługa przycisku logowania/rejestracji
+
+        // Obsługa kliknięcia na link logowania/rejestracji
         authLink.addEventListener("click", function(event) {
             event.preventDefault();
-            
-            // Przełączanie między rejestracją i logowaniem
-            if (authForm.style.display === "block") {
-                authForm.style.display = "none";
-            } else {
-                authForm.style.display = "block";
-                formTitle.textContent = "Zarejestruj się";
-                authButton.textContent = "Zarejestruj";
-            }
+            authForm.style.display = 'block';
+            formTitle.textContent = 'Zarejestruj się';
+            authButton.textContent = 'Zarejestruj';
         });
 
-        // Obsługa wysyłania formularza (rejestracja/logowanie)
+        // Zmiana formularza na logowanie
+        loginButton.addEventListener("click", function(event) {
+            formTitle.textContent = 'Zaloguj się';
+            authButton.textContent = 'Zaloguj';
+            loginButton.style.display = 'none'; // Ukrycie przycisku logowania po zmianie formularza
+        });
+
+        // Wysyłanie formularza
         authButton.addEventListener("click", function(event) {
             event.preventDefault();
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
             if (email && password) {
-                // Wysyłanie danych do backendu
-                fetch("/register", {  // Jeśli chcesz zarejestrować
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ email, password })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert("Rejestracja udana! Możesz się teraz zalogować.");
-                    } else {
-                        alert("Błąd rejestracji: " + data.message);
-                    }
-                })
-                .catch(error => alert("Wystąpił błąd podczas rejestracji: " + error));
+                // Sprawdzanie, czy jest to rejestracja czy logowanie
+                if (authButton.textContent === "Zarejestruj") {
+                    fetch("/register", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email, password })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("Rejestracja udana! Możesz się teraz zalogować.");
+                            loginButton.style.display = 'inline'; // Pokaż przycisk logowania po rejestracji
+                        } else {
+                            alert("Błąd rejestracji: " + data.message);
+                        }
+                    })
+                    .catch(error => alert("Wystąpił błąd podczas rejestracji: " + error));
+                } else {
+                    // Logowanie
+                    fetch("/login", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email, password })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("Zalogowano pomyślnie!");
+                        } else {
+                            alert("Błąd logowania: " + data.message);
+                        }
+                    })
+                    .catch(error => alert("Wystąpił błąd podczas logowania: " + error));
+                }
             } else {
                 alert("Proszę uzupełnić wszystkie pola.");
             }
