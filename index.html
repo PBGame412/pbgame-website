@@ -78,7 +78,7 @@
             border-radius: 10px;
             margin-bottom: 30px;
             text-align: center;
-            display: none; /* Ukryte na początku */
+            display: none;
             opacity: 0;
             transform: translateY(50px);
             animation: fadeInUp 1s forwards 1.5s;
@@ -137,6 +137,7 @@
             display: flex;
             gap: 20px;
             margin-top: 20px;
+            justify-content: center;
         }
 
         .auth-button {
@@ -164,7 +165,7 @@
             color: #fff;
             padding: 20px;
             border-radius: 10px;
-            display: none; /* Ukryte na początku */
+            display: none;
             font-size: 18px;
             opacity: 0;
             transform: translateY(20px);
@@ -200,6 +201,69 @@
             background-position: center;
             filter: blur(5px);
             z-index: -1;
+        }
+
+        /* Modal - Okna rejestracji i logowania */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #ff3333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ff6666;
         }
 
         @keyframes fadeInUp {
@@ -295,8 +359,8 @@
         </a>
 
         <div class="auth-buttons">
-            <button class="auth-button">Rejestracja</button>
-            <button class="auth-button">Logowanie</button>
+            <button class="auth-button" id="register-btn">Rejestracja</button>
+            <button class="auth-button" id="login-btn">Logowanie</button>
         </div>
     </div>
 
@@ -308,29 +372,63 @@
         <p>&copy; 2025 Strona Nagrywkowa</p>
     </footer>
 
+    <!-- Modal Rejestracja -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-register">&times;</span>
+            <h2>Rejestracja</h2>
+            <form>
+                <input type="text" placeholder="Nazwa użytkownika" required><br>
+                <input type="password" placeholder="Hasło" required><br>
+                <input type="submit" value="Zarejestruj się">
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Logowanie -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-login">&times;</span>
+            <h2>Logowanie</h2>
+            <form>
+                <input type="text" placeholder="Nazwa użytkownika" required><br>
+                <input type="password" placeholder="Hasło" required><br>
+                <input type="submit" value="Zaloguj się">
+            </form>
+        </div>
+    </div>
+
     <script>
-        const aboutLink = document.querySelector("#about-link");
-        const contactInfo = document.querySelector(".contact-info");
-        const mainContent = document.querySelector(".main-content");
+        // Modale
+        const registerModal = document.getElementById("register-modal");
+        const loginModal = document.getElementById("login-modal");
+        const registerBtn = document.getElementById("register-btn");
+        const loginBtn = document.getElementById("login-btn");
+        const closeRegister = document.getElementById("close-register");
+        const closeLogin = document.getElementById("close-login");
 
-        aboutLink.addEventListener("click", function(event) {
-            event.preventDefault();
-            if (contactInfo.style.display === "block") {
-                contactInfo.style.opacity = 0;
-                contactInfo.style.transform = "translateY(20px)";
-                setTimeout(() => {
-                    contactInfo.style.display = "none";
-                }, 500);
-            } else {
-                contactInfo.style.display = "block";
-                setTimeout(() => {
-                    contactInfo.style.opacity = 1;
-                    contactInfo.style.transform = "translateY(0)";
-                }, 10);
+        registerBtn.onclick = () => {
+            registerModal.style.display = "block";
+        }
+
+        loginBtn.onclick = () => {
+            loginModal.style.display = "block";
+        }
+
+        closeRegister.onclick = () => {
+            registerModal.style.display = "none";
+        }
+
+        closeLogin.onclick = () => {
+            loginModal.style.display = "none";
+        }
+
+        window.onclick = (event) => {
+            if (event.target === registerModal || event.target === loginModal) {
+                registerModal.style.display = "none";
+                loginModal.style.display = "none";
             }
-
-            mainContent.style.display = "block";  // Pokazanie głównej zawartości po kliknięciu
-        });
+        }
     </script>
 </body>
 </html>
