@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strona Nagrywkowa!</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Content Security Policy (CSP) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';">
+
+    <!-- X-Content-Type-Options -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <!-- X-Frame-Options to prevent clickjacking -->
+    <meta http-equiv="X-Frame-Options" content="DENY">
+
+    <!-- Strict-Transport-Security (wymusza HTTPS) -->
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
+
+    <!-- Referrer Policy (chroni prywatność użytkowników) -->
+    <meta name="referrer" content="no-referrer">
+
     <style>
         /* Resetowanie marginesów i paddingu */
         * {
@@ -23,8 +39,7 @@
             justify-content: flex-start;
             align-items: center;
             padding: 20px;
-            min-height: 100vh; /* Zapewnia, że zawartość wypełni całą stronę */
-            overflow-x: hidden; /* Zapobiega poziomemu przewijaniu */
+            overflow: hidden;
         }
 
         /* Nagłówek */
@@ -144,7 +159,7 @@
             transform: scale(1.05);
         }
 
-        /* Przyciski logowania i rejestracji */
+        /* Przycisk Logowanie i Rejestracja */
         .auth-buttons {
             display: flex;
             gap: 20px;
@@ -182,8 +197,6 @@
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease;
-            word-wrap: break-word; /* Zapobiega wychodzeniu tekstu */
-            overflow-wrap: break-word; /* Alternatywna metoda zawijania słów */
         }
 
         footer {
@@ -270,14 +283,6 @@
                 padding: 15px 0;
                 font-size: 16px;
             }
-
-            /* Poprawka na mobilne, aby tekst nie wychodził poza kontener */
-            .main-content, .contact-info {
-                padding: 20px;
-                word-wrap: break-word;
-                overflow-wrap: break-word;
-                text-align: center;
-            }
         }
 
         @media (max-width: 480px) {
@@ -288,80 +293,39 @@
             .main-content h2 {
                 font-size: 20px;
             }
-
-            .youtube-button {
-                padding: 12px 0;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Tło w stylu influencerowym -->
+    <!-- Tło strony -->
     <div class="background"></div>
 
-    <!-- Nagłówek strony -->
     <header>
-        <h1>Strona Nagrywkowa</h1>
+        <h1>Witaj na stronie!</h1>
     </header>
 
-    <!-- Pasek nawigacyjny -->
     <nav>
-        <a href="#">O mnie</a>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
     </nav>
 
-    <!-- Główna zawartość strony -->
     <div class="main-content">
-        <h2>Kanał PBGame</h2>
-
-        <!-- Przesunięcie zdjęcia w lewo -->
+        <h2>Strona główna</h2>
         <div class="image-container">
-            <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="Obrazek YouTube">
+            <img src="https://cdn.pixabay.com/photo/2016/05/03/23/37/space-1374589_960_720.jpg" alt="Space Image">
         </div>
-        
-        <!-- Zaktualizowany przycisk z linkiem do YouTube -->
-        <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">
-            <button class="youtube-button">Kliknij tutaj, aby przejść do mojego kanału YouTube</button>
-        </a>
-
-        <!-- Przyciski logowania i rejestracji -->
+        <button class="youtube-button">Subskrybuj na YouTube</button>
         <div class="auth-buttons">
-            <button class="auth-button">Rejestracja</button>
-            <button class="auth-button">Logowanie</button>
+            <button class="auth-button">Zaloguj się</button>
+            <button class="auth-button">Zarejestruj się</button>
         </div>
     </div>
 
-    <!-- Sekcja "O mnie" -->
-    <div class="contact-info">
-        <h3>Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!</h3>
-    </div>
-
-    <!-- Stopka z linkiem do strony -->
     <footer>
-        <p>&copy; 2025 Strona Nagrywkowa</p>
+        <p>&copy; 2025 <a href="#">pbgame.pl</a></p>
     </footer>
 
-    <!-- Skrypt JavaScript do pokazania sekcji "O mnie" -->
-    <script>
-        const aboutLink = document.querySelector("nav a");
-        const contactInfo = document.querySelector(".contact-info");
-
-        aboutLink.addEventListener("click", function(event) {
-            event.preventDefault(); // Zatrzymanie domyślnego działania linku
-
-            if (contactInfo.style.display === "block") {
-                contactInfo.style.opacity = 0;
-                contactInfo.style.transform = "translateY(20px)";
-                setTimeout(() => {
-                    contactInfo.style.display = "none";
-                }, 500); // Czekaj na zakończenie animacji
-            } else {
-                contactInfo.style.display = "block";
-                setTimeout(() => {
-                    contactInfo.style.opacity = 1;
-                    contactInfo.style.transform = "translateY(0)";
-                }, 10); // Małe opóźnienie przed rozpoczęciem animacji
-            }
-        });
-    </script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 </body>
 </html>
