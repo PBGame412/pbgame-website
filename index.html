@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona Nagrywkowa!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Resetowanie marginesów i paddingu */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Tło strony */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #2a2a2a;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Nagłówek */
+        header {
+            background-color: #3e0e12;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            border-radius: 10px;
+            background-image: linear-gradient(to right, #5c0f14, #3e0e12);
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        header h1 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        /* Pasek nawigacyjny */
+        nav {
+            margin: 10px 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInUp 1s forwards 1s;
+        }
+
+        nav a {
+            color: #ff3333;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff6666;
+            text-decoration: underline;
+        }
+
+        /* Główna sekcja */
+        .main-content {
+            background-color: #3a2a2a;
+            width: 90%;
+            max-width: 1200px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s forwards 1.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .main-content h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #ff3333;
+        }
+
+        /* Przesunięcie zdjęcia w lewo */
+        .image-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        img {
+            width: 350px;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 69, 0, 0.5);
+        }
+
+        /* Przycisk YouTube */
+        .youtube-button {
+            background-color: #5c0f14;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 2s;
+        }
+
+        .youtube-button:hover {
+            background-color: #ff3333;
+            transform: scale(1.05);
+        }
+
+        /* Sekcja "O mnie" */
+        .contact-info {
+            margin-top: 20px;
+            background-color: #4e1e22;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            font-size: 18px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #777;
+            font-size: 16px;
+        }
+
+        footer a {
+            color: #ff3333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #ff6666;
+            text-decoration: underline;
+        }
+
+        /* Tło i grafika */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://cdn.pixabay.com/photo/2017/08/30/22/53/space-2695564_960_720.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px);
+            z-index: -1;
+        }
+
+        /* Animacja - efekt przesunięcia */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Tło w stylu influencerowym -->
+    <div class="background"></div>
+
+    <!-- Nagłówek strony -->
+    <header>
+        <h1>Strona Nagrywkowa</h1>
+    </header>
+
+    <!-- Pasek nawigacyjny -->
+    <nav>
+        <a href="#">O mnie</a>
+    </nav>
+
+    <!-- Główna zawartość strony -->
+    <div class="main-content">
+        <h2>Kanał PBGame</h2>
+
+        <!-- Przesunięcie zdjęcia w lewo -->
+        <div class="image-container">
+            <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="Obrazek YouTube">
+        </div>
+        
+        <!-- Przycisk kierujący na YouTube -->
+        <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">
+            <button class="youtube-button">Subskrybuj nasz kanał</button>
+        </a>
+    </div>
+
+    <!-- Sekcja "O mnie" (na początku ukryta z animacją) -->
+    <div class="contact-info">
+        <h3>Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!</h3>
+    </div>
+
+    <!-- Stopka z linkiem do strony -->
+    <footer>
+        <p>&copy; 2025 Strona Nagrywkowa | <a href="https://pbgame.pl" target="_blank">pbgame.pl</a></p>
+    </footer>
+
+    <!-- Skrypt JavaScript do pokazania sekcji "O mnie" -->
+    <script>
+        const aboutLink = document.querySelector("nav a");
+        const contactInfo = document.querySelector(".contact-info");
+
+        aboutLink.addEventListener("click", function(event) {
+            event.preventDefault(); // Zatrzymanie domyślnego działania linku
+
+            if (contactInfo.style.display === "block") {
+                contactInfo.style.opacity = 0;
+                contactInfo.style.transform = "translateY(20px)";
+                setTimeout(() => {
+                    contactInfo.style.display = "none";
+                }, 500); // Czekaj na zakończenie animacji
+            } else {
+                contactInfo.style.display = "block";
+                setTimeout(() => {
+                    contactInfo.style.opacity = 1;
+                    contactInfo.style.transform = "translateY(0)";
+                }, 10); // Małe opóźnienie przed rozpoczęciem animacji
+            }
+        });
+    </script>
+</body>
+</html>
