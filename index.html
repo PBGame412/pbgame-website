@@ -399,7 +399,7 @@
     </div>
 
     <script>
-        // Modale
+        // Modal rejestracja i logowanie
         const registerModal = document.getElementById("register-modal");
         const loginModal = document.getElementById("login-modal");
         const registerBtn = document.getElementById("register-btn");
@@ -428,6 +428,16 @@
                 registerModal.style.display = "none";
                 loginModal.style.display = "none";
             }
+        }
+
+        // Funkcja otwierająca sekcję "O mnie"
+        const aboutLink = document.getElementById("about-link");
+        const contactInfo = document.querySelector(".contact-info");
+
+        aboutLink.onclick = () => {
+            contactInfo.style.display = "block";
+            contactInfo.style.opacity = "1";
+            contactInfo.style.transform = "translateY(0)";
         }
     </script>
 </body>
