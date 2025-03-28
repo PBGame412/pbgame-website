@@ -233,6 +233,7 @@
             opacity: 0;
             transform: translateY(50px);
             animation: fadeInUp 1s forwards 2.5s;
+            display: none; /* Domyślnie ukryte */
         }
 
         .about-section h2 {
@@ -287,15 +288,15 @@
 
     <!-- Pasek nawigacyjny -->
     <nav>
-        <a href="#">O mnie</a>
+        <a href="#" id="aboutBtn">O mnie</a>
         <a href="#">Kontakt</a>
     </nav>
 
     <!-- Sekcja "O mnie" -->
-    <div class="about-section">
+    <div class="about-section" id="aboutSection">
         <h2>O mnie</h2>
         <p>
-            Cześć! Jestem twórcą kanału PBGame, który zajmuje się grami komputerowymi. Na naszym kanale znajdziesz gameplaye, recenzje, poradniki, a także rozrywkę i zabawę z gier komputerowych. Dołącz do naszej społeczności, aby być na bieżąco z nowymi materiałami!
+            Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame! Na moim kanale znajdziesz gameplaye, recenzje oraz porady związane z grami komputerowymi. Jeśli interesują Cię gry, zapraszam do subskrypcji!
         </p>
     </div>
 
@@ -343,45 +344,15 @@
 
     <script>
         // Zmienne
-        const registerBtn = document.getElementById('registerBtn');
-        const loginBtn = document.getElementById('loginBtn');
-        const registerForm = document.getElementById('registerForm');
-        const loginForm = document.getElementById('loginForm');
-        const registerSubmit = document.getElementById('registerSubmit');
-        const loginSubmit = document.getElementById('loginSubmit');
+        const aboutBtn = document.getElementById('aboutBtn');
+        const aboutSection = document.getElementById('aboutSection');
 
-        // Obsługa kliknięć na przyciskach Rejestracja i Logowanie
-        registerBtn.addEventListener('click', () => {
-            registerForm.style.display = 'block';
-            loginForm.style.display = 'none';
-        });
-
-        loginBtn.addEventListener('click', () => {
-            loginForm.style.display = 'block';
-            registerForm.style.display = 'none';
-        });
-
-        // Obsługa wysyłania formularza rejestracji
-        registerSubmit.addEventListener('click', () => {
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            if (email && password) {
-                alert('Rejestracja zakończona pomyślnie');
-                // Dodaj tutaj logikę wysyłania danych do serwera
+        // Obsługa kliknięcia na przycisk "O mnie"
+        aboutBtn.addEventListener('click', () => {
+            if (aboutSection.style.display === "none" || aboutSection.style.display === "") {
+                aboutSection.style.display = "block"; // Pokazuje sekcję "O mnie"
             } else {
-                alert('Proszę wypełnić wszystkie pola');
-            }
-        });
-
-        // Obsługa wysyłania formularza logowania
-        loginSubmit.addEventListener('click', () => {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            if (email && password) {
-                alert('Zalogowano pomyślnie');
-                // Dodaj tutaj logikę logowania użytkownika
-            } else {
-                alert('Proszę wypełnić wszystkie pola');
+                aboutSection.style.display = "none"; // Ukrywa sekcję "O mnie"
             }
         });
     </script>
