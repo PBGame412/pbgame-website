@@ -176,7 +176,7 @@
             color: #fff;
             padding: 20px;
             border-radius: 10px;
-            display: none;
+            display: none; /* Ukryte na początku */
             font-size: 18px;
             opacity: 0;
             transform: translateY(20px);
@@ -305,7 +305,7 @@
 
     <!-- Pasek nawigacyjny -->
     <nav>
-        <a href="#">O mnie</a>
+        <a href="#" id="about-link">O mnie</a>
     </nav>
 
     <!-- Główna zawartość strony -->
@@ -341,8 +341,9 @@
 
     <!-- Skrypt JavaScript do pokazania sekcji "O mnie" -->
     <script>
-        const aboutLink = document.querySelector("nav a");
+        const aboutLink = document.querySelector("#about-link");
         const contactInfo = document.querySelector(".contact-info");
+        const mainContent = document.querySelector(".main-content");
 
         aboutLink.addEventListener("click", function(event) {
             event.preventDefault(); // Zatrzymanie domyślnego działania linku
@@ -360,6 +361,9 @@
                     contactInfo.style.transform = "translateY(0)";
                 }, 10); // Małe opóźnienie przed rozpoczęciem animacji
             }
+
+            // Pokazuje całą zawartość main-content
+            mainContent.style.display = "block";
         });
     </script>
 </body>
