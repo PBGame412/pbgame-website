@@ -21,6 +21,7 @@
             align-items: center;
             padding: 20px;
             height: 100vh;
+            animation: pageLoad 1s ease-out; /* Animacja przy ładowaniu strony */
         }
 
         header {
@@ -129,6 +130,17 @@
         @keyframes fadeOutDown {
             0% { opacity: 1; transform: translateY(0); }
             100% { opacity: 0; transform: translateY(30px); }
+        }
+
+        @keyframes pageLoad {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         @media (max-width: 768px) {
