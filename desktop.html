@@ -161,12 +161,25 @@
             }
         }
 
-        .tab-link {
-            transition: transform 0.3s ease;
+        /* Animacja banera powitalnego */
+        @keyframes bannerFadeIn {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
 
-        .tab-link:hover {
-            transform: translateY(-5px);
+        .banner {
+            background-color: #388e3c;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            display: none;
+            animation: bannerFadeIn 1s forwards;
         }
 
         @media (max-width: 768px) {
@@ -187,38 +200,23 @@
                 margin-bottom: 10px;
             }
         }
-
-        /* Animacja znikania banera */
-        @keyframes slideOut {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-50px); }
-        }
     </style>
 </head>
 <body>
-    <!-- Dodanie audio, które zacznie grać automatycznie i będzie miało ściszony dźwięk -->
-    <audio id="background-music" autoplay loop>
-        <source src="https://www.youtube.com/watch?v=FFfdyV8gnWk" type="audio/mp3">
-        Twoja przeglądarka nie wspiera tagu audio.
-    </audio>
-
-    <!-- Animowany baner powitalny -->
-    <div id="welcome-banner" class="welcome-banner" style="width: 100%; background-color: #388e3c; color: white; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; position: absolute; top: 0; left: 0; animation: slideIn 2s ease-out;">
-        Witaj na stronie PBGame! 🎮
-    </div>
-
-    <!-- Nagłówek strony -->
     <header>
         <h1>Strona PBGame</h1>
     </header>
 
-    <!-- Zakładki -->
+    <!-- Baner powitalny -->
+    <div id="welcomeBanner" class="banner">
+        Witaj na stronie PBGame!
+    </div>
+
     <div class="tabs">
         <div class="tab" onclick="toggleAbout()">O mnie</div>
         <div class="tab discord tab-link" onclick="window.location.href='https://discord.gg/kmnVBUYxY7'">Dołącz do Discorda</div>
     </div>
 
-    <!-- Sekcja "O mnie" -->
     <div id="about" class="about-section">
         <h2>O mnie</h2>
         <div class="about-content">
@@ -231,19 +229,26 @@
         </div>
     </div>
 
-    <script>
-        // Ustawiamy dźwięk na niską głośność
-        const audio = document.getElementById("background-music");
-        audio.volume = 0.1;  // Ściszenie dźwięku
+    <!-- Muzyka -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.youtube.com/watch?v=FFfdyV8gnWk" type="audio/mp4">
+    </audio>
 
-        // Funkcja do ukrywania banera po 5 sekundach
-        setTimeout(function() {
-            const banner = document.getElementById("welcome-banner");
-            banner.style.animation = "slideOut 2s ease-out";
-            setTimeout(function() {
-                banner.style.display = "none";
-            }, 2000); // Czeka 2 sekundy na zakończenie animacji, a potem ukrywa baner
-        }, 5000); // Baner zniknie po 5 sekundach
+    <script>
+        window.onload = function() {
+            // Odtwarzanie muzyki po załadowaniu strony
+            document.getElementById("bgMusic").play();
+            
+            // Animacja banera powitalnego
+            const banner = document.getElementById("welcomeBanner");
+            banner.style.display = "block";
+
+            // Po 4 sekundach zniknięcie banera
+            setTimeout(() => {
+                banner.style.animation = "fadeOutDown 1s forwards";
+                setTimeout(() => banner.style.display = "none", 1000); // Czekamy na zakończenie animacji, zanim ukryjemy baner
+            }, 4000); // Baner zniknie po 4 sekundach
+        }
 
         function toggleAbout() {
             const aboutSection = document.getElementById("about");
