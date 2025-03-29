@@ -4,9 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PBGame - Mobile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #111, #ff0000);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            font-size: 22px;
+            font-weight: 600;
+            background: #c62828;
+            border-radius: 10px;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .auth-button {
+            background: #ff3333;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .auth-button:hover {
+            background: #ff6666;
+        }
+    </style>
 </head>
 <body>
-    <h1>Wersja na telefon</h1>
-    <p>Tu jest wersja strony dostosowana do urządzeń mobilnych.</p>
+    <div class="header">PBGame</div>
+
+    <div class="image-container">
+        <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="Obrazek PBGame">
+    </div>
+
+    <div class="auth-buttons">
+        <button class="auth-button">Rejestracja</button>
+        <button class="auth-button">Logowanie</button>
+    </div>
 </body>
 </html>
