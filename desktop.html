@@ -4,69 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strona PBGame</title>
-    <!-- Zmiana czcionki na Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Resetowanie marginesów i paddingu */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Tło strony z zielono-jasnozielonym gradientem */
         body {
-            font-family: 'Poppins', sans-serif; /* Zmiana czcionki na Poppins */
-            background: linear-gradient(135deg, #2e7d32, #81c784); /* Zielono-jasnozielony gradient */
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2e7d32, #81c784);
             color: #fff;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
             align-items: center;
             padding: 20px;
             height: 100vh;
         }
 
-        /* Nagłówek strony */
         header {
             background-color: #388e3c;
             width: 80%;
             max-width: 1000px;
-            padding: 40px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
             border-radius: 15px;
             background-image: linear-gradient(to right, #1b5e20, #43a047);
-            opacity: 0;
-            transform: translateY(-50px);
-            animation: fadeInUp 1s forwards 0.5s;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
         }
 
         header h1 {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: bold;
-            color: #fff;
             letter-spacing: 2px;
         }
 
-        /* Zakładki */
         .tabs {
             display: flex;
-            margin-bottom: 20px;
-            width: 80%;
-            justify-content: space-around;
+            margin: 20px 0;
+            justify-content: center;
         }
 
         .tab {
             background-color: #388e3c;
-            padding: 15px;
-            border-radius: 5px;
-            text-align: center;
-            width: 200px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 22px;
             cursor: pointer;
-            font-size: 20px;
-            color: white;
             transition: background-color 0.3s ease;
         }
 
@@ -74,117 +59,95 @@
             background-color: #1b5e20;
         }
 
-        /* Sekcja "O mnie" */
         .about-section {
-            background-color: #388e3c; /* Tło sekcji */
+            background-color: #388e3c;
             color: #fff;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
-            width: 80%; /* Zmniejszenie szerokości sekcji */
-            max-width: 700px; /* Maksymalna szerokość dla "O mnie" */
+            width: 75%;
+            max-width: 600px; /* Jeszcze mniejszy klocek */
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            transition: all 0.3s ease; /* Płynna animacja przejść */
-            display: none; /* Domyślnie ukryta */
-            flex: 1;
-            flex-direction: row; /* Flexbox dla ustawienia zdjęcia obok tekstu */
-            align-items: center; /* Wyrównanie w pionie */
-            justify-content: space-between; /* Przestrzeń między zdjęciem a tekstem */
-            opacity: 0; /* Ukryte na początku */
-            transform: translateY(20px); /* Początkowe przesunięcie w dół */
-            animation: fadeInUp 0.5s forwards; /* Animacja */
+            transition: all 0.3s ease;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
         }
 
         .about-section h2 {
-            font-size: 24px; /* Zmniejszenie czcionki nagłówka */
-            margin-bottom: 20px;
+            font-size: 28px; /* Powiększony napis */
+            margin-bottom: 15px;
             font-weight: bold;
         }
 
         .about-section p {
-            font-size: 16px; /* Zmniejszenie czcionki tekstu */
-            line-height: 1.5;
-            width: 55%; /* Zmniejszenie szerokości tekstu */
+            font-size: 18px; /* Powiększony tekst */
+            line-height: 1.6;
+            width: 55%;
         }
 
         .about-section img {
-            width: 30%; /* Zmniejszenie szerokości zdjęcia */
-            height: auto;
+            width: 25%; /* Jeszcze mniejsze zdjęcie */
             border-radius: 10px;
-            margin-right: 20px; /* Odstęp między zdjęciem a tekstem */
-            transition: box-shadow 0.3s ease-in-out; /* Animacja poświaty */
+            transition: box-shadow 0.3s ease-in-out;
         }
 
-        /* Efekt poświaty na zdjęciu przy najechaniu */
         .about-section img:hover {
-            box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.8); /* Zielona poświata */
+            box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.8);
         }
 
         .about-section a {
             color: #81c784;
             font-size: 18px;
-            text-decoration: none;
             font-weight: bold;
             display: inline-block;
             margin-top: 10px;
         }
 
-        /* Animacja - efekt przesunięcia */
         @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Stylizacja dla urządzeń mobilnych */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 32px;
-            }
-
-            .about-section h2 {
-                font-size: 24px;
+            .about-section {
+                flex-direction: column;
+                text-align: center;
+                width: 90%;
             }
 
             .about-section p {
-                font-size: 16px;
-                width: 100%; /* Pełna szerokość na urządzeniach mobilnych */
-                margin-top: 15px; /* Odstęp na mobilce */
+                width: 100%;
+                margin-top: 10px;
             }
 
             .about-section img {
-                width: 50%; /* Większe zdjęcie na mobilkach */
-                margin-right: 0;
-                margin-bottom: 15px; /* Odstęp poniżej zdjęcia */
+                width: 50%;
+                margin-bottom: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Nagłówek strony -->
     <header>
         <h1>Strona PBGame</h1>
     </header>
 
-    <!-- Zakładki -->
     <div class="tabs">
         <div class="tab" onclick="toggleAbout()">O mnie</div>
     </div>
 
-    <!-- Sekcja "O mnie" -->
     <div id="about" class="about-section">
-        <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="Przemysław PBGame" /> <!-- Link do zdjęcia -->
+        <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
         <div>
             <h2>O mnie</h2>
             <p>
-                Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!<br><br>
-                Na moim kanale znajdziesz gameplaye z gier oraz poradniki. Jeśli interesują Cię gry komputerowe i chcesz poznać techniki, wskazówki oraz strategie, zapraszam do subskrypcji!<br><br>
-                <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Kliknij tutaj, aby przejść do mojego kanału YouTube!</a>
+                Witam, mam na imię Przemysław i prowadzę kanał YouTube PBGame!<br><br>
+                Znajdziesz u mnie gameplaye z gier i poradniki.<br><br>
+                <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Sprawdź mój kanał!</a>
             </p>
         </div>
     </div>
@@ -193,17 +156,12 @@
         function toggleAbout() {
             const aboutSection = document.getElementById("about");
 
-            // Sprawdź, czy sekcja "O mnie" jest widoczna
             if (aboutSection.style.display === "none" || aboutSection.style.display === "") {
-                // Jeśli nie, pokazujemy sekcję z animacją
                 aboutSection.style.display = "flex";
                 aboutSection.style.animation = "fadeInUp 0.5s forwards";
             } else {
-                // Jeśli jest widoczna, chować ją z animacją
                 aboutSection.style.animation = "fadeOutDown 0.5s forwards";
-                setTimeout(function() {
-                    aboutSection.style.display = "none";
-                }, 500); // Czas trwania animacji
+                setTimeout(() => aboutSection.style.display = "none", 500);
             }
         }
     </script>
