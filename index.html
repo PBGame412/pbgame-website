@@ -16,7 +16,7 @@
         /* Tło strony */
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #2a2a2a;
+            background-color: #1c1c1c;
             color: #f0f0f0;
             display: flex;
             flex-direction: column;
@@ -24,18 +24,19 @@
             align-items: center;
             padding: 20px;
             overflow: hidden;
+            min-height: 100vh;
         }
 
         /* Nagłówek */
         header {
-            background-color: #3e0e12;
+            background-color: #ff3b30;
             width: 100%;
             padding: 40px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin-bottom: 30px;
             border-radius: 10px;
-            background-image: linear-gradient(to right, #5c0f14, #3e0e12);
+            background-image: linear-gradient(to right, #ff5e57, #ff3b30);
             opacity: 0;
             transform: translateY(-50px);
             animation: fadeInUp 1s forwards 0.5s;
@@ -60,7 +61,7 @@
         }
 
         nav a {
-            color: #ff3333;
+            color: #fff;
             text-decoration: none;
             font-size: 20px;
             font-weight: bold;
@@ -69,13 +70,13 @@
         }
 
         nav a:hover {
-            color: #ff6666;
+            color: #ffd700;
             text-decoration: underline;
         }
 
         /* Główna sekcja */
         .main-content {
-            background-color: #3a2a2a;
+            background-color: #333;
             width: 90%;
             max-width: 1200px;
             padding: 40px;
@@ -96,7 +97,7 @@
             font-size: 32px;
             margin-bottom: 20px;
             font-weight: bold;
-            color: #ff3333;
+            color: #ff3b30;
         }
 
         /* Przesunięcie zdjęcia w lewo */
@@ -120,7 +121,7 @@
 
         /* Przycisk YouTube */
         .youtube-button {
-            background-color: #5c0f14;
+            background-color: #ff3b30;
             color: #fff;
             font-family: 'Arial', sans-serif;
             font-size: 18px;
@@ -139,7 +140,7 @@
         }
 
         .youtube-button:hover {
-            background-color: #ff3333;
+            background-color: #ffd700;
             transform: scale(1.05);
         }
 
@@ -151,7 +152,7 @@
         }
 
         .auth-button {
-            background-color: #ff3333;
+            background-color: #ff3b30;
             color: #fff;
             font-family: 'Arial', sans-serif;
             font-size: 18px;
@@ -166,7 +167,7 @@
         }
 
         .auth-button:hover {
-            background-color: #ff6666;
+            background-color: #ffd700;
         }
 
         /* Sekcja "O mnie" */
@@ -193,13 +194,13 @@
         }
 
         footer a {
-            color: #ff3333;
+            color: #ff3b30;
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
         footer a:hover {
-            color: #ff6666;
+            color: #ffd700;
             text-decoration: underline;
         }
 
@@ -213,7 +214,7 @@
             background-image: url('https://cdn.pixabay.com/photo/2017/08/30/22/53/space-2695564_960_720.jpg');
             background-size: cover;
             background-position: center;
-            filter: blur(5px);
+            filter: blur(8px);
             z-index: -1;
         }
 
@@ -313,7 +314,6 @@
     <!-- Pasek nawigacyjny -->
     <nav>
         <a href="#" id="aboutLink">O mnie</a>
-        <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Kanał YouTube</a>
     </nav>
 
     <!-- Główna zawartość strony -->
@@ -325,10 +325,10 @@
             <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="Obrazek YouTube">
         </div>
         
-        <!-- Zaktualizowany przycisk z linkiem do YouTube -->
-        <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">
-            <button class="youtube-button">Kliknij tutaj, aby przejść do mojego kanału YouTube</button>
-        </a>
+        <!-- Przycisk YouTube -->
+        <button class="youtube-button" onclick="window.location.href='https://www.youtube.com/@PBGame-v6c'">
+            Kliknij tutaj, aby przejść do mojego kanału YouTube
+        </button>
 
         <!-- Przyciski logowania i rejestracji -->
         <div class="auth-buttons">
