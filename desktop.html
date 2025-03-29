@@ -56,10 +56,11 @@
             padding: 20px;
             border-radius: 10px;
             margin-top: 30px;
-            width: 80%;
-            max-width: 1000px;
+            width: 70%; /* Zmniejszenie szerokości sekcji */
+            max-width: 900px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
+            transition: all 0.3s ease; /* Płynna animacja przejść */
         }
 
         .about-section h2 {
@@ -72,6 +73,16 @@
             font-size: 18px;
             line-height: 1.5;
             display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .about-section.open p {
+            display: block;
+            max-height: 500px;
+            opacity: 1;
         }
 
         /* Animacja - efekt przesunięcia */
@@ -119,12 +130,9 @@
 
     <script>
         function toggleAboutInfo() {
+            var aboutSection = document.querySelector('.about-section');
             var aboutInfo = document.getElementById('about-info');
-            if (aboutInfo.style.display === 'none' || aboutInfo.style.display === '') {
-                aboutInfo.style.display = 'block';
-            } else {
-                aboutInfo.style.display = 'none';
-            }
+            aboutSection.classList.toggle('open'); // Dodajemy/Usuwamy klasę otwierającą lub zamykającą
         }
     </script>
 
