@@ -23,10 +23,9 @@
             justify-content: flex-start;
             align-items: center;
             padding: 20px;
-            overflow-x: hidden;
+            overflow: hidden;
             position: relative;
             height: 100vh; /* Zajmuje całą wysokość ekranu */
-            overflow-y: auto; /* Naprawa przewijania na urządzeniach mobilnych */
         }
 
         /* Tło rozmyte - z mniejszym rozmyciem */
@@ -56,13 +55,13 @@
             transform: translateY(-50px);
             animation: fadeInUp 1s forwards 0.5s;
             position: relative;
-            margin-left: -150px; /* Przesunięcie w lewo */
+            margin-left: 20px; /* Dodany margines po lewej stronie */
         }
 
         header h1 {
             font-size: 48px;
             font-weight: bold;
-            color: #fff; /* Kolor tekstu na biały */
+            color: #fff;
             letter-spacing: 2px;
         }
 
@@ -141,7 +140,7 @@
         .youtube-button {
             background-color: #5c0f14;
             color: #fff;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Arial', sans-serif;
             font-size: 18px;
             padding: 15px 40px;
             border: none;
@@ -164,18 +163,17 @@
 
         /* Przyciski logowania i rejestracji na górze po prawej stronie */
         .auth-buttons {
-            position: fixed;
+            position: absolute;
             top: 20px;
             right: 20px;
             display: flex;
             gap: 20px;
-            z-index: 10;
         }
 
         .auth-button {
             background-color: #ff3333;
             color: #fff;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Arial', sans-serif;
             font-size: 18px;
             padding: 15px 40px;
             border: none;
@@ -240,73 +238,45 @@
         /* Stylizacja dla urządzeń mobilnych */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 24px; /* Zmniejszenie nagłówka na urządzeniach mobilnych */
-                width: auto;
-                padding-top: 80px; /* Ustawiamy przestrzeń na przyciski */
-                display: inline-block; /* Umieszczenie obok przycisków */
-                margin-right: 20px;
-            }
-
-            .main-content h2 {
-                font-size: 24px;
-            }
-
-            nav {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            nav a {
-                font-size: 18px;
-            }
-
-            .image-container img {
-                width: 100%;
-                height: auto;
-            }
-
-            .youtube-button {
-                width: 100%;
-                padding: 15px 0;
-                font-size: 16px;
+                font-size: 36px; /* Zmniejszenie rozmiaru czcionki */
+                margin-right: 120px; /* Dodanie marginesu, aby tekst nie kolidował z przyciskami */
             }
 
             .auth-buttons {
-                flex-direction: row; /* Przyciski logowania i rejestracji obok siebie */
-                align-items: center;
-                gap: 20px;
-                position: fixed;
-                top: 20px;
-                right: 20px;
+                flex-direction: row; /* Ustawienie przycisków obok siebie */
+                justify-content: flex-end; /* Przesunięcie przycisków na prawą stronę */
+                margin-top: 10px;
             }
 
             .auth-button {
                 width: auto;
-                padding: 15px 20px;
+                padding: 12px 30px;
                 font-size: 16px;
             }
 
-            /* Poprawka na mobilne, aby tekst nie wychodził poza kontener */
-            .main-content, .contact-info {
+            .main-content {
+                width: 90%; /* Zmniejszenie szerokości sekcji */
                 padding: 20px;
+            }
+
+            .image-container img {
+                width: 100%; /* Dopasowanie szerokości obrazu */
+                height: auto;
+            }
+
+            .main-content, .contact-info {
+                padding: 15px;
+                text-align: center;
                 word-wrap: break-word;
                 overflow-wrap: break-word;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 18px;
             }
 
-            .main-content h2 {
-                font-size: 20px;
-            }
-
-            .youtube-button {
-                padding: 12px 0;
-                font-size: 14px;
+            header {
+                position: relative;
+                width: 100%; /* Ustalamy pełną szerokość dla headera */
+                display: flex;
+                justify-content: space-between; /* Rozdzielenie napisu i przycisków */
+                align-items: center; /* Wyrównanie do środka */
             }
         }
     </style>
