@@ -21,6 +21,7 @@
             align-items: center;
             padding: 20px;
             height: 100vh;
+            overflow-x: hidden;
         }
 
         header {
@@ -138,6 +139,19 @@
             animation: slideIn 2s ease-out;
         }
 
+        .discord-tab {
+            background-color: #7289da;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .discord-tab:hover {
+            background-color: #5b6e8e;
+        }
+
         @media (max-width: 768px) {
             .about-section {
                 flex-direction: column;
@@ -159,20 +173,28 @@
     </style>
 </head>
 <body>
+    <!-- YouTube Audio Player -->
     <iframe width="0" height="0" src="https://www.youtube.com/embed/FFfdyV8gnWk?autoplay=1&loop=1&playlist=FFfdyV8gnWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+    <!-- Animowany baner powitalny -->
     <div class="welcome-banner">
         Witaj na stronie PBGame! 🎮
     </div>
 
+    <!-- Nagłówek strony -->
     <header>
         <h1>Strona PBGame</h1>
     </header>
 
+    <!-- Zakładki -->
     <div class="tabs">
         <div class="tab" onclick="toggleAbout()">O mnie</div>
+        <div class="discord-tab">
+            <a href="https://discord.gg/kmnVBUYxY7" target="_blank" style="color: white; text-decoration: none;">Dołącz do Discorda</a>
+        </div>
     </div>
 
+    <!-- Sekcja "O mnie" -->
     <div id="about" class="about-section">
         <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
         <div>
