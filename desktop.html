@@ -72,6 +72,50 @@
             background-color: #388e3c;
         }
 
+        .auth-form {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: #388e3c;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .auth-form input {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .auth-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #1b5e20;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .auth-form button:nth-child(2) { 
+            margin-top: 30px; 
+        }
+
+        .auth-form button:hover {
+            background-color: #388e3c;
+        }
+
         .tabs {
             display: flex;
             margin: 20px 0;
@@ -96,7 +140,7 @@
             margin-left: 20px;
         }
 
-        .settings-section {
+        .about-section {
             background-color: #388e3c;
             color: #fff;
             padding: 25px;
@@ -115,7 +159,7 @@
             animation: fadeInUp 0.5s forwards;
         }
 
-        .settings-section h2 {
+        .about-section h2 {
             font-size: 30px;
             margin-bottom: 15px;
             font-weight: bold;
@@ -125,28 +169,42 @@
             left: 10px;
         }
 
-        .settings-section input,
-        .settings-section button {
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-
-        .settings-section input {
+        .about-content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
             width: 100%;
+            margin-top: 40px;
         }
 
-        .settings-section button {
-            background-color: #1b5e20;
+        .about-section p {
+            font-size: 20px;
+            line-height: 1.8;
+            width: 55%;
+            padding-left: 20px;
+        }
+
+        .about-section img {
+            width: 30%;
+            border-radius: 10px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .about-section img:hover {
+            box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.8);
+        }
+
+        .about-section a {
+            color: #81c784;
+            font-size: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .about-section a:hover {
             color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .settings-section button:hover {
-            background-color: #388e3c;
         }
 
         @keyframes fadeInUp {
@@ -160,14 +218,21 @@
         }
 
         @media (max-width: 768px) {
-            .settings-section {
+            .about-section {
                 flex-direction: column;
                 text-align: center;
                 width: 90%;
             }
 
-            .settings-section input {
-                width: 90%;
+            .about-section p {
+                width: 100%;
+                padding-left: 0;
+                margin-top: 10px;
+            }
+
+            .about-section img {
+                width: 60%;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -186,7 +251,6 @@
     <div class="tabs">
         <div class="tab" onclick="toggleAbout()">O mnie</div>
         <div class="tab discord" onclick="window.location.href='https://discord.gg/kmnVBUYxY7'">Dołącz do Discorda</div>
-        <div class="tab" onclick="toggleSettings()">Ustawienia</div>
     </div>
 
     <div id="about" class="about-section">
@@ -199,14 +263,6 @@
             </p>
             <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
         </div>
-    </div>
-
-    <div id="settings" class="settings-section">
-        <h2>Ustawienia</h2>
-        <input type="password" id="changePassword" placeholder="Nowe Hasło" required>
-        <button onclick="changePassword()">Zmień Hasło</button>
-        <button onclick="toggleDarkMode()">Przełącz Tryb Ciemny/Światły</button>
-        <button onclick="closeSettings()">Zamknij</button>
     </div>
 
     <div id="loginForm" class="auth-form">
@@ -227,107 +283,121 @@
     </div>
 
     <script>
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-        let userNick = '';
-
+        // Funkcja do pokazania formularza logowania
         function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'flex';
+            document.getElementById('loginForm').style.opacity = 1;
         }
 
+        // Funkcja do pokazania formularza rejestracji
         function showRegisterForm() {
-            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'flex';
+            document.getElementById('registerForm').style.opacity = 1;
         }
 
+        // Funkcja do zamknięcia formularza
         function closeAuthForm() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-        }
+            document.getElementById('loginForm').style.transition = 'opacity 0.5s ease-in-out';
+            document.getElementById('registerForm').style.transition = 'opacity 0.5s ease-in-out';
+            document.getElementById('loginForm').style.opacity = 0;
+            document.getElementById('registerForm').style.opacity = 0;
 
-        function login() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-
-            const user = users.find(user => user.email === email && user.password === password);
-            if (user) {
-                userNick = user.username;
-                document.getElementById('userNick').innerText = `Zalogowano jako: ${userNick}`;
-                document.getElementById('userNick').style.display = 'block';
-                closeAuthForm();
-                alert("Zalogowano pomyślnie!");
-            } else {
-                alert("Błędny email lub hasło.");
-            }
-        }
-
-        function register() {
-            const username = document.getElementById('registerUsername').value;
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-
-            if (users.some(user => user.email === email)) {
-                alert("Użytkownik z takim emailem już istnieje.");
-                return;
-            }
-
-            users.push({ username, email, password });
-            localStorage.setItem('users', JSON.stringify(users));
-            alert("Zarejestrowano pomyślnie!");
-            closeAuthForm();
-        }
-
-        function toggleAbout() {
-            const about = document.getElementById('about');
-            about.style.display = about.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function toggleSettings() {
-            let settingsSection = document.getElementById('settings');
-            if (settingsSection.style.display === 'none') {
-                settingsSection.style.display = 'flex';
-                settingsSection.style.opacity = 1;
-            } else {
-                settingsSection.style.transition = 'opacity 0.5s ease-in-out';
-                settingsSection.style.opacity = 0;
-                setTimeout(() => {
-                    settingsSection.style.display = 'none';
-                }, 500);
-            }
-        }
-
-        function closeSettings() {
-            document.getElementById('settings').style.transition = 'opacity 0.5s ease-in-out';
-            document.getElementById('settings').style.opacity = 0;
             setTimeout(() => {
-                document.getElementById('settings').style.display = 'none';
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'none';
             }, 500);
         }
 
-        function changePassword() {
-            let newPassword = document.getElementById('changePassword').value;
-            if (newPassword.length < 6) {
+        // Funkcja rejestracji
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let userNick = '';
+
+        function register() {
+            let username = document.getElementById('registerUsername').value;
+            let email = document.getElementById('registerEmail').value;
+            let password = document.getElementById('registerPassword').value;
+
+            if (password.length < 6) {
                 alert("Hasło musi mieć przynajmniej 6 znaków!");
                 return;
             }
 
-            let user = users.find(u => u.username === userNick);
-            if (user) {
-                user.password = newPassword;
-                localStorage.setItem('users', JSON.stringify(users));
-                alert("Hasło zostało zmienione!");
+            // Sprawdzanie, czy email już istnieje
+            for (let user of users) {
+                if (user.email === email) {
+                    alert("Ten email jest już zajęty. Spróbuj inny.");
+                    return;
+                }
+            }
+
+            let newUser = { username, email, password };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert("Rejestracja zakończona sukcesem!");
+            closeAuthForm();
+        }
+
+        // Funkcja logowania
+        function login() {
+            let email = document.getElementById('loginEmail').value;
+            let password = document.getElementById('loginPassword').value;
+
+            if (password.length < 6) {
+                alert("Hasło musi mieć przynajmniej 6 znaków!");
+                return;
+            }
+
+            let loggedIn = false;
+
+            for (let user of users) {
+                if (user.email === email && user.password === password) {
+                    userNick = user.username;
+                    localStorage.setItem('isLoggedIn', true);
+                    loggedIn = true;
+                    break;
+                }
+            }
+
+            if (loggedIn) {
+                alert("Zalogowano pomyślnie!");
+                updateUserNick();
+                closeAuthForm();
+            } else {
+                alert("Nieprawidłowy email lub hasło!");
             }
         }
 
-        function toggleDarkMode() {
-            let currentTheme = localStorage.getItem('theme') || 'light';
-            if (currentTheme === 'light') {
-                document.body.style.background = '#2e2e2e';  // Dark mode
-                localStorage.setItem('theme', 'dark');
+        // Funkcja do aktualizacji widoku po zalogowaniu
+        function updateUserNick() {
+            if (localStorage.getItem('isLoggedIn')) {
+                document.getElementById('authButtons').style.display = 'none';
+                document.getElementById('userNick').style.display = 'block';
+                document.getElementById('userNick').innerHTML = 'Witaj, ' + userNick + '!';
+            }
+        }
+
+        // Wykrywanie, czy użytkownik jest już zalogowany
+        window.onload = function() {
+            if (localStorage.getItem('isLoggedIn')) {
+                updateUserNick();
+            }
+        }
+
+        // Funkcja do pokazania sekcji 'O mnie'
+        function toggleAbout() {
+            let aboutSection = document.getElementById('about');
+            if (aboutSection.style.display === 'none') {
+                aboutSection.style.display = 'flex';
+                aboutSection.style.opacity = 1;
             } else {
-                document.body.style.background = '#81c784';  // Light mode
-                localStorage.setItem('theme', 'light');
+                aboutSection.style.transition = 'opacity 0.5s ease-in-out';
+                aboutSection.style.opacity = 0;
+                setTimeout(() => {
+                    aboutSection.style.display = 'none';
+                }, 500);
             }
         }
     </script>
-
 </body>
 </html>
