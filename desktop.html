@@ -85,6 +85,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            opacity: 0; /* Początkowa przezroczystość */
+            transition: all 0.5s ease-in-out;
         }
 
         .auth-form input {
@@ -302,53 +304,44 @@
         let userNick = ''; // Globalna zmienna na nick
 
         function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'flex';
+            let loginForm = document.getElementById('loginForm');
+            loginForm.style.display = 'flex';
+            loginForm.style.opacity = 0;  // Początkowa przezroczystość
+            loginForm.style.transition = 'opacity 0.5s ease-in-out';
+            setTimeout(() => {
+                loginForm.style.opacity = 1; // Pojawianie się formularza
+            }, 10);
             document.getElementById('registerForm').style.display = 'none';
         }
 
         function showRegisterForm() {
-            document.getElementById('registerForm').style.display = 'flex';
+            let registerForm = document.getElementById('registerForm');
+            registerForm.style.display = 'flex';
+            registerForm.style.opacity = 0; // Początkowa przezroczystość
+            registerForm.style.transition = 'opacity 0.5s ease-in-out';
+            setTimeout(() => {
+                registerForm.style.opacity = 1; // Pojawianie się formularza
+            }, 10);
             document.getElementById('loginForm').style.display = 'none';
         }
 
         function closeAuthForm() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-        }
+            let loginForm = document.getElementById('loginForm');
+            let registerForm = document.getElementById('registerForm');
 
-        function login() {
-            let email = document.getElementById('loginEmail').value;
-            let password = document.getElementById('loginPassword').value;
-
-            // Sprawdzanie, czy email jest zarejestrowany
-            let user = users.find(u => u.email === email && u.password === password);
-            if (user) {
-                userNick = user.username;
-                updateUserNick();
-                closeAuthForm();
-            } else {
-                alert('Nie znaleziono użytkownika z takim emailem i hasłem!');
+            if (loginForm.style.display === 'flex') {
+                loginForm.style.transition = 'opacity 0.5s ease-in-out';
+                loginForm.style.opacity = 0; // Znikanie formularza
+                setTimeout(() => {
+                    loginForm.style.display = 'none';
+                }, 500);
+            } else if (registerForm.style.display === 'flex') {
+                registerForm.style.transition = 'opacity 0.5s ease-in-out';
+                registerForm.style.opacity = 0; // Znikanie formularza
+                setTimeout(() => {
+                    registerForm.style.display = 'none';
+                }, 500);
             }
-        }
-
-        function register() {
-            let username = document.getElementById('registerUsername').value;
-            let email = document.getElementById('registerEmail').value;
-            let password = document.getElementById('registerPassword').value;
-
-            // Sprawdzanie, czy email jest już zarejestrowany
-            let existingUser = users.find(u => u.email === email);
-            if (existingUser) {
-                alert('Email jest już zarejestrowany!');
-                return;
-            }
-
-            // Zapisanie nowego użytkownika
-            let newUser = { username, email, password };
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-            alert('Zarejestrowano użytkownika: ' + username);
-            closeAuthForm();
         }
 
         function updateUserNick() {
@@ -363,8 +356,12 @@
             let aboutSection = document.getElementById('about');
             if (aboutSection.style.display === 'none') {
                 aboutSection.style.display = 'flex';
+                aboutSection.style.animation = 'fadeInUp 0.5s forwards';
             } else {
-                aboutSection.style.display = 'none';
+                aboutSection.style.animation = 'fadeOutDown 0.5s forwards';
+                setTimeout(() => {
+                    aboutSection.style.display = 'none';
+                }, 500);
             }
         }
     </script>
