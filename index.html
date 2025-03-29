@@ -239,10 +239,15 @@
         /* Stylizacja dla urządzeń mobilnych (maksymalna szerokość 768px) */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 28px; /* Zmniejszenie czcionki dla urządzeń mobilnych */
-                margin-right: 120px; /* Dodanie marginesu po prawej stronie, aby uniknąć kolizji */
-                text-align: center; /* Wyrównanie do środka na urządzeniach mobilnych */
-                margin-top: 20px;
+                display: none; /* Usunięcie napisu "Strona PBGame" w wersji mobilnej */
+            }
+
+            .mobile-header {
+                font-size: 36px;
+                text-align: center;
+                margin-top: 20px; /* Napis pod przyciskami logowania */
+                color: white;
+                font-weight: bold;
             }
 
             .auth-buttons {
@@ -273,11 +278,9 @@
                 text-align: center;
             }
 
-            header {
-                position: relative;
-                width: 100%;
-                display: flex;
-                justify-content: center; /* Wycentrowanie nagłówka */
+            .contact-info {
+                display: block;
+                margin-top: 20px;
             }
 
             .background {
@@ -293,15 +296,6 @@
                 display: flex;
                 justify-content: center;
                 gap: 20px;
-            }
-
-            /* Napis "Strona PBGame" pod przyciskami logowania na urządzeniach mobilnych */
-            .mobile-header {
-                font-size: 36px;
-                text-align: center;
-                margin-top: 80px; /* Przesunięcie napisu na dół */
-                color: white;
-                font-weight: bold;
             }
         }
 
