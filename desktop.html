@@ -27,7 +27,7 @@
             height: 100vh;
         }
 
-        /* Nagłówek */
+        /* Nagłówek strony */
         header {
             background-color: #388e3c;
             width: 80%;
@@ -50,7 +50,7 @@
             letter-spacing: 2px;
         }
 
-        /* Stylizacja zakładek */
+        /* Zakładki */
         .tabs {
             display: flex;
             margin-bottom: 20px;
@@ -76,7 +76,6 @@
 
         /* Sekcja "O mnie" */
         .about-section {
-            display: none; /* Domyślnie ukryta */
             background-color: #388e3c; /* Tło sekcji */
             color: #fff;
             padding: 20px;
@@ -86,9 +85,14 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: all 0.3s ease; /* Płynna animacja przejść */
-            display: flex; /* Flexbox dla ustawienia zdjęcia obok tekstu */
+            display: none; /* Domyślnie ukryta */
+            flex: 1;
+            flex-direction: row; /* Flexbox dla ustawienia zdjęcia obok tekstu */
             align-items: center; /* Wyrównanie w pionie */
             justify-content: space-between; /* Przestrzeń między zdjęciem a tekstem */
+            opacity: 0; /* Ukryte na początku */
+            transform: translateY(20px); /* Początkowe przesunięcie w dół */
+            animation: fadeInUp 0.5s forwards; /* Animacja */
         }
 
         .about-section h2 {
@@ -169,7 +173,7 @@
 
     <!-- Zakładki -->
     <div class="tabs">
-        <div class="tab" onclick="showTab('about')">O mnie</div>
+        <div class="tab" onclick="toggleAbout()">O mnie</div>
     </div>
 
     <!-- Sekcja "O mnie" -->
@@ -186,19 +190,22 @@
     </div>
 
     <script>
-        function showTab(tab) {
-            // Ukryj wszystkie sekcje
-            const sections = document.querySelectorAll('.about-section');
-            sections.forEach(function(section) {
-                section.style.display = 'none';
-            });
+        function toggleAbout() {
+            const aboutSection = document.getElementById("about");
 
-            // Pokaż wybraną sekcję
-            document.getElementById(tab).style.display = 'flex';
+            // Sprawdź, czy sekcja "O mnie" jest widoczna
+            if (aboutSection.style.display === "none" || aboutSection.style.display === "") {
+                // Jeśli nie, pokazujemy sekcję z animacją
+                aboutSection.style.display = "flex";
+                aboutSection.style.animation = "fadeInUp 0.5s forwards";
+            } else {
+                // Jeśli jest widoczna, chować ją z animacją
+                aboutSection.style.animation = "fadeOutDown 0.5s forwards";
+                setTimeout(function() {
+                    aboutSection.style.display = "none";
+                }, 500); // Czas trwania animacji
+            }
         }
-
-        // Domyślnie wyświetlamy "O mnie"
-        showTab('about');
     </script>
 </body>
 </html>
