@@ -3,64 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desktop - PBGame</title>
+    <title>Strona PBGame</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #008000, #ADFF2F); /* Zielono-jasnozielone tło */
-            color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        /* Resetowanie marginesów i paddingu */
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .container {
-            background: rgba(0, 0, 0, 0.7);
+
+        /* Tło strony z zielono-jasnozielonym gradientem */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #2e7d32, #81c784); /* Zielono-jasnozielony gradient */
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px;
+            height: 100vh;
+        }
+
+        /* Nagłówek */
+        header {
+            background-color: #388e3c;
+            width: 80%;
+            max-width: 1000px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            border-radius: 15px;
+            background-image: linear-gradient(to right, #1b5e20, #43a047);
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        header h1 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        /* Sekcja "O mnie" */
+        .about-section {
+            background-color: #388e3c; /* Tło z dopasowanym kolorem */
+            color: #fff;
             padding: 20px;
             border-radius: 10px;
-            text-align: center;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            margin-top: 30px;
+            width: 80%;
+            max-width: 1000px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        h1 {
-            color: #FFD700; /* Żółty kolor, aby nie wtapiało się w tło */
-        }
-        .info {
-            display: none;
-            color: #FFF;
-            margin-top: 10px;
-        }
-        .btn {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background: #FFD700;
-            color: #000;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
+
+        .about-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
             font-weight: bold;
         }
-        .btn:hover {
-            background: #FFC107;
+
+        .about-section p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        /* Animacja - efekt przesunięcia */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Przycisk do pokazania/ukrycia informacji */
+        .about-button {
+            background-color: #2e7d32;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .about-button:hover {
+            background-color: #388e3c;
+        }
+
+        /* Stylizacja dla urządzeń mobilnych */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 32px;
+            }
+
+            .about-section h2 {
+                font-size: 24px;
+            }
+
+            .about-section p {
+                font-size: 16px;
+            }
+
+            .about-button {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>O mnie</h1>
-        <button class="btn" onclick="toggleInfo()">Więcej informacji</button>
-        <p class="info" id="info">Tutaj znajdziesz informacje o PBGame!</p>
+    <!-- Nagłówek strony -->
+    <header>
+        <h1>Strona PBGame</h1>
+    </header>
+
+    <!-- Sekcja "O mnie" -->
+    <div class="about-section">
+        <h2>O mnie</h2>
+        <p>Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!</p>
+        <p>Na moim kanale znajdziesz gameplaye z gier oraz poradniki. Jeśli interesują Cię gry komputerowe i chcesz poznać techniki, wskazówki oraz strategie, zapraszam do subskrypcji!</p>
+        <p>Jeśli chcesz dowiedzieć się więcej, kliknij poniżej, a ja podzielę się dodatkowymi informacjami o mojej twórczości.</p>
     </div>
 
-    <script>
-        function toggleInfo() {
-            var info = document.getElementById("info");
-            if (info.style.display === "none" || info.style.display === "") {
-                info.style.display = "block";
-            } else {
-                info.style.display = "none";
-            }
-        }
-    </script>
+    <!-- Przycisk do pokazania więcej informacji -->
+    <button class="about-button" onclick="alert('Więcej informacji o mnie...')">Dowiedz się więcej</button>
+
 </body>
 </html>
