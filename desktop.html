@@ -72,16 +72,14 @@
         .about-section p {
             font-size: 18px;
             line-height: 1.5;
-            display: none;
             max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out, opacity 0.5s ease;
             opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
         }
 
         .about-section.open p {
-            display: block;
-            max-height: 500px;
+            max-height: 500px; /* Wysokość treści, która ma być widoczna */
             opacity: 1;
         }
 
@@ -131,7 +129,6 @@
     <script>
         function toggleAboutInfo() {
             var aboutSection = document.querySelector('.about-section');
-            var aboutInfo = document.getElementById('about-info');
             aboutSection.classList.toggle('open'); // Dodajemy/Usuwamy klasę otwierającą lub zamykającą
         }
     </script>
