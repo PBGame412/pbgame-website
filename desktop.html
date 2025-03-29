@@ -22,8 +22,8 @@
             flex-direction: column;
         }
 
-        .column {
-            background-color: rgba(0, 0, 0, 0.8);
+        .container {
+            background: linear-gradient(135deg, #008000, #00ff00);
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -33,26 +33,27 @@
             transition: all 0.3s ease-in-out;
         }
 
-        .column h2 {
+        .container h2 {
             font-size: 24px;
             font-weight: bold;
-            color: #ff4444;
+            color: #ffffff;
         }
 
         .info {
             display: none;
             margin-top: 10px;
             font-size: 16px;
+            color: #ffffff;
         }
 
-        .column:hover {
-            background-color: rgba(255, 69, 69, 0.8);
+        .container:hover {
+            background: linear-gradient(135deg, #00a000, #66ff66);
         }
     </style>
 </head>
 <body>
 
-    <div class="column" onclick="toggleInfo()">
+    <div class="container" onclick="toggleInfo()">
         <h2>O mnie</h2>
         <div class="info">
             <p>Cześć! Mam na imię Przemysław i prowadzę kanał PBGame. Znajdziesz tu gry i poradniki!</p>
@@ -62,11 +63,7 @@
     <script>
         function toggleInfo() {
             let info = document.querySelector('.info');
-            if (info.style.display === "block") {
-                info.style.display = "none";
-            } else {
-                info.style.display = "block";
-            }
+            info.style.display = (info.style.display === "block") ? "none" : "block";
         }
     </script>
 
