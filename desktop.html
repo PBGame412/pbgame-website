@@ -20,8 +20,9 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            height: 100vh;
-            overflow-x: hidden;
+            min-height: 100vh; /* Umożliwia przewijanie */
+            overflow-y: auto; /* Dodaje możliwość przewijania w pionie */
+            animation: pageLoad 1s ease-out;
         }
 
         header {
@@ -33,12 +34,19 @@
             border-radius: 15px;
             background-image: linear-gradient(to right, #1b5e20, #43a047);
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease-in-out;
+            margin-bottom: 30px; /* Daje trochę przestrzeni poniżej nagłówka */
+        }
+
+        header:hover {
+            transform: scale(1.05);
         }
 
         header h1 {
             font-size: 42px;
             font-weight: bold;
             letter-spacing: 2px;
+            color: #fff;
         }
 
         .tabs {
@@ -53,11 +61,16 @@
             border-radius: 8px;
             font-size: 24px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .tab:hover {
             background-color: #1b5e20;
+            transform: scale(1.1);
+        }
+
+        .tab.discord {
+            margin-left: 20px;
         }
 
         .about-section {
@@ -66,7 +79,7 @@
             padding: 25px;
             border-radius: 10px;
             width: 85%;
-            max-width: 750px; 
+            max-width: 750px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: all 0.3s ease;
@@ -75,6 +88,7 @@
             justify-content: space-between;
             opacity: 0;
             transform: translateY(20px);
+            position: relative;
             animation: fadeInUp 0.5s forwards;
         }
 
@@ -82,6 +96,18 @@
             font-size: 30px;
             margin-bottom: 15px;
             font-weight: bold;
+            text-align: left;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 40px;
         }
 
         .about-section p {
@@ -107,6 +133,11 @@
             font-weight: bold;
             display: inline-block;
             margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .about-section a:hover {
+            color: #fff;
         }
 
         @keyframes fadeInUp {
@@ -114,42 +145,28 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes slideIn {
+        @keyframes fadeOutDown {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(30px); }
+        }
+
+        @keyframes pageLoad {
             0% {
-                transform: translateX(-100%);
+                transform: scale(0.8);
                 opacity: 0;
             }
             100% {
-                transform: translateX(0);
+                transform: scale(1);
                 opacity: 1;
             }
         }
 
-        .welcome-banner {
-            width: 100%;
-            background-color: #388e3c;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            position: absolute;
-            top: 0;
-            left: 0;
-            animation: slideIn 2s ease-out;
+        .tab-link {
+            transition: transform 0.3s ease;
         }
 
-        .discord-tab {
-            background-color: #7289da;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-size: 24px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .discord-tab:hover {
-            background-color: #5b6e8e;
+        .tab-link:hover {
+            transform: translateY(-5px);
         }
 
         @media (max-width: 768px) {
@@ -173,11 +190,11 @@
     </style>
 </head>
 <body>
-    <!-- YouTube Audio Player -->
-    <iframe width="0" height="0" src="https://www.youtube.com/embed/FFfdyV8gnWk?autoplay=1&loop=1&playlist=FFfdyV8gnWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <!-- YouTube Audio Player (z tłem, ściszony, autoplay, loop) -->
+    <iframe width="0" height="0" src="https://www.youtube.com/embed/FFfdyV8gnWk?autoplay=1&loop=1&playlist=FFfdyV8gnWk&mute=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
     <!-- Animowany baner powitalny -->
-    <div class="welcome-banner">
+    <div class="welcome-banner" style="width: 100%; background-color: #388e3c; color: white; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; position: absolute; top: 0; left: 0; animation: slideIn 2s ease-out;">
         Witaj na stronie PBGame! 🎮
     </div>
 
@@ -189,21 +206,19 @@
     <!-- Zakładki -->
     <div class="tabs">
         <div class="tab" onclick="toggleAbout()">O mnie</div>
-        <div class="discord-tab">
-            <a href="https://discord.gg/kmnVBUYxY7" target="_blank" style="color: white; text-decoration: none;">Dołącz do Discorda</a>
-        </div>
+        <div class="tab discord tab-link" onclick="window.location.href='https://discord.gg/kmnVBUYxY7'">Dołącz do Discorda</div>
     </div>
 
     <!-- Sekcja "O mnie" -->
     <div id="about" class="about-section">
-        <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
-        <div>
-            <h2>O mnie</h2>
+        <h2>O mnie</h2>
+        <div class="about-content">
             <p>
                 Witam, mam na imię Przemysław i prowadzę kanał YouTube PBGame!<br><br>
                 Znajdziesz u mnie gameplaye z gier i poradniki.<br><br>
                 <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Sprawdź mój kanał!</a>
             </p>
+            <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
         </div>
     </div>
 
@@ -211,12 +226,13 @@
         function toggleAbout() {
             const aboutSection = document.getElementById("about");
 
+            // Sprawdzamy, czy sekcja jest widoczna
             if (aboutSection.style.display === "none" || aboutSection.style.display === "") {
                 aboutSection.style.display = "flex";
                 aboutSection.style.animation = "fadeInUp 0.5s forwards";
             } else {
                 aboutSection.style.animation = "fadeOutDown 0.5s forwards";
-                setTimeout(() => aboutSection.style.display = "none", 500);
+                setTimeout(() => aboutSection.style.display = "none", 500); // Czekamy na zakończenie animacji, zanim ukryjemy sekcję
             }
         }
     </script>
