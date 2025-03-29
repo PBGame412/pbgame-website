@@ -251,7 +251,7 @@
 
         <!-- Przyciski logowania i rejestracji -->
         <div class="auth-buttons">
-            <button onclick="showLoginForm()">Zaloguj się</button>
+            <button id="loginButton" onclick="showLoginForm()">Zaloguj się</button>
             <button onclick="showRegisterForm()">Zarejestruj się</button>
         </div>
     </header>
@@ -285,6 +285,7 @@
     <!-- Formularz rejestracji -->
     <div id="registerForm" class="auth-form">
         <h2>Zarejestruj się</h2>
+        <input type="text" id="registerNick" placeholder="Nick" required>
         <input type="email" id="registerEmail" placeholder="Email" required>
         <input type="password" id="registerPassword" placeholder="Hasło" required>
         <input type="password" id="confirmPassword" placeholder="Potwierdź hasło" required>
@@ -293,16 +294,25 @@
     </div>
 
     <script>
+        // Sprawdzamy, czy użytkownik jest już zalogowany
+        window.onload = function() {
+            const loggedInNick = localStorage.getItem('nick');
+            const loginButton = document.getElementById('loginButton');
+
+            if (loggedInNick) {
+                loginButton.textContent = `Witaj, ${loggedInNick}`;
+            }
+        };
+
         function toggleAbout() {
             const aboutSection = document.getElementById("about");
 
-            // Sprawdzamy, czy sekcja jest widoczna
             if (aboutSection.style.display === "none" || aboutSection.style.display === "") {
                 aboutSection.style.display = "flex";
                 aboutSection.style.animation = "fadeInUp 0.5s forwards";
             } else {
                 aboutSection.style.animation = "fadeOutDown 0.5s forwards";
-                setTimeout(() => aboutSection.style.display = "none", 500); // Czekamy na zakończenie animacji, zanim ukryjemy sekcję
+                setTimeout(() => aboutSection.style.display = "none", 500);
             }
         }
 
@@ -320,19 +330,28 @@
         }
 
         function login() {
-            // Tutaj możesz zaimplementować logikę logowania
-            alert("Zalogowano pomyślnie!");
-            closeAuthForm();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            const loggedInNick = localStorage.getItem('nick');
+
+            // Sprawdzamy, czy nick jest zapisany w localStorage
+            if (loggedInNick) {
+                alert(`Zalogowano jako ${loggedInNick}`);
+                closeAuthForm();
+            } else {
+                alert("Nie znaleziono konta.");
+            }
         }
 
         function register() {
+            const nick = document.getElementById("registerNick").value;
             const email = document.getElementById("registerEmail").value;
             const password = document.getElementById("registerPassword").value;
             const confirmPassword = document.getElementById("confirmPassword").value;
 
             if (password === confirmPassword) {
-                // Tutaj może być logika rejestracji
-                alert("Zarejestrowano pomyślnie!");
+                localStorage.setItem('nick', nick); // Zapisujemy nick w localStorage
+                alert(`Zarejestrowano pomyślnie jako ${nick}`);
                 closeAuthForm();
             } else {
                 alert("Hasła nie pasują do siebie!");
