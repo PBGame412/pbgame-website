@@ -64,8 +64,8 @@
             color: #fff;
             padding: 25px;
             border-radius: 10px;
-            width: 80%;
-            max-width: 650px; /* Trochę większy klocek */
+            width: 85%;
+            max-width: 750px; /* SZERSZY KLOCEK */
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: all 0.3s ease;
@@ -78,19 +78,20 @@
         }
 
         .about-section h2 {
-            font-size: 30px; /* Większy napis */
+            font-size: 30px;
             margin-bottom: 15px;
             font-weight: bold;
         }
 
         .about-section p {
-            font-size: 20px; /* Większy tekst */
+            font-size: 20px;
             line-height: 1.8;
             width: 55%;
+            padding-left: 20px; /* PRZESUNIĘCIE TEKSTU */
         }
 
         .about-section img {
-            width: 30%; /* Większe zdjęcie */
+            width: 30%;
             border-radius: 10px;
             transition: box-shadow 0.3s ease-in-out;
         }
@@ -121,11 +122,12 @@
 
             .about-section p {
                 width: 100%;
+                padding-left: 0; /* Usunięcie przesunięcia tekstu na mobile */
                 margin-top: 10px;
             }
 
             .about-section img {
-                width: 60%; /* Większe zdjęcie na mobile */
+                width: 60%;
                 margin-bottom: 10px;
             }
         }
