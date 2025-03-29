@@ -286,61 +286,102 @@
     <!-- Formularz rejestracji -->
     <div id="registerForm" class="auth-form">
         <h2>Zarejestruj się</h2>
-        <input type="text" id="registerUsername" placeholder="Nazwa użytkownika" required>
+        <input type="text" id="registerNick" placeholder="Nick" required>
         <input type="email" id="registerEmail" placeholder="Email" required>
         <input type="password" id="registerPassword" placeholder="Hasło" required>
+        <input type="password" id="confirmPassword" placeholder="Potwierdź hasło" required>
         
-        <!-- reCAPTCHA -->
-        <div class="g-recaptcha" data-sitekey="6LdzfAMrAAAAABF7WG9BuIy-Buc08K0nSd3gfwJF"></div>
-
+        <!-- CAPTCHA -->
+        <div class="g-recaptcha" data-sitekey="6LewugMrAAAAAFdUENXHOH56wCPJFDgwCrIqIgu5"></div>
+        
         <button onclick="register()">Zarejestruj się</button>
         <button onclick="closeAuthForm()">Zamknij</button>
     </div>
 
     <script>
+        // Sprawdzamy, czy użytkownik jest już zalogowany
+        window.onload = function() {
+            const loggedInNick = localStorage.getItem('nick');
+            const loginButton = document.getElementById('loginButton');
+            const registerButton = document.getElementById('registerButton');
+            const userNick = document.getElementById('userNick');
+
+            if (loggedInNick) {
+                // Ukrywamy przyciski logowania i rejestracji
+                loginButton.style.display = 'none';
+                registerButton.style.display = 'none';
+
+                // Wyświetlamy nick użytkownika
+                userNick.textContent = Witaj, ${loggedInNick};
+                userNick.style.display = 'block';
+            }
+        };
+
+        function toggleAbout() {
+            const aboutSection = document.getElementById("about");
+
+            if (aboutSection.style.display === "none" || aboutSection.style.display === "") {
+                aboutSection.style.display = "flex";
+                aboutSection.style.animation = "fadeInUp 0.5s forwards";
+            } else {
+                aboutSection.style.animation = "fadeOutDown 0.5s forwards";
+                setTimeout(() => aboutSection.style.display = "none", 500);
+            }
+        }
+
         function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'flex';
-            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById("loginForm").style.display = "flex";
         }
 
         function showRegisterForm() {
-            document.getElementById('registerForm').style.display = 'flex';
-            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById("registerForm").style.display = "flex";
         }
 
         function closeAuthForm() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registerForm").style.display = "none";
         }
 
         function login() {
-            let email = document.getElementById('loginEmail').value;
-            let password = document.getElementById('loginPassword').value;
-            alert('Zalogowano z: ' + email);
-            closeAuthForm();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            const loggedInNick = localStorage.getItem('nick');
+
+            if (loggedInNick) {
+                alert(Zalogowano jako ${loggedInNick});
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('registerButton').style.display = 'none';
+                document.getElementById('userNick').textContent = Witaj, ${loggedInNick};
+                document.getElementById('userNick').style.display = 'block';
+                closeAuthForm();
+            } else {
+                alert("Nie znaleziono konta.");
+            }
         }
 
         function register() {
-            let username = document.getElementById('registerUsername').value;
-            let email = document.getElementById('registerEmail').value;
-            let password = document.getElementById('registerPassword').value;
-            let recaptchaResponse = grecaptcha.getResponse();
-            
-            if (recaptchaResponse.length == 0) {
-                alert('Proszę zaznaczyć reCAPTCHA');
+            const nick = document.getElementById("registerNick").value;
+            const email = document.getElementById("registerEmail").value;
+            const password = document.getElementById("registerPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            const recaptchaResponse = grecaptcha.getResponse();
+
+            if (!recaptchaResponse) {
+                alert("Proszę przejść przez CAPTCHA!");
                 return;
             }
 
-            alert('Zarejestrowano użytkownika: ' + username);
-            closeAuthForm();
-        }
-
-        function toggleAbout() {
-            let aboutSection = document.getElementById('about');
-            if (aboutSection.style.display === 'none') {
-                aboutSection.style.display = 'flex';
+            if (password === confirmPassword) {
+                localStorage.setItem('nick', nick);
+                alert(Zarejestrowano pomyślnie jako ${nick});
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('registerButton').style.display = 'none';
+                document.getElementById('userNick').textContent = Witaj, ${nick};
+                document.getElementById('userNick').style.display = 'block';
+                closeAuthForm();
             } else {
-                aboutSection.style.display = 'none';
+                alert("Hasła nie pasują do siebie!");
             }
         }
     </script>
