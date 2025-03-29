@@ -40,30 +40,6 @@
             z-index: -1;
         }
 
-        /* Nagłówek */
-        header {
-            background-color: #e53935;
-            width: 80%;
-            max-width: 1000px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
-            border-radius: 15px;
-            background-image: linear-gradient(to right, #c62828, #f44336);
-            opacity: 0;
-            transform: translateY(-50px);
-            animation: fadeInUp 1s forwards 0.5s;
-            position: relative;
-        }
-
-        header h1 {
-            font-size: 48px;
-            font-weight: bold;
-            color: #fff;
-            letter-spacing: 2px;
-        }
-
         /* Pasek nawigacyjny */
         nav {
             margin: 10px 0;
@@ -238,18 +214,6 @@
 
         /* Stylizacja dla urządzeń mobilnych (maksymalna szerokość 768px) */
         @media (max-width: 768px) {
-            header h1 {
-                display: none; /* Usunięcie napisu "Strona PBGame" w wersji mobilnej */
-            }
-
-            .mobile-header {
-                font-size: 36px;
-                text-align: center;
-                margin-top: 20px; /* Napis pod przyciskami logowania */
-                color: white;
-                font-weight: bold;
-            }
-
             .auth-buttons {
                 flex-direction: column;
                 justify-content: center;
@@ -287,24 +251,14 @@
                 filter: blur(5px); /* Zmniejszone rozmycie dla mniejszych ekranów */
             }
 
-            /* Przesunięcie napisu nad przyciski logowania i rejestracji na urządzeniach mobilnych */
-            .auth-buttons {
-                position: absolute;
-                top: 10px;
-                left: 0;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                gap: 20px;
+            /* Usunięcie napisu "Strona PBGame" i kolumny na urządzeniach mobilnych */
+            .mobile-header {
+                display: none;
             }
         }
 
         /* Stylizacja dla urządzeń mobilnych (szczegółowe ustawienie tylko na mniejszych ekranach) */
         @media (max-width: 480px) {
-            header h1 {
-                font-size: 24px; /* Zmniejszenie czcionki */
-            }
-
             .auth-buttons {
                 flex-direction: column;
                 justify-content: space-between;
@@ -316,16 +270,6 @@
 <body>
     <!-- Tło w stylu influencerowym -->
     <div class="background"></div>
-
-    <!-- Nagłówek strony -->
-    <header>
-        <h1>Strona PBGame</h1>
-    </header>
-
-    <!-- Napis Strona PBGame w wersji mobilnej (pozycjonowanie pod logowaniem i rejestracją) -->
-    <div class="mobile-header">
-        Strona PBGame
-    </div>
 
     <!-- Pasek nawigacyjny -->
     <nav>
