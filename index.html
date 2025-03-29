@@ -242,6 +242,7 @@
                 font-size: 28px; /* Zmniejszenie czcionki dla urządzeń mobilnych */
                 margin-right: 120px; /* Dodanie marginesu po prawej stronie, aby uniknąć kolizji */
                 text-align: center; /* Wyrównanie do środka na urządzeniach mobilnych */
+                margin-top: 20px;
             }
 
             .auth-buttons {
@@ -293,6 +294,15 @@
                 justify-content: center;
                 gap: 20px;
             }
+
+            /* Napis "Strona PBGame" pod przyciskami logowania na urządzeniach mobilnych */
+            .mobile-header {
+                font-size: 36px;
+                text-align: center;
+                margin-top: 80px; /* Przesunięcie napisu na dół */
+                color: white;
+                font-weight: bold;
+            }
         }
 
         /* Stylizacja dla urządzeń mobilnych (szczegółowe ustawienie tylko na mniejszych ekranach) */
@@ -317,6 +327,11 @@
     <header>
         <h1>Strona PBGame</h1>
     </header>
+
+    <!-- Napis Strona PBGame w wersji mobilnej (pozycjonowanie pod logowaniem i rejestracją) -->
+    <div class="mobile-header">
+        Strona PBGame
+    </div>
 
     <!-- Pasek nawigacyjny -->
     <nav>
