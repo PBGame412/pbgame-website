@@ -16,7 +16,7 @@
         /* Tło strony */
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #2a2a2a;
+            background: linear-gradient(135deg, #2a2a2a, #4e1e22);
             color: #f0f0f0;
             display: flex;
             flex-direction: column;
@@ -24,6 +24,7 @@
             align-items: center;
             padding: 20px;
             overflow: hidden;
+            height: 100vh;
         }
 
         /* Nagłówek */
@@ -34,7 +35,7 @@
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin-bottom: 30px;
-            border-radius: 10px;
+            border-radius: 20px;
             background-image: linear-gradient(to right, #5c0f14, #3e0e12);
             opacity: 0;
             transform: translateY(-50px);
@@ -66,21 +67,23 @@
             font-weight: bold;
             text-transform: uppercase;
             transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
         }
 
         nav a:hover {
             color: #ff6666;
             text-decoration: underline;
+            border-bottom: 2px solid #ff6666;
         }
 
         /* Główna sekcja */
         .main-content {
-            background-color: #3a2a2a;
+            background-color: rgba(58, 42, 42, 0.9);
             width: 90%;
             max-width: 1200px;
             padding: 40px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
+            border-radius: 20px;
             margin-bottom: 30px;
             text-align: center;
             opacity: 0;
@@ -109,8 +112,8 @@
         img {
             width: 350px;
             height: auto;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         img:hover {
