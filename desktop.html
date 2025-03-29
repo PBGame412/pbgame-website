@@ -293,6 +293,7 @@
     </div>
 
     <script>
+        let users = JSON.parse(localStorage.getItem('users')) || []; // Przechowywanie użytkowników
         let userNick = ''; // Globalna zmienna na nick
 
         function showLoginForm() {
@@ -313,29 +314,41 @@
         function login() {
             let email = document.getElementById('loginEmail').value;
             let password = document.getElementById('loginPassword').value;
-            // Przykładowa logika - w prawdziwej aplikacji sprawdzamy dane z serwerem
-            alert('Zalogowano z: ' + email);
-            userNick = 'Użytkownik'; // Przykładowy nick po zalogowaniu
-            updateUserNick();
-            closeAuthForm();
+
+            // Sprawdzanie, czy email jest zarejestrowany
+            let user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                userNick = user.username;
+                updateUserNick();
+                closeAuthForm();
+            } else {
+                alert('Nie znaleziono użytkownika z takim emailem i hasłem!');
+            }
         }
 
         function register() {
             let username = document.getElementById('registerUsername').value;
             let email = document.getElementById('registerEmail').value;
             let password = document.getElementById('registerPassword').value;
-            // Przykładowa logika - w prawdziwej aplikacji zapisujemy dane na serwerze
+
+            // Sprawdzanie, czy email jest już zarejestrowany
+            let existingUser = users.find(u => u.email === email);
+            if (existingUser) {
+                alert('Email jest już zarejestrowany!');
+                return;
+            }
+
+            // Zapisanie nowego użytkownika
+            let newUser = { username, email, password };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
             alert('Zarejestrowano użytkownika: ' + username);
-            userNick = username; // Przypisujemy użytkownikowi wybrany nick
-            updateUserNick();
             closeAuthForm();
         }
 
         function updateUserNick() {
             if (userNick) {
-                // Ukrywamy przyciski logowania i rejestracji
                 document.getElementById('authButtons').style.display = 'none';
-                // Wyświetlamy nick użytkownika
                 document.getElementById('userNick').style.display = 'block';
                 document.getElementById('userNick').innerHTML = 'Witaj, ' + userNick + '!';
             }
