@@ -182,6 +182,7 @@
             word-wrap: break-word; /* Zapobiega wychodzeniu tekstu */
             overflow-wrap: break-word; /* Alternatywna metoda zawijania słów */
             animation: fadeInUp 1s forwards;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
 
         footer {
@@ -225,6 +226,18 @@
             100% {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        /* Animacja znikania - przy zamknięciu */
+        @keyframes fadeOutDown {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(30px);
             }
         }
 
@@ -339,16 +352,28 @@
         <p>&copy; 2025 PBGame - Strona PBGame</p>
     </footer>
 
-    <!-- Skrypt JavaScript do pokazania sekcji "O mnie" -->
+    <!-- Skrypt JavaScript do pokazania i ukrywania sekcji "O mnie" -->
     <script>
         const aboutLink = document.querySelector("#aboutLink");
         const aboutSection = document.querySelector("#aboutSection");
 
         aboutLink.addEventListener("click", function(event) {
             event.preventDefault(); // Zatrzymanie domyślnego działania linku
-            aboutSection.style.display = (aboutSection.style.display === "block") ? "none" : "block";
-            aboutSection.classList.add("fadeInUp");
+            
+            // Sprawdzenie, czy sekcja jest już widoczna
+            if (aboutSection.style.display === "block") {
+                // Dodanie animacji znikania
+                aboutSection.style.animation = "fadeOutDown 0.5s forwards";
+                setTimeout(function() {
+                    aboutSection.style.display = "none";
+                }, 500); // Po zakończeniu animacji zniknięcia ukrywamy sekcję
+            } else {
+                // Pokaż sekcję "O mnie"
+                aboutSection.style.display = "block";
+                aboutSection.style.animation = "fadeInUp 1s forwards";
+            }
         });
     </script>
 </body>
 </html>
+
