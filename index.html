@@ -235,16 +235,16 @@
             }
         }
 
-        /* Stylizacja dla urządzeń mobilnych */
+        /* Stylizacja dla urządzeń mobilnych (maksymalna szerokość 768px) */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 36px; /* Zmniejszenie rozmiaru czcionki */
-                margin-right: 120px; /* Dodanie marginesu, aby tekst nie kolidował z przyciskami */
+                font-size: 28px; /* Zmniejszenie czcionki dla urządzeń mobilnych */
+                margin-right: 120px; /* Dodanie marginesu po prawej stronie, aby uniknąć kolizji */
             }
 
             .auth-buttons {
-                flex-direction: row; /* Ustawienie przycisków obok siebie */
-                justify-content: flex-end; /* Przesunięcie przycisków na prawą stronę */
+                flex-direction: row;
+                justify-content: flex-end;
                 margin-top: 10px;
             }
 
@@ -255,7 +255,7 @@
             }
 
             .main-content {
-                width: 90%; /* Zmniejszenie szerokości sekcji */
+                width: 90%;
                 padding: 20px;
             }
 
@@ -267,16 +267,31 @@
             .main-content, .contact-info {
                 padding: 15px;
                 text-align: center;
-                word-wrap: break-word;
-                overflow-wrap: break-word;
             }
 
             header {
                 position: relative;
-                width: 100%; /* Ustalamy pełną szerokość dla headera */
+                width: 100%;
                 display: flex;
-                justify-content: space-between; /* Rozdzielenie napisu i przycisków */
-                align-items: center; /* Wyrównanie do środka */
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .background {
+                filter: blur(5px); /* Zmniejszone rozmycie dla mniejszych ekranów */
+            }
+        }
+
+        /* Stylizacja dla urządzeń mobilnych (szczegółowe ustawienie tylko na mniejszych ekranach) */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 24px; /* Zmniejszenie czcionki */
+            }
+
+            .auth-buttons {
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 10px;
             }
         }
     </style>
