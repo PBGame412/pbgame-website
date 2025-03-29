@@ -117,7 +117,7 @@
         /* STYLIZACJA DLA URZĄDZEŃ MOBILNYCH */
         @media (max-width: 768px) {
             .auth-buttons {
-                display: none; /* Ukrywamy przyciski w wersji komputerowej */
+                display: none; /* Na telefonie ukrywamy przyciski z PC */
             }
 
             .main-content {
@@ -138,13 +138,19 @@
                 margin-top: 20px;
                 gap: 10px;
             }
+        }
 
-            .mobile-auth-buttons .auth-button {
-                width: 80%;
-                padding: 12px 30px;
-                font-size: 16px;
+        /* DOMYŚLNIE NA KOMPUTERZE NIE POKAZUJEMY PRZYCISKÓW Z MOBILE */
+        .mobile-auth-buttons {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-auth-buttons {
+                display: flex;
             }
         }
+
     </style>
 </head>
 <body>
