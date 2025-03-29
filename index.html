@@ -16,7 +16,7 @@
         /* Tło strony */
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
             color: #f0f0f0;
             display: flex;
             flex-direction: column;
@@ -29,14 +29,14 @@
 
         /* Nagłówek */
         header {
-            background-color: #4caf50;
+            background-color: #d32f2f;
             width: 100%;
             padding: 40px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin-bottom: 30px;
             border-radius: 10px;
-            background-image: linear-gradient(to right, #81c784, #388e3c);
+            background-image: linear-gradient(to right, #e57373, #c62828);
             opacity: 0;
             transform: translateY(-50px);
             animation: fadeInUp 1s forwards 0.5s;
@@ -70,13 +70,13 @@
         }
 
         nav a:hover {
-            color: #ffd700;
+            color: #ff5722;
             text-decoration: underline;
         }
 
         /* Główna sekcja */
         .main-content {
-            background-color: #344955;
+            background-color: #424242;
             width: 90%;
             max-width: 1200px;
             padding: 40px;
@@ -97,7 +97,7 @@
             font-size: 32px;
             margin-bottom: 20px;
             font-weight: bold;
-            color: #ff4081;
+            color: #ff5722;
         }
 
         /* Przesunięcie zdjęcia w lewo */
@@ -121,7 +121,7 @@
 
         /* Przycisk YouTube */
         .youtube-button {
-            background-color: #ff4081;
+            background-color: #ff5722;
             color: #fff;
             font-family: 'Arial', sans-serif;
             font-size: 18px;
@@ -140,7 +140,7 @@
         }
 
         .youtube-button:hover {
-            background-color: #ffd700;
+            background-color: #ffb74d;
             transform: scale(1.05);
         }
 
@@ -152,7 +152,7 @@
         }
 
         .auth-button {
-            background-color: #4caf50;
+            background-color: #d32f2f;
             color: #fff;
             font-family: 'Arial', sans-serif;
             font-size: 18px;
@@ -167,21 +167,18 @@
         }
 
         .auth-button:hover {
-            background-color: #ffd700;
+            background-color: #ff5722;
         }
 
         /* Sekcja "O mnie" */
         .contact-info {
             margin-top: 20px;
-            background-color: #ff4081;
+            background-color: #d32f2f;
             color: #fff;
             padding: 20px;
             border-radius: 10px;
             display: none;
             font-size: 18px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
             word-wrap: break-word; /* Zapobiega wychodzeniu tekstu */
             overflow-wrap: break-word; /* Alternatywna metoda zawijania słów */
         }
@@ -194,13 +191,13 @@
         }
 
         footer a {
-            color: #4caf50;
+            color: #ff5722;
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
         footer a:hover {
-            color: #ffd700;
+            color: #ffb74d;
             text-decoration: underline;
         }
 
@@ -293,13 +290,6 @@
                 padding: 12px 0;
             }
         }
-
-        /* Dodatkowy efekt dla sekcji O mnie */
-        .contact-info.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body>
@@ -338,7 +328,7 @@
     </div>
 
     <!-- Sekcja "O mnie" -->
-    <div class="contact-info">
+    <div class="contact-info" id="aboutSection">
         <h3>Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!</h3>
         <p>Na moim kanale znajdziesz gry, poradniki i nie tylko!</p>
     </div>
@@ -351,12 +341,11 @@
     <!-- Skrypt JavaScript do pokazania sekcji "O mnie" -->
     <script>
         const aboutLink = document.querySelector("#aboutLink");
-        const contactInfo = document.querySelector(".contact-info");
+        const aboutSection = document.querySelector("#aboutSection");
 
         aboutLink.addEventListener("click", function(event) {
             event.preventDefault(); // Zatrzymanie domyślnego działania linku
-
-            contactInfo.classList.toggle("show");
+            aboutSection.style.display = (aboutSection.style.display === "block") ? "none" : "block";
         });
     </script>
 </body>
