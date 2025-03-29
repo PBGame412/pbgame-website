@@ -55,7 +55,7 @@
             transform: translateY(-50px);
             animation: fadeInUp 1s forwards 0.5s;
             position: relative;
-            margin-left: 20px; /* Dodany margines po lewej stronie */
+            margin-left: 10%; /* Przesunięcie w lewo dla samego nagłówka */
         }
 
         header h1 {
@@ -63,31 +63,6 @@
             font-weight: bold;
             color: #fff;
             letter-spacing: 2px;
-        }
-
-        /* Pasek nawigacyjny */
-        nav {
-            margin: 10px 0;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            opacity: 0;
-            transform: translateY(-20px);
-            animation: fadeInUp 1s forwards 1s;
-        }
-
-        nav a {
-            color: #ff3333;
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-        }
-
-        nav a:hover {
-            color: #ff6666;
-            text-decoration: underline;
         }
 
         /* Sekcja "Kanał PBGame" */
@@ -107,7 +82,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            margin-left: 20px; /* Dodany margines po lewej stronie */
+            margin-left: 10%; /* Przesunięcie w lewo dla kolumny */
         }
 
         .main-content h2 {
@@ -115,25 +90,6 @@
             margin-bottom: 20px;
             font-weight: bold;
             color: #fff;
-        }
-
-        /* Przesunięcie zdjęcia w lewo */
-        .image-container {
-            display: flex;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-        }
-
-        img {
-            width: 350px;
-            height: auto;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(255, 69, 0, 0.5);
         }
 
         /* Przycisk YouTube */
@@ -317,11 +273,6 @@
     <!-- Główna zawartość strony -->
     <div class="main-content">
         <h2>Kanał PBGame</h2>
-
-        <!-- Przesunięcie zdjęcia w lewo -->
-        <div class="image-container">
-            <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="Obrazek YouTube">
-        </div>
 
         <!-- Zaktualizowany przycisk z linkiem do YouTube -->
         <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">
