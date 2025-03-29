@@ -6,15 +6,17 @@
     <title>Strona PBGame</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* Resetowanie marginesów i paddingu */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        /* Tło strony z czarno-czerwonym gradientem i rozmyciem */
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #111111, #ff0000);
+            background: linear-gradient(135deg, #111111, #ff0000); /* Czarno-czerwony gradient */
             color: #f0f0f0;
             display: flex;
             flex-direction: column;
@@ -23,9 +25,10 @@
             padding: 20px;
             overflow: hidden;
             position: relative;
-            height: 100vh;
+            height: 100vh; /* Zajmuje całą wysokość ekranu */
         }
 
+        /* Tło rozmyte - z mniejszym rozmyciem */
         .background {
             position: absolute;
             top: 0;
@@ -33,12 +36,38 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, #111111, #ff0000);
-            filter: blur(10px);
+            filter: blur(10px); /* Zmniejszone rozmycie */
             z-index: -1;
         }
 
+        /* Pasek nawigacyjny */
+        nav {
+            margin: 10px 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInUp 1s forwards 1s;
+        }
+
+        nav a {
+            color: #ff3333;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff6666;
+            text-decoration: underline;
+        }
+
+        /* Sekcja "Kanał PBGame" */
         .main-content {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.8); /* Ciemne tło z przezroczystością */
             width: 70%;
             max-width: 900px;
             padding: 30px;
@@ -46,6 +75,13 @@
             border-radius: 15px;
             margin-bottom: 30px;
             text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s forwards 1.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
         .main-content h2 {
@@ -55,7 +91,14 @@
             color: #fff;
         }
 
-        .image-container img {
+        /* Przesunięcie zdjęcia w lewo */
+        .image-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        img {
             width: 350px;
             height: auto;
             border-radius: 10px;
@@ -67,9 +110,11 @@
             box-shadow: 0 5px 15px rgba(255, 69, 0, 0.5);
         }
 
+        /* Przycisk YouTube */
         .youtube-button {
             background-color: #5c0f14;
             color: #fff;
+            font-family: 'Arial', sans-serif;
             font-size: 18px;
             padding: 15px 40px;
             border: none;
@@ -80,6 +125,9 @@
             text-transform: uppercase;
             font-weight: bold;
             letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 2s;
         }
 
         .youtube-button:hover {
@@ -87,18 +135,22 @@
             transform: scale(1.05);
         }
 
-        /* PRZYCISKI LOGOWANIA I REJESTRACJI NA KOMPUTERZE */
+        /* Przyciski logowania i rejestracji na górze po prawej stronie */
         .auth-buttons {
             position: absolute;
             top: 20px;
             right: 20px;
             display: flex;
             gap: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 2.5s;
         }
 
         .auth-button {
             background-color: #ff3333;
             color: #fff;
+            font-family: 'Arial', sans-serif;
             font-size: 18px;
             padding: 15px 40px;
             border: none;
@@ -114,10 +166,65 @@
             background-color: #ff6666;
         }
 
-        /* STYLIZACJA DLA URZĄDZEŃ MOBILNYCH */
+        /* Sekcja "O mnie" */
+        .contact-info {
+            margin-top: 20px;
+            background-color: #ff4444; /* Zmieniony kolor na czerwony */
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            font-size: 18px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            word-wrap: break-word; /* Zapobiega wychodzeniu tekstu */
+            overflow-wrap: break-word; /* Alternatywna metoda zawijania słów */
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #777;
+            font-size: 16px;
+        }
+
+        footer a {
+            color: #ff3333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #ff6666;
+            text-decoration: underline;
+        }
+
+        /* Animacja - efekt przesunięcia */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stylizacja dla urządzeń mobilnych (maksymalna szerokość 768px) */
         @media (max-width: 768px) {
             .auth-buttons {
-                display: none; /* Na telefonie ukrywamy przyciski z PC */
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
+            }
+
+            .auth-button {
+                width: 80%;
+                padding: 12px 30px;
+                font-size: 16px;
             }
 
             .main-content {
@@ -126,58 +233,130 @@
             }
 
             .image-container img {
-                width: 100%;
+                width: 100%; /* Dopasowanie szerokości obrazu */
                 height: auto;
             }
 
-            /* PRZYCISKI LOGOWANIA I REJESTRACJI POD ZDJĘCIEM TYLKO NA MOBILE */
-            .mobile-auth-buttons {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+            .main-content, .contact-info {
+                padding: 15px;
+                text-align: center;
+            }
+
+            .contact-info {
+                display: block;
                 margin-top: 20px;
+            }
+
+            .background {
+                filter: blur(5px); /* Zmniejszone rozmycie dla mniejszych ekranów */
+            }
+
+            /* Usunięcie napisu "Strona PBGame" i kolumny na urządzeniach mobilnych */
+            .mobile-header {
+                display: none;
+            }
+
+            /* Zmiana układu przycisków logowania i rejestracji, pojawiają się obok zdjęcia */
+            .auth-buttons {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                margin-top: 20px;
+            }
+
+            .main-content {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .image-container {
+                order: 2; /* Przesunięcie obrazka na koniec */
+            }
+
+            .auth-buttons {
+                order: 1; /* Przeniesienie przycisków przed zdjęcie */
+                margin-top: 0; /* Usunięcie marginesu od góry */
+            }
+        }
+
+        /* Stylizacja dla urządzeń mobilnych (szczegółowe ustawienie tylko na mniejszych ekranach) */
+        @media (max-width: 480px) {
+            .auth-buttons {
+                flex-direction: column;
+                justify-content: space-between;
                 gap: 10px;
             }
         }
-
-        /* DOMYŚLNIE NA KOMPUTERZE NIE POKAZUJEMY PRZYCISKÓW Z MOBILE */
-        .mobile-auth-buttons {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .mobile-auth-buttons {
-                display: flex;
-            }
-        }
-
     </style>
 </head>
 <body>
+    <!-- Tło w stylu influencerowym -->
     <div class="background"></div>
 
+    <!-- Pasek nawigacyjny -->
+    <nav>
+        <a href="#" id="aboutLink">O mnie</a>
+    </nav>
+
+    <!-- Główna zawartość strony -->
     <div class="main-content">
         <h2>Kanał PBGame</h2>
 
+        <!-- Przesunięcie zdjęcia w lewo -->
         <div class="image-container">
             <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="Obrazek YouTube">
         </div>
 
+        <!-- Zaktualizowany przycisk z linkiem do YouTube -->
         <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">
             <button class="youtube-button">Kliknij tutaj, aby przejść do mojego kanału YouTube</button>
         </a>
-
-        <!-- PRZYCISKI LOGOWANIA I REJESTRACJI TYLKO DLA MOBILNYCH -->
-        <div class="mobile-auth-buttons">
-            <button class="auth-button">Rejestracja</button>
-            <button class="auth-button">Logowanie</button>
-        </div>
     </div>
 
-    <!-- PRZYCISKI LOGOWANIA I REJESTRACJI TYLKO DLA KOMPUTERA -->
+    <!-- Przyciski logowania i rejestracji -->
     <div class="auth-buttons">
         <button class="auth-button">Rejestracja</button>
         <button class="auth-button">Logowanie</button>
     </div>
+
+    <!-- Sekcja "O mnie" -->
+    <div class="contact-info">
+        <h3>Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!</h3>
+        <p>Na moim kanale znajdziesz gry, poradniki i nie tylko!</p>
+    </div>
+
+    <!-- Stopka z linkiem do strony -->
+    <footer>
+        <p>&copy; 2025 Strona PBGame</p>
+    </footer>
+
+    <!-- Skrypt JavaScript do pokazania sekcji "O mnie" -->
+    <script>
+        const aboutLink = document.querySelector("#aboutLink");
+        const contactInfo = document.querySelector(".contact-info");
+
+        aboutLink.addEventListener("click", function(event) {
+            event.preventDefault(); // Zatrzymanie domyślnego działania linku
+
+            if (contactInfo.style.display === "block") {
+                contactInfo.style.opacity = 0;
+                contactInfo.style.transform = "translateY(20px)";
+                setTimeout(() => {
+                    contactInfo.style.display = "none";
+                }, 500); // Czekaj na zakończenie animacji
+            } else {
+                contactInfo.style.display = "block";
+                setTimeout(() => {
+                    contactInfo.style.opacity = 1;
+                    contactInfo.style.transform = "translateY(0)";
+                }, 10); // Małe opóźnienie przed rozpoczęciem animacji
+            }
+        });
+    </script>
 </body>
 </html>
