@@ -3,69 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PBGame - Desktop</title>
+    <title>Desktop</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
         body {
-            background: linear-gradient(135deg, #111111, #ff0000);
-            color: #fff;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #008000, #adff2f); /* Zielono-jasnozielone tło */
+            color: #ffffff; /* Biały kolor tekstu */
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-direction: column;
+            margin: 0;
         }
 
-        .container {
-            background: linear-gradient(135deg, #008000, #00ff00);
+        .about-container {
+            background-color: rgba(0, 0, 0, 0.7); /* Ciemne tło dla sekcji */
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            width: 300px;
+            border-radius: 10px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
         }
 
-        .container h2 {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffffff;
-        }
-
-        .info {
-            display: none;
-            margin-top: 10px;
-            font-size: 16px;
-            color: #ffffff;
-        }
-
-        .container:hover {
-            background: linear-gradient(135deg, #00a000, #66ff66);
+        .about-container h1 {
+            color: #ffcc00; /* Żółty kolor napisu, aby nie wtapiało się w tło */
         }
     </style>
 </head>
 <body>
-
-    <div class="container" onclick="toggleInfo()">
-        <h2>O mnie</h2>
-        <div class="info">
-            <p>Cześć! Mam na imię Przemysław i prowadzę kanał PBGame. Znajdziesz tu gry i poradniki!</p>
-        </div>
+    <div class="about-container">
+        <h1>O mnie</h1>
+        <p>Kliknij tutaj, aby zobaczyć więcej informacji!</p>
     </div>
-
-    <script>
-        function toggleInfo() {
-            let info = document.querySelector('.info');
-            info.style.display = (info.style.display === "block") ? "none" : "block";
-        }
-    </script>
-
 </body>
 </html>
