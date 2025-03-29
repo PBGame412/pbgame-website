@@ -74,6 +74,7 @@
             justify-content: space-between;
             opacity: 0;
             transform: translateY(20px);
+            position: relative; /* Dodaję pozycjonowanie względne */
             animation: fadeInUp 0.5s forwards;
         }
 
@@ -81,7 +82,10 @@
             font-size: 30px;
             margin-bottom: 15px;
             font-weight: bold;
-            text-align: left; /* Wyrównanie do lewego rogu */
+            text-align: left;
+            position: absolute;
+            top: 10px;
+            left: 10px;
         }
 
         .about-section p {
