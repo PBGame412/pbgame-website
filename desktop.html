@@ -3,36 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desktop</title>
+    <title>Desktop - PBGame</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #008000, #adff2f); /* Zielono-jasnozielone tło */
-            color: #ffffff; /* Biały kolor tekstu */
+            background: linear-gradient(135deg, #008000, #ADFF2F); /* Zielono-jasnozielone tło */
+            color: #000;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
-
-        .about-container {
-            background-color: rgba(0, 0, 0, 0.7); /* Ciemne tło dla sekcji */
+        .container {
+            background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
             text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
         }
-
-        .about-container h1 {
-            color: #ffcc00; /* Żółty kolor napisu, aby nie wtapiało się w tło */
+        h1 {
+            color: #FFD700; /* Żółty kolor, aby nie wtapiało się w tło */
+        }
+        .info {
+            display: none;
+            color: #FFF;
+            margin-top: 10px;
+        }
+        .btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #FFD700;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background: #FFC107;
         }
     </style>
 </head>
 <body>
-    <div class="about-container">
+    <div class="container">
         <h1>O mnie</h1>
-        <p>Kliknij tutaj, aby zobaczyć więcej informacji!</p>
+        <button class="btn" onclick="toggleInfo()">Więcej informacji</button>
+        <p class="info" id="info">Tutaj znajdziesz informacje o PBGame!</p>
     </div>
+
+    <script>
+        function toggleInfo() {
+            var info = document.getElementById("info");
+            if (info.style.display === "none" || info.style.display === "") {
+                info.style.display = "block";
+            } else {
+                info.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
