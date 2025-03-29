@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Nagrywkowa!</title>
+    <title>Strona PBGame</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* Resetowanie marginesów i paddingu */
@@ -16,7 +16,7 @@
         /* Tło strony */
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #2a2a2a, #4e1e22);
+            background-color: #2a2a2a;
             color: #f0f0f0;
             display: flex;
             flex-direction: column;
@@ -24,7 +24,6 @@
             align-items: center;
             padding: 20px;
             overflow: hidden;
-            height: 100vh;
         }
 
         /* Nagłówek */
@@ -35,7 +34,7 @@
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin-bottom: 30px;
-            border-radius: 20px;
+            border-radius: 10px;
             background-image: linear-gradient(to right, #5c0f14, #3e0e12);
             opacity: 0;
             transform: translateY(-50px);
@@ -67,23 +66,21 @@
             font-weight: bold;
             text-transform: uppercase;
             transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
         }
 
         nav a:hover {
             color: #ff6666;
             text-decoration: underline;
-            border-bottom: 2px solid #ff6666;
         }
 
         /* Główna sekcja */
         .main-content {
-            background-color: rgba(58, 42, 42, 0.9);
+            background-color: #3a2a2a;
             width: 90%;
             max-width: 1200px;
             padding: 40px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 20px;
+            border-radius: 10px;
             margin-bottom: 30px;
             text-align: center;
             opacity: 0;
@@ -112,8 +109,8 @@
         img {
             width: 350px;
             height: auto;
-            border-radius: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
         }
 
         img:hover {
@@ -295,6 +292,13 @@
                 padding: 12px 0;
             }
         }
+
+        /* Dodatkowy efekt dla sekcji O mnie */
+        .contact-info.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -303,12 +307,13 @@
 
     <!-- Nagłówek strony -->
     <header>
-        <h1>Strona Nagrywkowa</h1>
+        <h1>Strona PBGame</h1>
     </header>
 
     <!-- Pasek nawigacyjny -->
     <nav>
         <a href="#" id="aboutLink">O mnie</a>
+        <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Kanał YouTube</a>
     </nav>
 
     <!-- Główna zawartość strony -->
@@ -340,7 +345,7 @@
 
     <!-- Stopka z linkiem do strony -->
     <footer>
-        <p>&copy; 2025 Strona Nagrywkowa</p>
+        <p>&copy; 2025 PBGame - Strona PBGame</p>
     </footer>
 
     <!-- Skrypt JavaScript do pokazania sekcji "O mnie" -->
@@ -351,19 +356,7 @@
         aboutLink.addEventListener("click", function(event) {
             event.preventDefault(); // Zatrzymanie domyślnego działania linku
 
-            if (contactInfo.style.display === "block") {
-                contactInfo.style.opacity = 0;
-                contactInfo.style.transform = "translateY(20px)";
-                setTimeout(() => {
-                    contactInfo.style.display = "none";
-                }, 500); // Czekaj na zakończenie animacji
-            } else {
-                contactInfo.style.display = "block";
-                setTimeout(() => {
-                    contactInfo.style.opacity = 1;
-                    contactInfo.style.transform = "translateY(0)";
-                }, 10); // Małe opóźnienie przed rozpoczęciem animacji
-            }
+            contactInfo.classList.toggle("show");
         });
     </script>
 </body>
