@@ -93,7 +93,7 @@
             align-items: flex-start;
             justify-content: space-between;
             width: 100%;
-            margin-top: 40px; /* Przesunięcie poniżej nagłówka */
+            margin-top: 40px;
         }
 
         .about-section p {
@@ -176,12 +176,13 @@
         function toggleAbout() {
             const aboutSection = document.getElementById("about");
 
+            // Sprawdzamy, czy sekcja jest widoczna
             if (aboutSection.style.display === "none" || aboutSection.style.display === "") {
                 aboutSection.style.display = "flex";
                 aboutSection.style.animation = "fadeInUp 0.5s forwards";
             } else {
                 aboutSection.style.animation = "fadeOutDown 0.5s forwards";
-                setTimeout(() => aboutSection.style.display = "none", 500);
+                setTimeout(() => aboutSection.style.display = "none", 500); // Czekamy na zakończenie animacji, zanim ukryjemy sekcję
             }
         }
     </script>
