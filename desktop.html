@@ -33,12 +33,18 @@
             border-radius: 15px;
             background-image: linear-gradient(to right, #1b5e20, #43a047);
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease-in-out;
+        }
+
+        header:hover {
+            transform: scale(1.05);
         }
 
         header h1 {
             font-size: 42px;
             font-weight: bold;
             letter-spacing: 2px;
+            color: #fff;
         }
 
         .tabs {
@@ -53,15 +59,16 @@
             border-radius: 8px;
             font-size: 24px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .tab:hover {
             background-color: #1b5e20;
+            transform: scale(1.1);
         }
 
         .tab.discord {
-            margin-left: 20px; /* Dodaj margines po lewej stronie, aby przesunąć przycisk w prawo */
+            margin-left: 20px;
         }
 
         .about-section {
@@ -124,6 +131,11 @@
             font-weight: bold;
             display: inline-block;
             margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .about-section a:hover {
+            color: #fff;
         }
 
         @keyframes fadeInUp {
@@ -145,6 +157,14 @@
                 transform: scale(1);
                 opacity: 1;
             }
+        }
+
+        .tab-link {
+            transition: transform 0.3s ease;
+        }
+
+        .tab-link:hover {
+            transform: translateY(-5px);
         }
 
         @media (max-width: 768px) {
@@ -174,7 +194,7 @@
 
     <div class="tabs">
         <div class="tab" onclick="toggleAbout()">O mnie</div>
-        <div class="tab discord" onclick="window.location.href='https://discord.gg/kmnVBUYxY7'">Dołącz do Discorda</div>
+        <div class="tab discord tab-link" onclick="window.location.href='https://discord.gg/kmnVBUYxY7'">Dołącz do Discorda</div>
     </div>
 
     <div id="about" class="about-section">
