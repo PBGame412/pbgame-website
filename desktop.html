@@ -85,7 +85,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            opacity: 0; /* Początkowa przezroczystość */
+            opacity: 0;
             transition: all 0.5s ease-in-out;
         }
 
@@ -105,11 +105,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 20px; /* Dodano margines górny, aby przycisk był niżej */
+            margin-top: 20px;
         }
 
-        .auth-form button:nth-child(2) { /* Przyciski 'Zamknij' w formularzach */
-            margin-top: 30px; /* Zwiększenie marginesu, by przycisk 'Zamknij' był niżej */
+        .auth-form button:nth-child(2) { 
+            margin-top: 30px; 
         }
 
         .auth-form button:hover {
@@ -217,17 +217,6 @@
             100% { opacity: 0; transform: translateY(30px); }
         }
 
-        @keyframes pageLoad {
-            0% {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
         @media (max-width: 768px) {
             .about-section {
                 flex-direction: column;
@@ -252,14 +241,10 @@
 
     <header>
         <h1>Strona PBGame</h1>
-
-        <!-- Przyciski logowania i rejestracji -->
         <div id="authButtons" class="auth-buttons">
             <button id="loginButton" onclick="showLoginForm()">Zaloguj się</button>
             <button id="registerButton" onclick="showRegisterForm()">Zarejestruj się</button>
         </div>
-
-        <!-- Nick użytkownika -->
         <div id="userNick" style="display:none; font-size: 18px; color: #fff; font-weight: bold;"></div>
     </header>
 
@@ -280,7 +265,6 @@
         </div>
     </div>
 
-    <!-- Formularz logowania -->
     <div id="loginForm" class="auth-form">
         <h2>Zaloguj się</h2>
         <input type="email" id="loginEmail" placeholder="Email" required>
@@ -289,7 +273,6 @@
         <button onclick="closeAuthForm()">Zamknij</button>
     </div>
 
-    <!-- Formularz rejestracji -->
     <div id="registerForm" class="auth-form">
         <h2>Zarejestruj się</h2>
         <input type="text" id="registerUsername" placeholder="Nazwa użytkownika" required>
@@ -300,71 +283,121 @@
     </div>
 
     <script>
-        let users = JSON.parse(localStorage.getItem('users')) || []; // Przechowywanie użytkowników
-        let userNick = ''; // Globalna zmienna na nick
-
+        // Funkcja do pokazania formularza logowania
         function showLoginForm() {
-            let loginForm = document.getElementById('loginForm');
-            loginForm.style.display = 'flex';
-            loginForm.style.opacity = 0;  // Początkowa przezroczystość
-            loginForm.style.transition = 'opacity 0.5s ease-in-out';
-            setTimeout(() => {
-                loginForm.style.opacity = 1; // Pojawianie się formularza
-            }, 10);
-            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'flex';
+            document.getElementById('loginForm').style.opacity = 1;
         }
 
+        // Funkcja do pokazania formularza rejestracji
         function showRegisterForm() {
-            let registerForm = document.getElementById('registerForm');
-            registerForm.style.display = 'flex';
-            registerForm.style.opacity = 0; // Początkowa przezroczystość
-            registerForm.style.transition = 'opacity 0.5s ease-in-out';
-            setTimeout(() => {
-                registerForm.style.opacity = 1; // Pojawianie się formularza
-            }, 10);
-            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'flex';
+            document.getElementById('registerForm').style.opacity = 1;
         }
 
+        // Funkcja do zamknięcia formularza
         function closeAuthForm() {
-            let loginForm = document.getElementById('loginForm');
-            let registerForm = document.getElementById('registerForm');
+            document.getElementById('loginForm').style.transition = 'opacity 0.5s ease-in-out';
+            document.getElementById('registerForm').style.transition = 'opacity 0.5s ease-in-out';
+            document.getElementById('loginForm').style.opacity = 0;
+            document.getElementById('registerForm').style.opacity = 0;
 
-            if (loginForm.style.display === 'flex') {
-                loginForm.style.transition = 'opacity 0.5s ease-in-out';
-                loginForm.style.opacity = 0; // Znikanie formularza
-                setTimeout(() => {
-                    loginForm.style.display = 'none';
-                }, 500);
-            } else if (registerForm.style.display === 'flex') {
-                registerForm.style.transition = 'opacity 0.5s ease-in-out';
-                registerForm.style.opacity = 0; // Znikanie formularza
-                setTimeout(() => {
-                    registerForm.style.display = 'none';
-                }, 500);
+            setTimeout(() => {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'none';
+            }, 500);
+        }
+
+        // Funkcja rejestracji
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let userNick = '';
+
+        function register() {
+            let username = document.getElementById('registerUsername').value;
+            let email = document.getElementById('registerEmail').value;
+            let password = document.getElementById('registerPassword').value;
+
+            if (password.length < 6) {
+                alert("Hasło musi mieć przynajmniej 6 znaków!");
+                return;
+            }
+
+            // Sprawdzanie, czy email już istnieje
+            for (let user of users) {
+                if (user.email === email) {
+                    alert("Ten email jest już zajęty. Spróbuj inny.");
+                    return;
+                }
+            }
+
+            let newUser = { username, email, password };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert("Rejestracja zakończona sukcesem!");
+            closeAuthForm();
+        }
+
+        // Funkcja logowania
+        function login() {
+            let email = document.getElementById('loginEmail').value;
+            let password = document.getElementById('loginPassword').value;
+
+            if (password.length < 6) {
+                alert("Hasło musi mieć przynajmniej 6 znaków!");
+                return;
+            }
+
+            let loggedIn = false;
+
+            for (let user of users) {
+                if (user.email === email && user.password === password) {
+                    userNick = user.username;
+                    localStorage.setItem('isLoggedIn', true);
+                    loggedIn = true;
+                    break;
+                }
+            }
+
+            if (loggedIn) {
+                alert("Zalogowano pomyślnie!");
+                updateUserNick();
+                closeAuthForm();
+            } else {
+                alert("Nieprawidłowy email lub hasło!");
             }
         }
 
+        // Funkcja do aktualizacji widoku po zalogowaniu
         function updateUserNick() {
-            if (userNick) {
+            if (localStorage.getItem('isLoggedIn')) {
                 document.getElementById('authButtons').style.display = 'none';
                 document.getElementById('userNick').style.display = 'block';
                 document.getElementById('userNick').innerHTML = 'Witaj, ' + userNick + '!';
             }
         }
 
+        // Wykrywanie, czy użytkownik jest już zalogowany
+        window.onload = function() {
+            if (localStorage.getItem('isLoggedIn')) {
+                updateUserNick();
+            }
+        }
+
+        // Funkcja do pokazania sekcji 'O mnie'
         function toggleAbout() {
             let aboutSection = document.getElementById('about');
             if (aboutSection.style.display === 'none') {
                 aboutSection.style.display = 'flex';
-                aboutSection.style.animation = 'fadeInUp 0.5s forwards';
+                aboutSection.style.opacity = 1;
             } else {
-                aboutSection.style.animation = 'fadeOutDown 0.5s forwards';
+                aboutSection.style.transition = 'opacity 0.5s ease-in-out';
+                aboutSection.style.opacity = 0;
                 setTimeout(() => {
                     aboutSection.style.display = 'none';
                 }, 500);
             }
         }
     </script>
-
 </body>
 </html>
