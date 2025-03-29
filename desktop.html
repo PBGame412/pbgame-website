@@ -294,7 +294,7 @@
 
     <script>
         let users = JSON.parse(localStorage.getItem('users')) || []; // Przechowywanie użytkowników
-        let userNick = ''; // Globalna zmienna na nick
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null; // Pobranie aktualnie zalogowanego użytkownika
 
         function showLoginForm() {
             document.getElementById('loginForm').style.display = 'flex';
@@ -315,10 +315,9 @@
             let email = document.getElementById('loginEmail').value;
             let password = document.getElementById('loginPassword').value;
 
-            // Sprawdzanie, czy email jest zarejestrowany
             let user = users.find(u => u.email === email && u.password === password);
             if (user) {
-                userNick = user.username;
+                localStorage.setItem('currentUser', JSON.stringify(user)); // Zapisanie aktualnie zalogowanego użytkownika
                 updateUserNick();
                 closeAuthForm();
             } else {
@@ -331,14 +330,12 @@
             let email = document.getElementById('registerEmail').value;
             let password = document.getElementById('registerPassword').value;
 
-            // Sprawdzanie, czy email jest już zarejestrowany
             let existingUser = users.find(u => u.email === email);
             if (existingUser) {
                 alert('Email jest już zarejestrowany!');
                 return;
             }
 
-            // Zapisanie nowego użytkownika
             let newUser = { username, email, password };
             users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
@@ -347,10 +344,10 @@
         }
 
         function updateUserNick() {
-            if (userNick) {
+            if (currentUser) {
                 document.getElementById('authButtons').style.display = 'none';
                 document.getElementById('userNick').style.display = 'block';
-                document.getElementById('userNick').innerHTML = 'Witaj, ' + userNick + '!';
+                document.getElementById('userNick').innerHTML = 'Witaj, ' + currentUser.username + '!';
             }
         }
 
@@ -362,6 +359,13 @@
                 aboutSection.style.display = 'none';
             }
         }
+
+        // Funkcja wywoływana po załadowaniu strony
+        document.addEventListener("DOMContentLoaded", function () {
+            if (currentUser) {
+                updateUserNick();
+            }
+        });
     </script>
 
 </body>
