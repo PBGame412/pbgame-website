@@ -103,6 +103,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 20px; /* Dodano margines górny, aby przycisk był niżej */
+        }
+
+        .auth-form button:nth-child(2) { /* Przyciski 'Zamknij' w formularzach */
+            margin-top: 30px; /* Zwiększenie marginesu, by przycisk 'Zamknij' był niżej */
         }
 
         .auth-form button:hover {
@@ -294,7 +299,7 @@
 
     <script>
         let users = JSON.parse(localStorage.getItem('users')) || []; // Przechowywanie użytkowników
-        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null; // Pobranie aktualnie zalogowanego użytkownika
+        let userNick = ''; // Globalna zmienna na nick
 
         function showLoginForm() {
             document.getElementById('loginForm').style.display = 'flex';
@@ -315,9 +320,10 @@
             let email = document.getElementById('loginEmail').value;
             let password = document.getElementById('loginPassword').value;
 
+            // Sprawdzanie, czy email jest zarejestrowany
             let user = users.find(u => u.email === email && u.password === password);
             if (user) {
-                localStorage.setItem('currentUser', JSON.stringify(user)); // Zapisanie aktualnie zalogowanego użytkownika
+                userNick = user.username;
                 updateUserNick();
                 closeAuthForm();
             } else {
@@ -330,12 +336,14 @@
             let email = document.getElementById('registerEmail').value;
             let password = document.getElementById('registerPassword').value;
 
+            // Sprawdzanie, czy email jest już zarejestrowany
             let existingUser = users.find(u => u.email === email);
             if (existingUser) {
                 alert('Email jest już zarejestrowany!');
                 return;
             }
 
+            // Zapisanie nowego użytkownika
             let newUser = { username, email, password };
             users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
@@ -344,10 +352,10 @@
         }
 
         function updateUserNick() {
-            if (currentUser) {
+            if (userNick) {
                 document.getElementById('authButtons').style.display = 'none';
                 document.getElementById('userNick').style.display = 'block';
-                document.getElementById('userNick').innerHTML = 'Witaj, ' + currentUser.username + '!';
+                document.getElementById('userNick').innerHTML = 'Witaj, ' + userNick + '!';
             }
         }
 
@@ -359,13 +367,6 @@
                 aboutSection.style.display = 'none';
             }
         }
-
-        // Funkcja wywoływana po załadowaniu strony
-        document.addEventListener("DOMContentLoaded", function () {
-            if (currentUser) {
-                updateUserNick();
-            }
-        });
     </script>
 
 </body>
