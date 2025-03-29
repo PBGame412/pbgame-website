@@ -247,7 +247,7 @@
         <h1>Strona PBGame</h1>
 
         <!-- Przyciski logowania i rejestracji -->
-        <div class="auth-buttons">
+        <div id="authButtons" class="auth-buttons">
             <button id="loginButton" onclick="showLoginForm()">Zaloguj się</button>
             <button id="registerButton" onclick="showRegisterForm()">Zarejestruj się</button>
         </div>
@@ -333,6 +333,9 @@
 
         function updateUserNick() {
             if (userNick) {
+                // Ukrywamy przyciski logowania i rejestracji
+                document.getElementById('authButtons').style.display = 'none';
+                // Wyświetlamy nick użytkownika
                 document.getElementById('userNick').style.display = 'block';
                 document.getElementById('userNick').innerHTML = 'Witaj, ' + userNick + '!';
             }
