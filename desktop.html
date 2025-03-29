@@ -293,6 +293,8 @@
     </div>
 
     <script>
+        let userNick = ''; // Globalna zmienna na nick
+
         function showLoginForm() {
             document.getElementById('loginForm').style.display = 'flex';
             document.getElementById('registerForm').style.display = 'none';
@@ -311,7 +313,10 @@
         function login() {
             let email = document.getElementById('loginEmail').value;
             let password = document.getElementById('loginPassword').value;
+            // Przykładowa logika - w prawdziwej aplikacji sprawdzamy dane z serwerem
             alert('Zalogowano z: ' + email);
+            userNick = 'Użytkownik'; // Przykładowy nick po zalogowaniu
+            updateUserNick();
             closeAuthForm();
         }
 
@@ -319,8 +324,18 @@
             let username = document.getElementById('registerUsername').value;
             let email = document.getElementById('registerEmail').value;
             let password = document.getElementById('registerPassword').value;
+            // Przykładowa logika - w prawdziwej aplikacji zapisujemy dane na serwerze
             alert('Zarejestrowano użytkownika: ' + username);
+            userNick = username; // Przypisujemy użytkownikowi wybrany nick
+            updateUserNick();
             closeAuthForm();
+        }
+
+        function updateUserNick() {
+            if (userNick) {
+                document.getElementById('userNick').style.display = 'block';
+                document.getElementById('userNick').innerHTML = 'Witaj, ' + userNick + '!';
+            }
         }
 
         function toggleAbout() {
