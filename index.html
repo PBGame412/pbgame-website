@@ -23,9 +23,10 @@
             justify-content: flex-start;
             align-items: center;
             padding: 20px;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
             height: 100vh; /* Zajmuje całą wysokość ekranu */
+            overflow-y: auto; /* Naprawa przewijania na urządzeniach mobilnych */
         }
 
         /* Tło rozmyte - z mniejszym rozmyciem */
@@ -239,7 +240,7 @@
         /* Stylizacja dla urządzeń mobilnych */
         @media (max-width: 768px) {
             header h1 {
-                font-size: 32px;
+                font-size: 36px; /* Zmniejszenie nagłówka na urządzeniach mobilnych */
                 margin-left: 0; /* Usuwanie przesunięcia w lewo */
                 width: 90%;
                 padding-top: 80px; /* Ustawiamy przestrzeń na przyciski */
@@ -270,17 +271,17 @@
             }
 
             .auth-buttons {
-                flex-direction: column;
+                flex-direction: row; /* Przyciski logowania i rejestracji obok siebie */
                 align-items: center;
-                gap: 10px;
+                gap: 20px;
                 position: fixed;
                 top: 20px;
                 right: 20px;
             }
 
             .auth-button {
-                width: 100%;
-                padding: 15px 0;
+                width: auto;
+                padding: 15px 20px;
                 font-size: 16px;
             }
 
