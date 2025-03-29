@@ -61,6 +61,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: all 0.3s ease; /* Płynna animacja przejść */
+            text-align: center; /* Wyśrodkowanie tekstu */
         }
 
         .about-section h2 {
@@ -81,6 +82,22 @@
         .about-section.open p {
             max-height: 500px; /* Wysokość treści, która ma być widoczna */
             opacity: 1;
+        }
+
+        .about-section img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .about-section a {
+            color: #81c784;
+            font-size: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
         }
 
         /* Animacja - efekt przesunięcia */
@@ -119,10 +136,12 @@
 
     <!-- Sekcja "O mnie" -->
     <div class="about-section" onclick="toggleAboutInfo()">
+        <img src="your-image-url.jpg" alt="Przemysław PBGame" /> <!-- Wstaw tu link do swojego zdjęcia -->
         <h2>O mnie</h2>
         <p id="about-info">
             Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!<br><br>
-            Na moim kanale znajdziesz gameplaye z gier oraz poradniki. Jeśli interesują Cię gry komputerowe i chcesz poznać techniki, wskazówki oraz strategie, zapraszam do subskrypcji!
+            Na moim kanale znajdziesz gameplaye z gier oraz poradniki. Jeśli interesują Cię gry komputerowe i chcesz poznać techniki, wskazówki oraz strategie, zapraszam do subskrypcji!<br><br>
+            <a href="https://www.youtube.com/channel/your-channel-link" target="_blank">Kliknij tutaj, aby przejść do mojego kanału YouTube!</a>
         </p>
     </div>
 
