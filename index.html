@@ -55,7 +55,6 @@
             transform: translateY(-50px);
             animation: fadeInUp 1s forwards 0.5s;
             position: relative;
-            margin-left: 20px; /* Dodany margines po lewej stronie */
         }
 
         header h1 {
@@ -107,7 +106,6 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            margin-left: 20px; /* Dodany margines po lewej stronie */
         }
 
         .main-content h2 {
@@ -168,6 +166,9 @@
             right: 20px;
             display: flex;
             gap: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 2.5s;
         }
 
         .auth-button {
@@ -240,16 +241,18 @@
             header h1 {
                 font-size: 28px; /* Zmniejszenie czcionki dla urządzeń mobilnych */
                 margin-right: 120px; /* Dodanie marginesu po prawej stronie, aby uniknąć kolizji */
+                text-align: center; /* Wyrównanie do środka na urządzeniach mobilnych */
             }
 
             .auth-buttons {
-                flex-direction: row;
-                justify-content: flex-end;
-                margin-top: 10px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
             }
 
             .auth-button {
-                width: auto;
+                width: 80%;
                 padding: 12px 30px;
                 font-size: 16px;
             }
@@ -273,12 +276,22 @@
                 position: relative;
                 width: 100%;
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
+                justify-content: center; /* Wycentrowanie nagłówka */
             }
 
             .background {
                 filter: blur(5px); /* Zmniejszone rozmycie dla mniejszych ekranów */
+            }
+
+            /* Przesunięcie napisu nad przyciski logowania i rejestracji na urządzeniach mobilnych */
+            .auth-buttons {
+                position: absolute;
+                top: 10px;
+                left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                gap: 20px;
             }
         }
 
@@ -289,7 +302,7 @@
             }
 
             .auth-buttons {
-                flex-direction: row;
+                flex-direction: column;
                 justify-content: space-between;
                 gap: 10px;
             }
