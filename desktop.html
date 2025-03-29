@@ -57,11 +57,13 @@
             border-radius: 10px;
             margin-top: 30px;
             width: 90%; /* Zmniejszenie szerokości sekcji */
-            max-width: 600px; /* Maksymalna szerokość dla "O mnie" */
+            max-width: 900px; /* Maksymalna szerokość dla "O mnie" */
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: all 0.3s ease; /* Płynna animacja przejść */
-            text-align: center; /* Wyśrodkowanie tekstu */
+            display: flex; /* Flexbox dla ustawienia zdjęcia obok tekstu */
+            align-items: center; /* Wyrównanie w pionie */
+            justify-content: space-between; /* Przestrzeń między zdjęciem a tekstem */
         }
 
         .about-section h2 {
@@ -77,6 +79,7 @@
             opacity: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            width: 60%; /* Szerokość tekstu, aby zmieścił się obok zdjęcia */
         }
 
         .about-section.open p {
@@ -85,10 +88,10 @@
         }
 
         .about-section img {
-            width: 100%;
+            width: 30%; /* Rozmiar zdjęcia */
             height: auto;
             border-radius: 10px;
-            margin-bottom: 20px;
+            margin-right: 20px; /* Odstęp między zdjęciem a tekstem */
         }
 
         .about-section a {
@@ -124,6 +127,14 @@
 
             .about-section p {
                 font-size: 16px;
+                width: 100%; /* Pełna szerokość na urządzeniach mobilnych */
+                margin-top: 15px; /* Odstęp na mobilce */
+            }
+
+            .about-section img {
+                width: 50%; /* Większe zdjęcie na mobilkach */
+                margin-right: 0;
+                margin-bottom: 15px; /* Odstęp poniżej zdjęcia */
             }
         }
     </style>
@@ -137,12 +148,14 @@
     <!-- Sekcja "O mnie" -->
     <div class="about-section" onclick="toggleAboutInfo()">
         <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="Przemysław PBGame" /> <!-- Link do zdjęcia -->
-        <h2>O mnie</h2>
-        <p id="about-info">
-            Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!<br><br>
-            Na moim kanale znajdziesz gameplaye z gier oraz poradniki. Jeśli interesują Cię gry komputerowe i chcesz poznać techniki, wskazówki oraz strategie, zapraszam do subskrypcji!<br><br>
-            <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Kliknij tutaj, aby przejść do mojego kanału YouTube!</a>
-        </p>
+        <div>
+            <h2>O mnie</h2>
+            <p id="about-info">
+                Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!<br><br>
+                Na moim kanale znajdziesz gameplaye z gier oraz poradniki. Jeśli interesują Cię gry komputerowe i chcesz poznać techniki, wskazówki oraz strategie, zapraszam do subskrypcji!<br><br>
+                <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Kliknij tutaj, aby przejść do mojego kanału YouTube!</a>
+            </p>
+        </div>
     </div>
 
     <script>
