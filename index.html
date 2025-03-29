@@ -255,6 +255,33 @@
             .mobile-header {
                 display: none;
             }
+
+            /* Zmiana układu przycisków logowania i rejestracji, pojawiają się obok zdjęcia */
+            .auth-buttons {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                margin-top: 20px;
+            }
+
+            .main-content {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .image-container {
+                order: 2; /* Przesunięcie obrazka na koniec */
+            }
+
+            .auth-buttons {
+                order: 1; /* Przeniesienie przycisków przed zdjęcie */
+                margin-top: 0; /* Usunięcie marginesu od góry */
+            }
         }
 
         /* Stylizacja dla urządzeń mobilnych (szczegółowe ustawienie tylko na mniejszych ekranach) */
