@@ -74,7 +74,7 @@
             justify-content: space-between;
             opacity: 0;
             transform: translateY(20px);
-            position: relative; /* Dodaję pozycjonowanie względne */
+            position: relative;
             animation: fadeInUp 0.5s forwards;
         }
 
@@ -86,6 +86,14 @@
             position: absolute;
             top: 10px;
             left: 10px;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 40px; /* Przesunięcie poniżej nagłówka */
         }
 
         .about-section p {
@@ -118,6 +126,11 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes fadeOutDown {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(30px); }
+        }
+
         @media (max-width: 768px) {
             .about-section {
                 flex-direction: column;
@@ -148,14 +161,14 @@
     </div>
 
     <div id="about" class="about-section">
-        <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
-        <div>
-            <h2>O mnie</h2>
+        <h2>O mnie</h2>
+        <div class="about-content">
             <p>
                 Witam, mam na imię Przemysław i prowadzę kanał YouTube PBGame!<br><br>
                 Znajdziesz u mnie gameplaye z gier i poradniki.<br><br>
                 <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Sprawdź mój kanał!</a>
             </p>
+            <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
         </div>
     </div>
 
