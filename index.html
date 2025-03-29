@@ -55,6 +55,7 @@
             transform: translateY(-50px);
             animation: fadeInUp 1s forwards 0.5s;
             position: relative;
+            margin-left: 20px; /* Dodany margines po lewej stronie */
         }
 
         header h1 {
@@ -106,6 +107,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            margin-left: 20px; /* Dodany margines po lewej stronie */
         }
 
         .main-content h2 {
@@ -159,6 +161,32 @@
             transform: scale(1.05);
         }
 
+        /* Przyciski logowania i rejestracji */
+        .auth-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .auth-button {
+            background-color: #ff3333;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .auth-button:hover {
+            background-color: #ff6666;
+        }
+
         /* Sekcja "O mnie" */
         .contact-info {
             margin-top: 20px;
@@ -191,34 +219,6 @@
         footer a:hover {
             color: #ff6666;
             text-decoration: underline;
-        }
-
-        /* Stylizacja dla przycisków logowania i rejestracji w prawym górnym rogu */
-        .auth-buttons {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 20px;
-        }
-
-        .auth-button {
-            background-color: #ff3333;
-            color: #fff;
-            font-family: 'Arial', sans-serif;
-            font-size: 18px;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .auth-button:hover {
-            background-color: #ff6666;
         }
 
         /* Animacja - efekt przesunięcia */
@@ -312,12 +312,6 @@
         <a href="#" id="aboutLink">O mnie</a>
     </nav>
 
-    <!-- Sekcja logowania i rejestracji w prawym górnym rogu -->
-    <div class="auth-buttons">
-        <button class="auth-button">Rejestracja</button>
-        <button class="auth-button">Logowanie</button>
-    </div>
-
     <!-- Główna zawartość strony -->
     <div class="main-content">
         <h2>Kanał PBGame</h2>
@@ -331,6 +325,12 @@
         <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">
             <button class="youtube-button">Kliknij tutaj, aby przejść do mojego kanału YouTube</button>
         </a>
+
+        <!-- Przyciski logowania i rejestracji -->
+        <div class="auth-buttons">
+            <button class="auth-button">Rejestracja</button>
+            <button class="auth-button">Logowanie</button>
+        </div>
     </div>
 
     <!-- Sekcja "O mnie" -->
