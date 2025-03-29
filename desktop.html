@@ -92,6 +92,12 @@
             height: auto;
             border-radius: 10px;
             margin-right: 20px; /* Odstęp między zdjęciem a tekstem */
+            transition: box-shadow 0.3s ease-in-out; /* Animacja poświaty */
+        }
+
+        /* Efekt poświaty na zdjęciu przy najechaniu */
+        .about-section img:hover {
+            box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.8); /* Zielona poświata */
         }
 
         .about-section a {
