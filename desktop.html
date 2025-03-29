@@ -187,6 +187,12 @@
                 margin-bottom: 10px;
             }
         }
+
+        /* Animacja znikania banera */
+        @keyframes slideOut {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-50px); }
+        }
     </style>
 </head>
 <body>
@@ -194,7 +200,7 @@
     <iframe width="0" height="0" src="https://www.youtube.com/embed/FFfdyV8gnWk?autoplay=1&loop=1&playlist=FFfdyV8gnWk&mute=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
     <!-- Animowany baner powitalny -->
-    <div class="welcome-banner" style="width: 100%; background-color: #388e3c; color: white; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; position: absolute; top: 0; left: 0; animation: slideIn 2s ease-out;">
+    <div id="welcome-banner" class="welcome-banner" style="width: 100%; background-color: #388e3c; color: white; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; position: absolute; top: 0; left: 0; animation: slideIn 2s ease-out;">
         Witaj na stronie PBGame! 🎮
     </div>
 
@@ -223,6 +229,15 @@
     </div>
 
     <script>
+        // Funkcja do ukrywania banera po 5 sekundach
+        setTimeout(function() {
+            const banner = document.getElementById("welcome-banner");
+            banner.style.animation = "slideOut 2s ease-out";
+            setTimeout(function() {
+                banner.style.display = "none";
+            }, 2000); // Czeka 2 sekundy na zakończenie animacji, a potem ukrywa baner
+        }, 5000); // Baner zniknie po 5 sekundach
+
         function toggleAbout() {
             const aboutSection = document.getElementById("about");
 
