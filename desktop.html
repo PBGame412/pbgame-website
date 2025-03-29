@@ -59,6 +59,7 @@
             width: 80%;
             max-width: 1000px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
         }
 
         .about-section h2 {
@@ -70,6 +71,7 @@
         .about-section p {
             font-size: 18px;
             line-height: 1.5;
+            display: none;
         }
 
         /* Animacja - efekt przesunięcia */
@@ -82,23 +84,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* Przycisk do pokazania/ukrycia informacji */
-        .about-button {
-            background-color: #2e7d32;
-            color: #fff;
-            padding: 15px 30px;
-            font-size: 18px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .about-button:hover {
-            background-color: #388e3c;
         }
 
         /* Stylizacja dla urządzeń mobilnych */
@@ -114,10 +99,6 @@
             .about-section p {
                 font-size: 16px;
             }
-
-            .about-button {
-                font-size: 16px;
-            }
         }
     </style>
 </head>
@@ -128,15 +109,24 @@
     </header>
 
     <!-- Sekcja "O mnie" -->
-    <div class="about-section">
+    <div class="about-section" onclick="toggleAboutInfo()">
         <h2>O mnie</h2>
-        <p>Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!</p>
-        <p>Na moim kanale znajdziesz gameplaye z gier oraz poradniki. Jeśli interesują Cię gry komputerowe i chcesz poznać techniki, wskazówki oraz strategie, zapraszam do subskrypcji!</p>
-        <p>Jeśli chcesz dowiedzieć się więcej, kliknij poniżej, a ja podzielę się dodatkowymi informacjami o mojej twórczości.</p>
+        <p id="about-info">
+            Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!<br><br>
+            Na moim kanale znajdziesz gameplaye z gier oraz poradniki. Jeśli interesują Cię gry komputerowe i chcesz poznać techniki, wskazówki oraz strategie, zapraszam do subskrypcji!
+        </p>
     </div>
 
-    <!-- Przycisk do pokazania więcej informacji -->
-    <button class="about-button" onclick="alert('Więcej informacji o mnie...')">Dowiedz się więcej</button>
+    <script>
+        function toggleAboutInfo() {
+            var aboutInfo = document.getElementById('about-info');
+            if (aboutInfo.style.display === 'none' || aboutInfo.style.display === '') {
+                aboutInfo.style.display = 'block';
+            } else {
+                aboutInfo.style.display = 'none';
+            }
+        }
+    </script>
 
 </body>
 </html>
