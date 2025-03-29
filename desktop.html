@@ -252,8 +252,11 @@
         <!-- Przyciski logowania i rejestracji -->
         <div class="auth-buttons">
             <button id="loginButton" onclick="showLoginForm()">Zaloguj się</button>
-            <button onclick="showRegisterForm()">Zarejestruj się</button>
+            <button id="registerButton" onclick="showRegisterForm()">Zarejestruj się</button>
         </div>
+
+        <!-- Nick użytkownika -->
+        <div id="userNick" style="display:none; font-size: 18px; color: #fff; font-weight: bold;"></div>
     </header>
 
     <div class="tabs">
@@ -298,9 +301,17 @@
         window.onload = function() {
             const loggedInNick = localStorage.getItem('nick');
             const loginButton = document.getElementById('loginButton');
+            const registerButton = document.getElementById('registerButton');
+            const userNick = document.getElementById('userNick');
 
             if (loggedInNick) {
-                loginButton.textContent = `Witaj, ${loggedInNick}`;
+                // Ukrywamy przyciski logowania i rejestracji
+                loginButton.style.display = 'none';
+                registerButton.style.display = 'none';
+
+                // Wyświetlamy nick użytkownika
+                userNick.textContent = `Witaj, ${loggedInNick}`;
+                userNick.style.display = 'block';
             }
         };
 
@@ -337,6 +348,14 @@
             // Sprawdzamy, czy nick jest zapisany w localStorage
             if (loggedInNick) {
                 alert(`Zalogowano jako ${loggedInNick}`);
+                // Ukrywamy przyciski logowania i rejestracji
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('registerButton').style.display = 'none';
+
+                // Wyświetlamy nick użytkownika
+                document.getElementById('userNick').textContent = `Witaj, ${loggedInNick}`;
+                document.getElementById('userNick').style.display = 'block';
+
                 closeAuthForm();
             } else {
                 alert("Nie znaleziono konta.");
@@ -352,6 +371,15 @@
             if (password === confirmPassword) {
                 localStorage.setItem('nick', nick); // Zapisujemy nick w localStorage
                 alert(`Zarejestrowano pomyślnie jako ${nick}`);
+
+                // Ukrywamy przyciski logowania i rejestracji
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('registerButton').style.display = 'none';
+
+                // Wyświetlamy nick użytkownika
+                document.getElementById('userNick').textContent = `Witaj, ${nick}`;
+                document.getElementById('userNick').style.display = 'block';
+
                 closeAuthForm();
             } else {
                 alert("Hasła nie pasują do siebie!");
