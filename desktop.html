@@ -50,13 +50,37 @@
             letter-spacing: 2px;
         }
 
+        /* Stylizacja zakładek */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            width: 80%;
+            justify-content: space-around;
+        }
+
+        .tab {
+            background-color: #388e3c;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            width: 200px;
+            cursor: pointer;
+            font-size: 20px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .tab:hover {
+            background-color: #1b5e20;
+        }
+
         /* Sekcja "O mnie" */
         .about-section {
-            background-color: #388e3c; /* Tło z dopasowanym kolorem */
+            display: none; /* Domyślnie ukryta */
+            background-color: #388e3c; /* Tło sekcji */
             color: #fff;
             padding: 20px;
             border-radius: 10px;
-            margin-top: 30px;
             width: 90%; /* Zmniejszenie szerokości sekcji */
             max-width: 900px; /* Maksymalna szerokość dla "O mnie" */
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -76,16 +100,7 @@
         .about-section p {
             font-size: 18px;
             line-height: 1.5;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
             width: 60%; /* Szerokość tekstu, aby zmieścił się obok zdjęcia */
-        }
-
-        .about-section.open p {
-            max-height: 500px; /* Wysokość treści, która ma być widoczna */
-            opacity: 1;
         }
 
         .about-section img {
@@ -152,12 +167,17 @@
         <h1>Strona PBGame</h1>
     </header>
 
+    <!-- Zakładki -->
+    <div class="tabs">
+        <div class="tab" onclick="showTab('about')">O mnie</div>
+    </div>
+
     <!-- Sekcja "O mnie" -->
-    <div class="about-section" onclick="toggleAboutInfo()">
+    <div id="about" class="about-section">
         <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="Przemysław PBGame" /> <!-- Link do zdjęcia -->
         <div>
             <h2>O mnie</h2>
-            <p id="about-info">
+            <p>
                 Witam, mam na imię Przemysław i prowadzę kanał YouTube pod nickiem PBGame!<br><br>
                 Na moim kanale znajdziesz gameplaye z gier oraz poradniki. Jeśli interesują Cię gry komputerowe i chcesz poznać techniki, wskazówki oraz strategie, zapraszam do subskrypcji!<br><br>
                 <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Kliknij tutaj, aby przejść do mojego kanału YouTube!</a>
@@ -166,11 +186,19 @@
     </div>
 
     <script>
-        function toggleAboutInfo() {
-            var aboutSection = document.querySelector('.about-section');
-            aboutSection.classList.toggle('open'); // Dodajemy/Usuwamy klasę otwierającą lub zamykającą
-        }
-    </script>
+        function showTab(tab) {
+            // Ukryj wszystkie sekcje
+            const sections = document.querySelectorAll('.about-section');
+            sections.forEach(function(section) {
+                section.style.display = 'none';
+            });
 
+            // Pokaż wybraną sekcję
+            document.getElementById(tab).style.display = 'flex';
+        }
+
+        // Domyślnie wyświetlamy "O mnie"
+        showTab('about');
+    </script>
 </body>
 </html>
