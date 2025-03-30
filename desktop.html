@@ -250,9 +250,9 @@
             const banner = document.getElementById('welcomeBanner');
             banner.style.display = 'block';
 
-            // Ukrycie bannera po 5 sekundach
+            // Animacja po 5 sekundach
             setTimeout(function() {
-                banner.style.display = 'none';
+                banner.style.animation = 'fadeOut 1s ease forwards';
             }, 5000);
         }
 
@@ -324,6 +324,5 @@
             }
         }
     </script>
-
 </body>
 </html>
