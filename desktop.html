@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona PBGame</title>
+    <title>PBGame - Nagrywanie Gier, Poradniki, Edity</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,8 +14,8 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #2E7D32, #388E3C);
-            color: #fff;
+            background: #212121;
+            color: white;
             overflow-x: hidden;
             transition: background 0.5s ease;
         }
@@ -25,7 +25,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             z-index: 1000;
             display: flex;
@@ -34,10 +34,9 @@
         }
 
         header h1 {
-            font-size: 30px;
+            font-size: 32px;
             font-weight: 600;
-            color: #fff;
-            text-transform: uppercase;
+            color: #ff9800;
         }
 
         .nav-buttons button {
@@ -62,50 +61,76 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: url('https://via.placeholder.com/1500x900') no-repeat center center/cover;
+            background: url('https://via.placeholder.com/1600x900/000000/FFFFFF?text=Gry,+Poradniki,+Edity') no-repeat center center/cover;
             animation: fadeIn 1s ease-in-out;
+            color: white;
         }
 
         .hero h2 {
-            font-size: 50px;
-            color: white;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+            font-size: 60px;
+            font-weight: 700;
+            color: #ffeb3b;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .hero p {
+            font-size: 20px;
+            font-weight: 400;
+            color: #ffffff;
+            margin-top: 15px;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            padding: 0 20px;
         }
 
         .card {
-            display: inline-block;
-            margin: 20px;
-            background-color: #fff;
-            padding: 30px;
-            width: 250px;
+            background-color: #333;
+            padding: 20px;
+            width: 300px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            text-align: center;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            color: white;
         }
 
         .card:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0px 15px 30px rgba(0,0,0,0.4);
         }
 
         .card h3 {
             font-size: 24px;
-            color: #388E3C;
+            color: #ff9800;
             margin-bottom: 15px;
         }
 
         .card p {
             font-size: 16px;
-            color: #333;
         }
 
-        .footer {
+        footer {
             background-color: #388e3c;
             padding: 20px 0;
             color: white;
             text-align: center;
-            margin-top: 50px;
+        }
+
+        .social-links a {
+            color: #ffeb3b;
+            font-size: 25px;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ff9800;
         }
 
         @keyframes fadeIn {
@@ -117,18 +142,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        .social-links a {
-            color: #fff;
-            font-size: 20px;
-            margin: 0 15px;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: #ffeb3b;
         }
     </style>
 </head>
@@ -144,28 +157,28 @@
 
     <section class="hero">
         <div>
-            <h2>Witaj w PBGame!</h2>
-            <p>Odkryj najlepsze gry online i dołącz do naszej społeczności!</p>
+            <h2>Graj, Twórz, Dziel się!</h2>
+            <p>Nagrywam gry, tworzę poradniki i edity, które zmieniają sposób, w jaki grasz!</p>
         </div>
     </section>
 
-    <div class="content">
+    <div class="card-container">
         <div class="card">
-            <h3>Nowości</h3>
-            <p>Zapoznaj się z najnowszymi grami dostępnymi na naszej platformie.</p>
+            <h3>Nagrywanie Gier</h3>
+            <p>Tworzę wyjątkowe materiały wideo z gier, które pomogą Ci stać się lepszym graczem!</p>
         </div>
         <div class="card">
-            <h3>Społeczność</h3>
-            <p>Dołącz do naszej społeczności na Discordzie i YouTube.</p>
+            <h3>Poradniki</h3>
+            <p>Moje poradniki to doskonała okazja, by zgłębić tajniki ulubionych gier!</p>
         </div>
         <div class="card">
-            <h3>Promocje</h3>
-            <p>Sprawdź nasze aktualne promocje i oferty specjalne!</p>
+            <h3>Edity</h3>
+            <p>Tworzę unikalne edity, które sprawią, że Twoje doświadczenie w grach będzie jeszcze lepsze!</p>
         </div>
     </div>
 
-    <footer class="footer">
-        <p>&copy; 2025 PBGame. Wszystkie prawa zastrzeżone.</p>
+    <footer>
+        <p>&copy; 2025 PBGame - Wszystkie prawa zastrzeżone</p>
         <div class="social-links">
             <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">YouTube</a>
             <a href="https://discord.gg/kmnVBUYxY7" target="_blank">Discord</a>
@@ -173,7 +186,7 @@
     </footer>
 
     <script>
-        // Placeholder for functionality
+        // Placeholder for future functionality
         document.querySelector('button').addEventListener('click', function () {
             alert("Przycisk kliknięty!");
         });
