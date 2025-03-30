@@ -15,6 +15,16 @@
         body {
             font-family: 'Poppins', sans-serif;
             transition: background 0.5s ease;
+            animation: fadeIn 1s ease-out; /* Animacja fade-in przy wejściu na stronę */
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         .dark-theme {
@@ -121,6 +131,30 @@
             cursor: pointer;
         }
 
+        .welcome-banner {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #388e3c;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 1000;
+            display: none;
+            animation: slideDown 0.5s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
         footer {
             text-align: center;
             margin-top: 30px;
@@ -128,7 +162,7 @@
             background-color: #388e3c;
             color: white;
             border-radius: 8px;
-            max-width: 400px; /* Zmniejszenie szerokości stopki */
+            max-width: 400px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -137,7 +171,7 @@
             color: white;
             text-decoration: none;
             margin: 0 15px;
-            font-size: 18px; /* Powiększenie czcionki linków */
+            font-size: 18px;
         }
 
         footer a:hover {
@@ -146,6 +180,10 @@
     </style>
 </head>
 <body class="dark-theme">
+
+    <div class="welcome-banner" id="welcomeBanner">
+        Witaj na stronie PBGame! Ciesz się naszą społecznością!
+    </div>
 
     <header>
         <h1>Strona PBGame</h1>
@@ -196,6 +234,17 @@
 
     <script>
         let loggedIn = false;
+
+        window.onload = function() {
+            // Wyświetlanie bannera powitalnego po załadowaniu strony
+            const banner = document.getElementById('welcomeBanner');
+            banner.style.display = 'block';
+
+            // Ukrycie bannera po 5 sekundach
+            setTimeout(function() {
+                banner.style.display = 'none';
+            }, 5000);
+        }
 
         function toggleSettings() {
             if (loggedIn) {
