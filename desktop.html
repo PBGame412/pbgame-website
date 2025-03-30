@@ -890,5 +890,118 @@
         }
     </script>
 
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .light-mode {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .dark-mode {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: #1b5e20;
+            color: white;
+        }
+
+        .settings {
+            display: none;
+            padding: 20px;
+            background: #2e7d32;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .settings input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #000;
+        }
+
+        .settings button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff9800;
+            color: white;
+            cursor: pointer;
+        }
+
+        .settings button:hover {
+            background-color: #f57c00;
+        }
+
+        .toggle-settings {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #388e3c;
+            color: white;
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
+</head>
+<body class="light-mode">
+
+    <header>
+        <button class="toggle-settings" onclick="toggleSettings()">Ustawienia</button>
+    </header>
+
+    <div id="settings" class="settings">
+        <h2>Ustawienia</h2>
+        <label>Motyw:</label>
+        <select id="themeSelect" onchange="changeTheme()">
+            <option value="light">Jasny</option>
+            <option value="dark">Ciemny</option>
+        </select>
+        <br><br>
+        <label>Nowy Email:</label>
+        <input type="email" id="emailInput" placeholder="Nowy email" />
+        <label>Nowe Hasło:</label>
+        <input type="password" id="passwordInput" placeholder="Nowe hasło" />
+        <button onclick="saveSettings()">Zapisz zmiany</button>
+    </div>
+
+    <script>
+        function toggleSettings() {
+            const settings = document.getElementById('settings');
+            settings.style.display = settings.style.display === 'none' || settings.style.display === '' ? 'block' : 'none';
+        }
+
+        function changeTheme() {
+            const selectedTheme = document.getElementById('themeSelect').value;
+            document.body.className = selectedTheme === 'dark' ? 'dark-mode' : 'light-mode';
+            localStorage.setItem('theme', selectedTheme);
+        }
+
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.className = savedTheme === 'dark' ? 'dark-mode' : 'light-mode';
+            document.getElementById('themeSelect').value = savedTheme;
+        };
+    </script>
 </body>
 </html>
