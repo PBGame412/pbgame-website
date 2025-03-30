@@ -11,93 +11,110 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            background-color: #222;
+            color: white;
+            font-family: Arial, sans-serif;
         }
         canvas {
-            border: 1px solid black;
+            border: 1px solid white;
             cursor: crosshair;
         }
-        #controls {
+        #colorPicker, #timer {
             margin: 10px;
         }
     </style>
 </head>
 <body>
-    <div id="controls">
-        <input type="color" id="colorPicker" value="#ff0000">
-        <span id="timer">60s</span>
-    </div>
+    <h1>Pixel Europe</h1>
+    <input type="color" id="colorPicker" value="#ff0000">
+    <div id="timer">Time Left: 60s</div>
     <canvas id="canvas"></canvas>
+    
     <script>
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
         const colorPicker = document.getElementById("colorPicker");
         const timerDisplay = document.getElementById("timer");
         
-        let isMouseDown = false;
+        canvas.width = 800;
+        canvas.height = 600;
+        
+        let isDrawing = false;
         let offsetX = 0, offsetY = 0;
-        let lastX, lastY;
-        let timeLeft = 60;
+        let drag = false, lastX, lastY;
+        let timeLeft = 60; // Sekundy
         let pixelsPlaced = 0;
-        const gridSize = 10;
-        const mapWidth = 800;
-        const mapHeight = 600;
+        let timerStarted = false;
+        let gameActive = true;
         
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight - 50;
-        
-        const image = new Image();
-        image.src = "https://upload.wikimedia.org/wikipedia/commons/6/69/Europe_blank_map.png";
-        
-        image.onload = () => {
-            ctx.drawImage(image, 0, 0, mapWidth, mapHeight);
+        const mapImage = new Image();
+        mapImage.src = "https://upload.wikimedia.org/wikipedia/commons/9/9e/Blank_map_of_Europe_%28white%29.svg";
+        mapImage.onload = () => {
+            ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
         };
         
-        function drawPixel(x, y, color) {
-            ctx.fillStyle = color;
-            ctx.fillRect(x, y, gridSize, gridSize);
+        function startTimer() {
+            timerStarted = true;
+            const timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+                } else {
+                    gameActive = false;
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "Time Over!";
+                }
+            }, 1000);
         }
         
         canvas.addEventListener("mousedown", (e) => {
-            if (timeLeft <= 0) return;
-            isMouseDown = true;
-            lastX = e.clientX;
-            lastY = e.clientY;
-        });
-        
-        canvas.addEventListener("mouseup", () => {
-            isMouseDown = false;
+            if (!gameActive) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            if (e.button === 0) {
+                isDrawing = true;
+                placePixel(x, y);
+            } else if (e.button === 2) {
+                drag = true;
+                lastX = e.clientX;
+                lastY = e.clientY;
+            }
         });
         
         canvas.addEventListener("mousemove", (e) => {
-            if (isMouseDown) {
-                offsetX += e.clientX - lastX;
-                offsetY += e.clientY - lastY;
+            if (drag) {
+                const dx = e.clientX - lastX;
+                const dy = e.clientY - lastY;
+                offsetX += dx;
+                offsetY += dy;
                 lastX = e.clientX;
                 lastY = e.clientY;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(image, offsetX, offsetY, mapWidth, mapHeight);
+                redraw();
             }
         });
         
-        canvas.addEventListener("click", (e) => {
-            if (timeLeft <= 0) return;
-            const rect = canvas.getBoundingClientRect();
-            const x = Math.floor((e.clientX - rect.left - offsetX) / gridSize) * gridSize;
-            const y = Math.floor((e.clientY - rect.top - offsetY) / gridSize) * gridSize;
-            drawPixel(x, y, colorPicker.value);
+        canvas.addEventListener("mouseup", () => {
+            isDrawing = false;
+            drag = false;
+        });
+        
+        function placePixel(x, y) {
+            if (!gameActive) return;
+            ctx.fillStyle = colorPicker.value;
+            ctx.fillRect(x, y, 5, 5);
             pixelsPlaced++;
-            timeLeft += 1;
-            timerDisplay.textContent = `${timeLeft}s`;
-        });
+            if (!timerStarted) startTimer();
+            timeLeft = Math.min(60, timeLeft + 1); // Dodanie 1 sekundy za każdy piksel
+            timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+        }
         
-        const timer = setInterval(() => {
-            if (timeLeft > 0) {
-                timeLeft--;
-                timerDisplay.textContent = `${timeLeft}s`;
-            } else {
-                clearInterval(timer);
-            }
-        }, 1000);
+        function redraw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(mapImage, offsetX, offsetY, canvas.width, canvas.height);
+        }
     </script>
 </body>
 </html>
