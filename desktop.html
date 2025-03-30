@@ -3,1029 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona PBGame</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #2e7d32, #81c784);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            min-height: 100vh;
-            overflow-y: auto;
-        }
-
-        header {
-            background-color: #388e3c;
-            width: 80%;
-            max-width: 1000px;
-            padding: 30px;
-            text-align: center;
-            border-radius: 15px;
-            background-image: linear-gradient(to right, #1b5e20, #43a047);
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.5s ease-in-out;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        header:hover {
-            transform: scale(1.05);
-        }
-
-        header h1 {
-            font-size: 42px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: #fff;
-        }
-
-        .auth-buttons {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            display: flex;
-            gap: 20px;
-        }
-
-        .auth-buttons button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #1b5e20;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .auth-buttons button:hover {
-            background-color: #388e3c;
-        }
-
-        .auth-form {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background-color: #388e3c;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: all 0.5s ease-in-out;
-        }
-
-        .auth-form input {
-            padding: 10px;
-            margin: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .auth-form button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #1b5e20;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        .auth-form button:nth-child(2) { 
-            margin-top: 30px; 
-        }
-
-        .auth-form button:hover {
-            background-color: #388e3c;
-        }
-
-        .tabs {
-            display: flex;
-            margin: 20px 0;
-            justify-content: center;
-        }
-
-        .tab {
-            background-color: #388e3c;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-size: 24px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .tab:hover {
-            background-color: #1b5e20;
-            transform: scale(1.1);
-        }
-
-        .tab.discord {
-            margin-left: 20px;
-        }
-
-        .about-section {
-            background-color: #388e3c;
-            color: #fff;
-            padding: 25px;
-            border-radius: 10px;
-            width: 85%;
-            max-width: 750px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: none;
-            align-items: center;
-            justify-content: space-between;
-            opacity: 0;
-            transform: translateY(20px);
-            position: relative;
-            animation: fadeInUp 0.5s forwards;
-        }
-
-        .about-section h2 {
-            font-size: 30px;
-            margin-bottom: 15px;
-            font-weight: bold;
-            text-align: left;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-        }
-
-        .about-content {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 40px;
-        }
-
-        .about-section p {
-            font-size: 20px;
-            line-height: 1.8;
-            width: 55%;
-            padding-left: 20px;
-        }
-
-        .about-section img {
-            width: 30%;
-            border-radius: 10px;
-            transition: box-shadow 0.3s ease-in-out;
-        }
-
-        .about-section img:hover {
-            box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.8);
-        }
-
-        .about-section a {
-            color: #81c784;
-            font-size: 20px;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 10px;
-            transition: color 0.3s ease;
-        }
-
-        .about-section a:hover {
-            color: #fff;
-        }
-
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeOutDown {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(30px); }
-        }
-
-        @media (max-width: 768px) {
-            .about-section {
-                flex-direction: column;
-                text-align: center;
-                width: 90%;
-            }
-
-            .about-section p {
-                width: 100%;
-                padding-left: 0;
-                margin-top: 10px;
-            }
-
-            .about-section img {
-                width: 60%;
-                margin-bottom: 10px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="tabs">
-        <div class="tab" onclick="toggleAbout()">O mnie</div>
-        <div class="tab discord" onclick="window.location.href='https://discord.gg/kmnVBUYxY7'">Dołącz do Discorda</div>
-    </div>
-
-    <div id="about" class="about-section">
-        <h2>O mnie</h2>
-        <div class="about-content">
-            <p>
-                Witam, mam na imię Przemysław i prowadzę kanał YouTube PBGame!<br><br>
-                Znajdziesz u mnie gameplaye z gier i poradniki.<br><br>
-                <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Sprawdź mój kanał!</a>
-            </p>
-            <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
-        </div>
-    </div>
-
-    <div id="loginForm" class="auth-form">
-        <h2>Zaloguj się</h2>
-        <input type="email" id="loginEmail" placeholder="Email" required>
-        <input type="password" id="loginPassword" placeholder="Hasło" required>
-        <button onclick="login()">Zaloguj się</button>
-        <button onclick="closeAuthForm()">Zamknij</button>
-    </div>
-
-    <div id="registerForm" class="auth-form">
-        <h2>Zarejestruj się</h2>
-        <input type="text" id="registerUsername" placeholder="Nazwa użytkownika" required>
-        <input type="email" id="registerEmail" placeholder="Email" required>
-        <input type="password" id="registerPassword" placeholder="Hasło" required>
-        <button onclick="register()">Zarejestruj się</button>
-        <button onclick="closeAuthForm()">Zamknij</button>
-    </div>
-
-    <script>
-        // Funkcja do pokazania formularza logowania
-        function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'flex';
-            document.getElementById('loginForm').style.opacity = 1;
-        }
-
-        // Funkcja do pokazania formularza rejestracji
-        function showRegisterForm() {
-            document.getElementById('registerForm').style.display = 'flex';
-            document.getElementById('registerForm').style.opacity = 1;
-        }
-
-        // Funkcja do zamknięcia formularza
-        function closeAuthForm() {
-            document.getElementById('loginForm').style.transition = 'opacity 0.5s ease-in-out';
-            document.getElementById('registerForm').style.transition = 'opacity 0.5s ease-in-out';
-            document.getElementById('loginForm').style.opacity = 0;
-            document.getElementById('registerForm').style.opacity = 0;
-
-            setTimeout(() => {
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('registerForm').style.display = 'none';
-            }, 500);
-        }
-
-        // Funkcja rejestracji
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-        let userNick = '';
-
-        function register() {
-            let username = document.getElementById('registerUsername').value;
-            let email = document.getElementById('registerEmail').value;
-            let password = document.getElementById('registerPassword').value;
-
-            if (password.length < 6) {
-                alert("Hasło musi mieć przynajmniej 6 znaków!");
-                return;
-            }
-
-            // Sprawdzanie, czy email już istnieje
-            for (let user of users) {
-                if (user.email === email) {
-                    alert("Ten email jest już zajęty. Spróbuj inny.");
-                    return;
-                }
-            }
-
-            let newUser = { username, email, password };
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-
-            alert("Rejestracja zakończona sukcesem!");
-            closeAuthForm();
-        }
-
-        // Funkcja logowania
-        function login() {
-            let email = document.getElementById('loginEmail').value;
-            let password = document.getElementById('loginPassword').value;
-
-            if (password.length < 6) {
-                alert("Hasło musi mieć przynajmniej 6 znaków!");
-                return;
-            }
-
-            let loggedIn = false;
-
-            for (let user of users) {
-                if (user.email === email && user.password === password) {
-                    userNick = user.username;
-                    localStorage.setItem('isLoggedIn', true);
-                    loggedIn = true;
-                    break;
-                }
-            }
-
-            if (loggedIn) {
-                alert("Zalogowano pomyślnie!");
-                updateUserNick();
-                closeAuthForm();
-            } else {
-                alert("Nieprawidłowy email lub hasło!");
-            }
-        }
-
-        // Funkcja do aktualizacji widoku po zalogowaniu
-        function updateUserNick() {
-            if (localStorage.getItem('isLoggedIn')) {
-                document.getElementById('authButtons').style.display = 'none';
-                document.getElementById('userNick').style.display = 'block';
-                document.getElementById('userNick').innerHTML = 'Witaj, ' + userNick + '!';
-            }
-        }
-
-        // Wykrywanie, czy użytkownik jest już zalogowany
-        window.onload = function() {
-            if (localStorage.getItem('isLoggedIn')) {
-                updateUserNick();
-            }
-        }
-
-        // Funkcja do pokazania sekcji 'O mnie'
-        function toggleAbout() {
-            let aboutSection = document.getElementById('about');
-            if (aboutSection.style.display === 'none') {
-                aboutSection.style.display = 'flex';
-                aboutSection.style.opacity = 1;
-            } else {
-                aboutSection.style.transition = 'opacity 0.5s ease-in-out';
-                aboutSection.style.opacity = 0;
-                setTimeout(() => {
-                    aboutSection.style.display = 'none';
-                }, 500);
-            }
-        }
-    </script>
-         <script>
-    // Funkcja pokazująca/ukrywająca ustawienia
-    function toggleSettings() {
-        const settingsSection = document.getElementById('settingsSection');
-        if (settingsSection.style.display === 'none' || settingsSection.style.display === '') {
-            settingsSection.style.display = 'flex';
-            settingsSection.style.opacity = 1;
-        } else {
-            settingsSection.style.opacity = 0;
-            setTimeout(() => {
-                settingsSection.style.display = 'none';
-            }, 500);
-        }
-    }
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona PBGame</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        /* Dotychczasowy styl */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #2e7d32, #81c784);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            min-height: 100vh;
-            overflow-y: auto;
-        }
-
-        header {
-            background-color: #388e3c;
-            width: 80%;
-            max-width: 1000px;
-            padding: 30px;
-            text-align: center;
-            border-radius: 15px;
-            background-image: linear-gradient(to right, #1b5e20, #43a047);
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.5s ease-in-out;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        header:hover {
-            transform: scale(1.05);
-        }
-
-        header h1 {
-            font-size: 42px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: #fff;
-        }
-
-        /* Kolumna ustawień */
-        .settings-column {
-            background-color: #388e3c;
-            width: 300px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.5s ease-in-out;
-            margin-top: 20px;
-        }
-
-        .settings-header {
-            background-color: #2e7d32;
-            padding: 15px;
-            text-align: center;
-            border-radius: 10px 10px 0 0;
-            cursor: pointer;
-        }
-
-        .settings-header h3 {
-            color: white;
-            font-size: 22px;
-            margin: 0;
-        }
-
-        .settings-content {
-            padding: 20px;
-            display: none; /* Na początku ukryte */
-            opacity: 0;
-            transition: all 0.5s ease-in-out;
-        }
-
-        .settings-content input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .settings-content button {
-            width: 100%;
-            padding: 10px;
-            background-color: #388e3c;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .settings-content button:hover {
-            background-color: #2e7d32;
-        }
-
-        /* Reszta stylów */
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>Strona PBGame</h1>
-        <div id="authButtons" class="auth-buttons">
-            <button id="loginButton" onclick="showLoginForm()">Zaloguj się</button>
-            <button id="registerButton" onclick="showRegisterForm()">Zarejestruj się</button>
-        </div>
-        <div id="userNick" style="display:none; font-size: 18px; color: #fff; font-weight: bold;"></div>
-    </header>
-
-    <div class="tabs">
-        <div class="tab" onclick="toggleAbout()">O mnie</div>
-        <div class="tab discord" onclick="window.location.href='https://discord.gg/kmnVBUYxY7'">Dołącz do Discorda</div>
-    </div>
-
-    <div id="about" class="about-section">
-        <h2>O mnie</h2>
-        <div class="about-content">
-            <p>
-                Witam, mam na imię Przemysław i prowadzę kanał YouTube PBGame!<br><br>
-                Znajdziesz u mnie gameplaye z gier i poradniki.<br><br>
-                <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Sprawdź mój kanał!</a>
-            </p>
-            <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
-        </div>
-    </div>
-
-    <!-- Kolumna z ustawieniami -->
-    <div id="settingsColumn" class="settings-column">
-        <div class="settings-header" onclick="toggleSettings()">
-            <h3>Ustawienia</h3>
-        </div>
-
-        <!-- Sekcja ustawień (na początku jest ukryta) -->
-        <div id="settingsSection" class="settings-content">
-            <h2>Zmiana danych</h2>
-            <input type="email" id="newEmail" placeholder="Nowy email">
-            <input type="password" id="newPassword" placeholder="Nowe hasło (min. 6 znaków)">
-            <button onclick="updateSettings()">Zapisz zmiany</button>
-            <button onclick="closeSettings()">Zamknij</button>
-        </div>
-    </div>
-
-    <div id="loginForm" class="auth-form">
-        <h2>Zaloguj się</h2>
-        <input type="email" id="loginEmail" placeholder="Email" required>
-        <input type="password" id="loginPassword" placeholder="Hasło" required>
-        <button onclick="login()">Zaloguj się</button>
-        <button onclick="closeAuthForm()">Zamknij</button>
-    </div>
-
-    <div id="registerForm" class="auth-form">
-        <h2>Zarejestruj się</h2>
-        <input type="text" id="registerUsername" placeholder="Nazwa użytkownika" required>
-        <input type="email" id="registerEmail" placeholder="Email" required>
-        <input type="password" id="registerPassword" placeholder="Hasło" required>
-        <button onclick="register()">Zarejestruj się</button>
-        <button onclick="closeAuthForm()">Zamknij</button>
-    </div>
-
-    <script>
-        // Funkcja pokazująca/ukrywająca ustawienia
-        function toggleSettings() {
-            const settingsSection = document.getElementById('settingsSection');
-            const isVisible = settingsSection.style.display === 'block';
-
-            if (isVisible) {
-                // Ukrywanie ustawień
-                settingsSection.style.opacity = 0;
-                setTimeout(() => {
-                    settingsSection.style.display = 'none';
-                }, 500);
-            } else {
-                // Pokazywanie ustawień
-                settingsSection.style.display = 'block';
-                setTimeout(() => {
-                    settingsSection.style.opacity = 1;
-                }, 10);
-            }
-        }
-
-        // Funkcja zamykająca ustawienia
-        function closeSettings() {
-            const settingsSection = document.getElementById('settingsSection');
-            settingsSection.style.opacity = 0;
-            setTimeout(() => {
-                settingsSection.style.display = 'none';
-            }, 500);
-        }
-
-        // Funkcja aktualizująca dane użytkownika
-        function updateSettings() {
-            const newEmail = document.getElementById('newEmail').value;
-            const newPassword = document.getElementById('newPassword').value;
-
-            if (newPassword.length < 6) {
-                alert("Hasło musi mieć przynajmniej 6 znaków!");
-                return;
-            }
-
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-            let user = users.find(u => u.username === userNick);
-
-            if (user) {
-                if (newEmail) user.email = newEmail;
-                if (newPassword) user.password = newPassword;
-
-                localStorage.setItem('users', JSON.stringify(users));
-                alert("Dane zostały zaktualizowane!");
-                closeSettings();
-            } else {
-                alert("Nie znaleziono użytkownika.");
-            }
-        }
-
-        // Pozostałe funkcje logowania i rejestracji
-        function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'flex';
-            document.getElementById('loginForm').style.opacity = 1;
-        }
-
-        function showRegisterForm() {
-            document.getElementById('registerForm').style.display = 'flex';
-            document.getElementById('registerForm').style.opacity = 1;
-        }
-
-        function closeAuthForm() {
-            document.getElementById('loginForm').style.transition = 'opacity 0.5s ease-in-out';
-            document.getElementById('registerForm').style.transition = 'opacity 0.5s ease-in-out';
-            document.getElementById('loginForm').style.opacity = 0;
-            document.getElementById('registerForm').style.opacity = 0;
-
-            setTimeout(() => {
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('registerForm').style.display = 'none';
-            }, 500);
-        }
-    </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <style>
-        /* Dotychczasowy styl */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #2e7d32, #81c784);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            min-height: 100vh;
-            overflow-y: auto;
-        }
-
-        header {
-            background-color: #388e3c;
-            width: 80%;
-            max-width: 1000px;
-            padding: 30px;
-            text-align: center;
-            border-radius: 15px;
-            background-image: linear-gradient(to right, #1b5e20, #43a047);
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.5s ease-in-out;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        header:hover {
-            transform: scale(1.05);
-        }
-
-        header h1 {
-            font-size: 42px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: #fff;
-        }
-
-        /* Kolumna ustawień */
-        .settings-column {
-            background-color: #388e3c;
-            width: 300px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            margin-top: 20px;
-            transition: all 0.5s ease-in-out;
-        }
-
-        .settings-header {
-            background-color: #2e7d32;
-            padding: 15px;
-            text-align: center;
-            border-radius: 10px 10px 0 0;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        /* Animacja najechania na przycisk */
-        .settings-header:hover {
-            transform: scale(1.1);
-        }
-
-        .settings-header h3 {
-            color: white;
-            font-size: 22px;
-            margin: 0;
-        }
-
-        .settings-content {
-            padding: 20px;
-            display: none; /* Na początku ukryte */
-            opacity: 0;
-            height: 0;
-            transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
-        }
-
-        .settings-content.show {
-            display: block;
-            opacity: 1;
-            height: auto; /* Automatycznie dostosowuje wysokość po wyświetleniu */
-        }
-
-        .settings-content input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .settings-content button {
-            width: 100%;
-            padding: 10px;
-            background-color: #388e3c;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .settings-content button:hover {
-            background-color: #2e7d32;
-        }
-    </style>
-</head>
-<body>
-    <!-- Kolumna ustawień -->
-    <div class="settings-column">
-        <div class="settings-header" onclick="toggleSettings()">
-            <h3>Ustawienia</h3>
-        </div>
-
-        <!-- Sekcja ustawień -->
-        <div id="settingsSection" class="settings-content">
-            <h4>Zmień email</h4>
-            <input type="email" id="newEmail" placeholder="Nowy Email">
-            <button onclick="changeEmail()">Zmień Email</button>
-
-            <h4>Zmień hasło</h4>
-            <input type="password" id="newPassword" placeholder="Nowe Hasło">
-            <button onclick="changePassword()">Zmień Hasło</button>
-        </div>
-    </div>
-
-    <script>
-        // Funkcja pokazująca/ukrywająca ustawienia
-        function toggleSettings() {
-            const settingsSection = document.getElementById('settingsSection');
-
-            // Sprawdzamy, czy sekcja ustawień jest widoczna
-            if (settingsSection.classList.contains('show')) {
-                // Ukrywamy ustawienia
-                settingsSection.classList.remove('show');
-            } else {
-                // Pokazujemy ustawienia
-                settingsSection.classList.add('show');
-            }
-        }
-
-        // Funkcja zmiany emaila
-        function changeEmail() {
-            const newEmail = document.getElementById('newEmail').value;
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            
-            // Sprawdzenie, czy email jest już taki sam jak obecny
-            if (newEmail === currentUser.email) {
-                alert('Nowy email nie może być taki sam jak obecny email!');
-                return;
-            }
-
-            if (newEmail) {
-                // Wylogowanie użytkownika po zmianie emaila
-                logout();
-
-                // Zaktualizowanie emaila w lokalnej pamięci
-                currentUser.email = newEmail;
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                alert(`Email został zmieniony na: ${newEmail}`);
-                window.location.reload(); // Przeładowanie strony, aby użytkownik mógł się ponownie zalogować
-            } else {
-                alert('Proszę podać nowy email');
-            }
-        }
-
-        // Funkcja zmiany hasła
-        function changePassword() {
-            const newPassword = document.getElementById('newPassword').value;
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            
-            // Sprawdzenie, czy hasło jest takie samo jak obecne
-            if (newPassword === currentUser.password) {
-                alert('Nowe hasło nie może być takie samo jak obecne hasło!');
-                return;
-            }
-
-            if (newPassword.length >= 6) {
-                // Wylogowanie użytkownika po zmianie hasła
-                logout();
-
-                // Zaktualizowanie hasła w lokalnej pamięci
-                currentUser.password = newPassword;
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                alert(`Hasło zostało zmienione na: ${newPassword}`);
-                window.location.reload(); // Przeładowanie strony, aby użytkownik mógł się ponownie zalogować
-            } else {
-                alert('Hasło musi mieć co najmniej 6 znaków');
-            }
-        }
-
-        // Funkcja wylogowująca użytkownika
-        function logout() {
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('currentUser');
-            alert("Zostałeś wylogowany.");
-        }
-
-        // Funkcja logowania
-        function login() {
-            let email = document.getElementById('loginEmail').value;
-            let password = document.getElementById('loginPassword').value;
-
-            let user = JSON.parse(localStorage.getItem('currentUser'));
-
-            if (user && user.email === email && user.password === password) {
-                localStorage.setItem('isLoggedIn', true);
-                alert("Zalogowano pomyślnie!");
-            } else {
-                alert("Nieprawidłowy email lub hasło!");
-            }
-        }
-    </script>
-
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.5s ease-in-out;
-        }
-
-        .light-mode {
-            background: linear-gradient(135deg, #d4edda, #a5d6a7);
-            color: #333;
-        }
-
-        .dark-mode {
-            background: linear-gradient(135deg, #2e7d32, #1b5e20);
-            color: #f5f5f5;
-        }
-
-        header {
-            text-align: center;
-            padding: 30px;
-            border-radius: 15px;
-            background: #1b5e20;
-            color: white;
-        }
-
-        .settings-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .settings {
-            display: none;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            padding: 20px;
-            background: rgba(46, 125, 50, 0.9);
-            border-radius: 15px;
-            color: white;
-            position: relative;
-            width: 300px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .settings.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .settings input {
-            padding: 10px;
-            margin: 10px 0;
-            width: 100%;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            color: #000;
-        }
-
-        .settings button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #ff9800;
-            color: white;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .settings button:hover {
-            background-color: #f57c00;
-        }
-
-        .toggle-settings {
-            cursor: pointer;
-            padding: 10px;
-            background-color: #388e3c;
-            color: white;
-            border-radius: 5px;
-            border: none;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body class="light-mode">
-    <div class="settings-container">
-        <button class="toggle-settings" onclick="toggleSettings()">Ustawienia</button>
-        <div id="settings" class="settings">
-            <h2>Ustawienia</h2>
-            <label>Motyw:</label>
-            <select id="themeSelect" onchange="changeTheme()">
-                <option value="light">Jasny</option>
-                <option value="dark">Ciemny</option>
-            </select>
-            <br><br>
-            <label>Nowy Email:</label>
-            <input type="email" id="emailInput" placeholder="Nowy email" />
-            <label>Nowe Hasło:</label>
-            <input type="password" id="passwordInput" placeholder="Nowe hasło" />
-            <button onclick="saveSettings()">Zapisz zmiany</button>
-        </div>
-    </div>
-    <script>
-        function toggleSettings() {
-            const settings = document.getElementById('settings');
-            if (settings.classList.contains('show')) {
-                settings.style.opacity = '0';
-                settings.style.transform = 'translateY(-20px)';
-                setTimeout(() => settings.classList.remove('show'), 500);
-            } else {
-                settings.classList.add('show');
-                settings.style.opacity = '1';
-                settings.style.transform = 'translateY(0)';
-            }
-        }
-
-        function changeTheme() {
-            const selectedTheme = document.getElementById('themeSelect').value;
-            document.body.className = selectedTheme === 'dark' ? 'dark-mode' : 'light-mode';
-            localStorage.setItem('theme', selectedTheme);
-        }
-
-        window.onload = function() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.body.className = savedTheme === 'dark' ? 'dark-mode' : 'light-mode';
-            document.getElementById('themeSelect').value = savedTheme;
-        };
-    </script>
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona PBGame</title>
+    <title>Desktop PBGame</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -1038,6 +16,8 @@
             font-family: 'Poppins', sans-serif;
             transition: background 0.5s ease-in-out;
             color: white;
+            text-align: center;
+            padding: 20px;
         }
 
         .light-mode {
@@ -1049,20 +29,28 @@
         }
 
         header {
-            text-align: center;
-            padding: 30px;
-            border-radius: 15px;
             background: #1b5e20;
+            padding: 20px;
+            border-radius: 10px;
             color: white;
+            margin-bottom: 20px;
         }
 
-        .auth-form {
+        button {
+            padding: 10px 15px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .auth-form, .settings {
             display: none;
             flex-direction: column;
             align-items: center;
             padding: 20px;
             background: rgba(46, 125, 50, 0.9);
-            border-radius: 15px;
+            border-radius: 10px;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -1070,9 +58,10 @@
             width: 300px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.5s ease-in-out;
         }
 
-        .auth-form input {
+        .auth-form input, .settings input {
             padding: 10px;
             margin: 10px 0;
             width: 100%;
@@ -1082,26 +71,20 @@
             color: #000;
         }
 
-        .auth-form button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #ff9800;
-            color: white;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .auth-form button:hover {
-            background-color: #f57c00;
+        .settings {
+            background: rgba(30, 30, 30, 0.9);
         }
     </style>
 </head>
 <body class="light-mode">
 
     <header>
-        <h1>Strona PBGame</h1>
-    <header>
+        <h1>Desktop PBGame</h1>
+        <button onclick="showLoginForm()">Zaloguj się</button>
+        <button onclick="showRegisterForm()">Zarejestruj się</button>
+        <button onclick="toggleSettings()">Ustawienia</button>
+    </header>
+
     <div id="loginForm" class="auth-form">
         <h2>Zaloguj się</h2>
         <input type="email" id="loginEmail" placeholder="Email" required>
@@ -1117,6 +100,15 @@
         <input type="password" id="registerPassword" placeholder="Hasło" required>
         <button onclick="register()">Zarejestruj się</button>
         <button onclick="closeAuthForm()">Zamknij</button>
+    </div>
+
+    <div id="settings" class="settings">
+        <h2>Ustawienia</h2>
+        <button onclick="toggleTheme()">Zmień Motyw</button>
+        <input type="password" id="newPassword" placeholder="Nowe Hasło">
+        <input type="email" id="newEmail" placeholder="Nowy Email">
+        <button onclick="updateCredentials()">Zmień Dane</button>
+        <button onclick="toggleSettings()">Zamknij</button>
     </div>
 
     <script>
@@ -1134,18 +126,46 @@
         }
 
         function login() {
-            let email = document.getElementById('loginEmail').value;
-            let password = document.getElementById('loginPassword').value;
             alert("Zalogowano pomyślnie!");
             closeAuthForm();
         }
 
         function register() {
-            let username = document.getElementById('registerUsername').value;
-            let email = document.getElementById('registerEmail').value;
-            let password = document.getElementById('registerPassword').value;
             alert("Rejestracja zakończona sukcesem!");
             closeAuthForm();
+        }
+
+        function toggleSettings() {
+            let settings = document.getElementById('settings');
+            if (settings.style.display === 'none' || settings.style.display === '') {
+                settings.style.display = 'flex';
+                settings.style.opacity = 1;
+            } else {
+                settings.style.opacity = 0;
+                setTimeout(() => { settings.style.display = 'none'; }, 500);
+            }
+        }
+
+        function toggleTheme() {
+            let body = document.body;
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+            }
+        }
+
+        function updateCredentials() {
+            let newEmail = document.getElementById('newEmail').value;
+            let newPassword = document.getElementById('newPassword').value;
+            if (newEmail || newPassword) {
+                alert("Dane zmienione! Zostaniesz wylogowany.");
+                window.location.reload();
+            } else {
+                alert("Wpisz nowe dane!");
+            }
         }
     </script>
 </body>
