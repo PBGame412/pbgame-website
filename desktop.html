@@ -3,239 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PBGame - Poradniki i Edity</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <title>Nowa Strona z Obrazem</title>
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #0f0f0f;
-            color: #fff;
-            overflow-x: hidden;
         }
 
         header {
-            background-color: #111;
-            color: #0ff;
-            padding: 30px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
             text-align: center;
-            border-bottom: 3px solid #ff00ff;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        header h1 {
-            font-size: 45px;
-            font-weight: 700;
-            text-transform: uppercase;
+        h1 {
+            margin: 0;
         }
 
-        header nav {
-            margin-top: 20px;
-        }
-
-        header nav a {
-            color: #0ff;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: color 0.3s ease;
-        }
-
-        header nav a:hover {
-            color: #ff00ff;
-        }
-
-        .hero-section {
-            background: url('https://via.placeholder.com/1600x800/00ff00/000000?text=PBGame') no-repeat center center/cover;
-            color: white;
+        .content {
             text-align: center;
-            padding: 120px 0;
+            padding: 20px;
         }
 
-        .hero-section h2 {
-            font-size: 55px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.4);
-        }
-
-        .hero-section p {
-            font-size: 24px;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.4);
-        }
-
-        .cta-btn {
-            padding: 15px 30px;
-            background-color: #ff00ff;
-            color: white;
-            font-size: 20px;
-            font-weight: 600;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
-        }
-
-        .cta-btn:hover {
-            background-color: #d5008f;
-            transform: scale(1.1);
-        }
-
-        .about-section {
-            padding: 60px 20px;
-            text-align: center;
-            background-color: #181818;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .about-section h2 {
-            font-size: 40px;
-            margin-bottom: 20px;
-            color: #ff00ff;
-            text-transform: uppercase;
-        }
-
-        .about-section p {
-            font-size: 20px;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            color: #ccc;
-        }
-
-        .my-photo {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            object-fit: cover;
-        }
-
-        .skills-section {
-            display: flex;
-            justify-content: space-around;
-            padding: 60px 20px;
-            text-align: center;
-            background-color: #1c1c1c;
-        }
-
-        .skill {
-            background-color: #222;
-            padding: 40px;
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 5px solid #333;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            width: 250px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .skill:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(255, 0, 255, 0.5);
-        }
-
-        .skill h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #ff00ff;
-        }
-
-        .skill p {
-            font-size: 16px;
-            color: #ccc;
         }
 
         footer {
-            background-color: #111;
-            color: white;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
             text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-
-        footer p {
-            font-size: 16px;
-        }
-
-        footer a {
-            color: #ff00ff;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        footer a:hover {
-            color: #d5008f;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 1s ease-out;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>PBGame</h1>
-        <nav>
-            <a href="#about">O mnie</a>
-            <a href="#skills">Moje Edity</a>
-            <a href="#contact">Kontakt</a>
-        </nav>
+        <h1>Witaj na Nowej Stronie!</h1>
     </header>
 
-    <section class="hero-section">
-        <div class="fade-in-up">
-            <h2>Tworzę poradniki i edity!</h2>
-            <p>Pomagam graczom rozwijać się, nagrywając poradniki i dynamiczne edity.</p>
-            <button class="cta-btn">Zobacz moją pracę</button>
-        </div>
-    </section>
-
-    <section id="about" class="about-section fade-in-up">
-        <h2>O mnie</h2>
-        <p>Witaj! Nazywam się PBGame, jestem twórcą treści gamingowych. Moim głównym celem jest pomaganie graczom poprzez nagrywanie poradników i tworzenie niesamowitych editów w grach, które inspirują innych do rozwoju.</p>
-        <img src="https://via.placeholder.com/200" alt="Moje zdjęcie" class="my-photo">
-        <p>Staram się łączyć pasję do gier z twórczością wideo, aby dostarczyć coś wyjątkowego każdemu, kto chce rozwinąć swoje umiejętności w grach!</p>
-    </section>
-
-    <section id="skills" class="skills-section fade-in-up">
-        <div class="skill">
-            <h3>Poradniki</h3>
-            <p>Tworzę szczegółowe poradniki, które pomagają graczom opanować swoje ulubione gry.</p>
-        </div>
-        <div class="skill">
-            <h3>Edity</h3>
-            <p>Specjalizuję się w tworzeniu dynamicznych edytów, które sprawiają, że każda scena w grze staje się bardziej ekscytująca!</p>
-        </div>
-    </section>
+    <div class="content">
+        <p>Oto obrazek, który znajduje się na tej stronie:</p>
+        <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="Obrazek z YouTube">
+    </div>
 
     <footer>
-        <p>&copy; 2025 PBGame. Wszystkie prawa zastrzeżone.</p>
-        <p>Skontaktuj się ze mną: <a href="mailto:kontakt@pbgame.pl">kontakt@pbgame.pl</a></p>
+        <p>&copy; 2025 Nowa Strona. Wszelkie prawa zastrzeżone.</p>
     </footer>
 
-    <script>
-        // Placeholder for additional JS functionality
-    </script>
 </body>
 </html>
