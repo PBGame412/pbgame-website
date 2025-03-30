@@ -3,49 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Europe</title>
+    <title>Mapa Europy - Pixel Art</title>
     <style>
         body {
             text-align: center;
-            background-color: #111;
-            color: white;
             font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: white;
         }
         canvas {
-            border: 2px solid white;
-            margin-top: 20px;
+            border: 1px solid white;
             cursor: crosshair;
+        }
+        .controls {
+            margin: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Pixel Europe</h1>
-    <p>Kliknij na mapę, aby dodać kolorowy piksel!</p>
-    <canvas id="pixelCanvas" width="800" height="600"></canvas>
-    <br>
-    <button onclick="clearCanvas()">Wyczyść</button>
-    
+    <h1>Mapa Europy - Pixel Art</h1>
+    <div class="controls">
+        <label for="colorPicker">Wybierz kolor: </label>
+        <input type="color" id="colorPicker" value="#ff0000">
+    </div>
+    <canvas id="mapCanvas" width="800" height="600"></canvas>
     <script>
-        const canvas = document.getElementById('pixelCanvas');
+        const canvas = document.getElementById('mapCanvas');
         const ctx = canvas.getContext('2d');
-        const pixelSize = 10;
+        const colorPicker = document.getElementById('colorPicker');
         
-        function getRandomColor() {
-            return '#' + Math.floor(Math.random()*16777215).toString(16);
-        }
+        // Załaduj mapę Europy
+        const mapImage = new Image();
+        mapImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BlankMap-Europe-v4.png/800px-BlankMap-Europe-v4.png';
+        mapImage.onload = () => {
+            ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
+        };
         
-        canvas.addEventListener('click', function(event) {
+        canvas.addEventListener('click', (event) => {
             const rect = canvas.getBoundingClientRect();
-            const x = Math.floor((event.clientX - rect.left) / pixelSize) * pixelSize;
-            const y = Math.floor((event.clientY - rect.top) / pixelSize) * pixelSize;
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
             
-            ctx.fillStyle = getRandomColor();
-            ctx.fillRect(x, y, pixelSize, pixelSize);
+            ctx.fillStyle = colorPicker.value;
+            ctx.fillRect(x, y, 5, 5); // Rysowanie piksela 5x5
         });
-        
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
     </script>
 </body>
 </html>
