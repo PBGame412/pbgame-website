@@ -399,5 +399,67 @@
             }
         }
     </script>
+         <script>
+    // Funkcja pokazująca/ukrywająca ustawienia
+    function toggleSettings() {
+        const settingsSection = document.getElementById('settingsSection');
+        if (settingsSection.style.display === 'none' || settingsSection.style.display === '') {
+            settingsSection.style.display = 'flex';
+            settingsSection.style.opacity = 1;
+        } else {
+            settingsSection.style.opacity = 0;
+            setTimeout(() => {
+                settingsSection.style.display = 'none';
+            }, 500);
+        }
+    }
+
+    // Funkcja zamykająca ustawienia
+    function closeSettings() {
+        const settingsSection = document.getElementById('settingsSection');
+        settingsSection.style.opacity = 0;
+        setTimeout(() => {
+            settingsSection.style.display = 'none';
+        }, 500);
+    }
+
+    // Funkcja aktualizująca dane użytkownika
+    function updateSettings() {
+        const newEmail = document.getElementById('newEmail').value;
+        const newPassword = document.getElementById('newPassword').value;
+
+        if (newPassword.length < 6) {
+            alert("Hasło musi mieć przynajmniej 6 znaków!");
+            return;
+        }
+
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let user = users.find(u => u.username === userNick);
+
+        if (user) {
+            if (newEmail) user.email = newEmail;
+            if (newPassword) user.password = newPassword;
+
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("Dane zostały zaktualizowane!");
+            closeSettings();
+        } else {
+            alert("Nie znaleziono użytkownika.");
+        }
+    }
+ 
+    // Pozostałe Twoje funkcje (np. logowanie, rejestracja itp.) pozostają bez zmian
+</script>
+        <!-- Przycisk do otwierania sekcji ustawień -->
+<button id="settingsButton" onclick="toggleSettings()">Ustawienia</button>
+
+<!-- Sekcja ustawień -->
+<div id="settingsSection" style="display: none;">
+    <h2>Ustawienia</h2>
+    <input type="email" id="newEmail" placeholder="Nowy email">
+    <input type="password" id="newPassword" placeholder="Nowe hasło (min. 6 znaków)">
+    <button onclick="updateSettings()">Zapisz zmiany</button>
+    <button onclick="closeSettings()">Zamknij</button>
+</div>
 </body>
 </html>
