@@ -85,10 +85,21 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            transition: all 0.3s ease; /* Animacja przejścia */
         }
 
         .btn-green { background: #43a047; color: white; }
         .btn-red { background: #d32f2f; color: white; }
+
+        .btn-green:hover {
+            transform: scale(1.1);
+            background: #66bb6a;
+        }
+
+        .btn-red:hover {
+            transform: scale(1.1);
+            background: #ef5350;
+        }
 
         .auth-form {
             display: none;
@@ -182,10 +193,11 @@
             text-decoration: none;
             margin: 0 15px;
             font-size: 18px;
+            transition: color 0.3s ease; /* Animacja przejścia dla linków */
         }
 
         footer a:hover {
-            text-decoration: underline;
+            color: #81c784;
         }
     </style>
 </head>
@@ -262,14 +274,20 @@
                 panel.classList.toggle('show');
                 enableSettings(true);
             } else {
-                alert('Musisz być zalogowany, aby zmieniać ustawienia.');
+                alert('Musisz się zalogować, aby zmienić ustawienia.');
             }
         }
 
-        function enableSettings(status) {
-            document.getElementById('newPassword').disabled = !status;
-            document.getElementById('newEmail').disabled = !status;
-            document.querySelector('.btn-green').disabled = !status;
+        function enableSettings(isEnabled) {
+            const newPassword = document.getElementById('newPassword');
+            const newEmail = document.getElementById('newEmail');
+            const savePasswordBtn = document.querySelector('.settings button:nth-child(4)');
+            const saveEmailBtn = document.querySelector('.settings button:nth-child(6)');
+
+            newPassword.disabled = !isEnabled;
+            newEmail.disabled = !isEnabled;
+            savePasswordBtn.disabled = !isEnabled;
+            saveEmailBtn.disabled = !isEnabled;
         }
 
         function changeTheme(theme) {
