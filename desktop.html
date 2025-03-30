@@ -1020,5 +1020,133 @@
             document.getElementById('themeSelect').value = savedTheme;
         };
     </script>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona PBGame</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.5s ease-in-out;
+            color: white;
+        }
+
+        .light-mode {
+            background: linear-gradient(135deg, #d4edda, #a5d6a7);
+        }
+
+        .dark-mode {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+        }
+
+        header {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: #1b5e20;
+            color: white;
+        }
+
+        .auth-form {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background: rgba(46, 125, 50, 0.9);
+            border-radius: 15px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-form input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #000;
+        }
+
+        .auth-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff9800;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .auth-form button:hover {
+            background-color: #f57c00;
+        }
+    </style>
+</head>
+<body class="light-mode">
+
+    <header>
+        <h1>Strona PBGame</h1>
+    <header>
+    <div id="loginForm" class="auth-form">
+        <h2>Zaloguj się</h2>
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Hasło" required>
+        <button onclick="login()">Zaloguj się</button>
+        <button onclick="closeAuthForm()">Zamknij</button>
+    </div>
+
+    <div id="registerForm" class="auth-form">
+        <h2>Zarejestruj się</h2>
+        <input type="text" id="registerUsername" placeholder="Nazwa użytkownika" required>
+        <input type="email" id="registerEmail" placeholder="Email" required>
+        <input type="password" id="registerPassword" placeholder="Hasło" required>
+        <button onclick="register()">Zarejestruj się</button>
+        <button onclick="closeAuthForm()">Zamknij</button>
+    </div>
+
+    <script>
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'flex';
+        }
+
+        function showRegisterForm() {
+            document.getElementById('registerForm').style.display = 'flex';
+        }
+
+        function closeAuthForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        function login() {
+            let email = document.getElementById('loginEmail').value;
+            let password = document.getElementById('loginPassword').value;
+            alert("Zalogowano pomyślnie!");
+            closeAuthForm();
+        }
+
+        function register() {
+            let username = document.getElementById('registerUsername').value;
+            let email = document.getElementById('registerEmail').value;
+            let password = document.getElementById('registerPassword').value;
+            alert("Rejestracja zakończona sukcesem!");
+            closeAuthForm();
+        }
+    </script>
 </body>
 </html>
