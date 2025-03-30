@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa z Pixelami</title>
+    <title>Mapa PixelPlanet</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,13 +22,12 @@
             height: 80vh;
             border: 1px solid #ccc;
             overflow: hidden;
-            cursor: pointer;
+            cursor: crosshair;
         }
         canvas {
             position: absolute;
             top: 0;
             left: 0;
-            cursor: crosshair;
         }
         .controls {
             position: fixed;
@@ -48,6 +47,10 @@
             font-size: 18px;
             margin-top: 10px;
         }
+        #pixelCount {
+            font-size: 18px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -60,6 +63,7 @@
     <label for="colorPicker">Wybierz kolor: </label>
     <input type="color" id="colorPicker" value="#ff0000">
     <div id="timer">Czas: 0s</div>
+    <div id="pixelCount">Liczba postawionych pikseli: 0</div>
     <button id="resetButton">Resetuj</button>
 </div>
 
@@ -68,12 +72,13 @@
     const ctx = canvas.getContext('2d');
     const colorPicker = document.getElementById('colorPicker');
     const timerDisplay = document.getElementById('timer');
+    const pixelCountDisplay = document.getElementById('pixelCount');
     const resetButton = document.getElementById('resetButton');
     
     const pixelSize = 10;
     const canvasWidth = 800;
     const canvasHeight = 800;
-    let time = 0; // Startujemy od 0 sekundy
+    let time = 0;
     let pixelsPlaced = 0;
     let canPlacePixels = true;
 
@@ -85,7 +90,7 @@
     const mapImage = new Image();
     mapImage.src = 'https://t4.ftcdn.net/jpg/00/69/68/61/360_F_69686132_hhGgrZGQxReATU3VO1Nqv6VxqPe02MVZ.jpg';
     mapImage.onload = function() {
-        ctx.drawImage(mapImage, 0, 0, canvasWidth, canvasHeight);  // Rysowanie mapy na canvasie
+        ctx.drawImage(mapImage, 0, 0, canvasWidth, canvasHeight);
     }
 
     // Funkcja rysująca piksele
@@ -109,6 +114,7 @@
         pixelsPlaced++;
         time += 1;
         updateTimer();
+        updatePixelCount();
 
         // Sprawdzenie, czy minęła 60 sekund
         if (time >= 60) {
@@ -122,6 +128,11 @@
         timerDisplay.innerText = "Czas: " + time + "s";
     }
 
+    // Funkcja odświeżająca licznik pikseli
+    function updatePixelCount() {
+        pixelCountDisplay.innerText = "Liczba postawionych pikseli: " + pixelsPlaced;
+    }
+
     // Resetowanie
     resetButton.addEventListener('click', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Czyszczenie canvas
@@ -130,6 +141,7 @@
         pixelsPlaced = 0;
         canPlacePixels = true;
         updateTimer();
+        updatePixelCount();
     });
 
 </script>
