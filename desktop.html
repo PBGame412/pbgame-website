@@ -140,12 +140,12 @@
         <button onclick="changeTheme('dark')" class="btn-red">Ciemny</button>
         <hr>
         <h3>Zmień hasło</h3>
-        <input type="password" id="newPassword" placeholder="Nowe hasło">
-        <button onclick="changePassword()" class="btn-green">Zapisz</button>
+        <input type="password" id="newPassword" placeholder="Nowe hasło" disabled>
+        <button onclick="changePassword()" class="btn-green" disabled>Zapisz</button>
         <hr>
         <h3>Zmień email</h3>
-        <input type="email" id="newEmail" placeholder="Nowy email">
-        <button onclick="changeEmail()" class="btn-green">Zapisz</button>
+        <input type="email" id="newEmail" placeholder="Nowy email" disabled>
+        <button onclick="changeEmail()" class="btn-green" disabled>Zapisz</button>
     </div>
 
     <div id="loginForm" class="auth-form">
@@ -166,9 +166,28 @@
     </div>
 
     <script>
+        let loggedIn = false;
+
         function toggleSettings() {
-            const panel = document.getElementById('settingsPanel');
-            panel.classList.toggle('show');
+            if (loggedIn) {
+                const panel = document.getElementById('settingsPanel');
+                panel.classList.toggle('show');
+                enableSettings(true);
+            } else {
+                alert('Musisz być zalogowany, aby zmieniać ustawienia.');
+            }
+        }
+
+        function enableSettings(enable) {
+            const passwordInput = document.getElementById('newPassword');
+            const emailInput = document.getElementById('newEmail');
+            const savePasswordButton = document.querySelector('button[onclick="changePassword()"]');
+            const saveEmailButton = document.querySelector('button[onclick="changeEmail()"]');
+            
+            passwordInput.disabled = !enable;
+            emailInput.disabled = !enable;
+            savePasswordButton.disabled = !enable;
+            saveEmailButton.disabled = !enable;
         }
 
         function changeTheme(theme) {
@@ -177,10 +196,16 @@
 
         function changePassword() {
             alert('Hasło zmienione. Zaloguj się ponownie.');
+            loggedIn = false;
+            enableSettings(false);
+            closeAuthForm();
         }
 
         function changeEmail() {
             alert('Email zmieniony. Zaloguj się ponownie.');
+            loggedIn = false;
+            enableSettings(false);
+            closeAuthForm();
         }
 
         function showLoginForm() {
@@ -194,6 +219,35 @@
         function closeAuthForm() {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('registerForm').style.display = 'none';
+        }
+
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Możesz tutaj dodać dodatkową logikę do sprawdzania loginu
+            if (email && password) {
+                loggedIn = true;
+                enableSettings(true);
+                alert('Zalogowano pomyślnie!');
+                closeAuthForm();
+            } else {
+                alert('Proszę podać poprawny email i hasło.');
+            }
+        }
+
+        function register() {
+            const username = document.getElementById('registerUsername').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            // Możesz tutaj dodać logikę rejestracji
+            if (username && email && password) {
+                alert('Zarejestrowano pomyślnie! Możesz się teraz zalogować.');
+                closeAuthForm();
+            } else {
+                alert('Proszę uzupełnić wszystkie pola.');
+            }
         }
     </script>
 </body>
