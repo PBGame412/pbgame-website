@@ -3,286 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PBGame - Profesjonalna Strona</title>
+    <title>Strona PBGame</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Globalne Style */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f1f1f1;
-            color: #333;
+            background: linear-gradient(to right, #43a047, #a5d6a7);
+            color: #fff;
+            transition: background 0.5s ease;
             overflow-x: hidden;
         }
-        h1, h2, h3 {
-            font-weight: 600;
-        }
 
-        /* Animacje */
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* Nagłówek */
         header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #388e3c;
+            padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease;
         }
+
         header h1 {
-            font-size: 28px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
         }
-        .nav-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        .nav-buttons button {
-            background-color: #3498db;
-            border: none;
+
+        .auth-buttons button {
+            background-color: #43a047;
             color: white;
             padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+            margin-left: 10px;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        .nav-buttons button:hover {
-            background-color: #2980b9;
+
+        .auth-buttons button:hover {
+            background-color: #2e7d32;
         }
 
-        /* Container */
-        .container {
-            width: 80%;
+        .content {
+            margin-top: 80px;
+            padding: 40px;
+            text-align: center;
+            color: #333;
             max-width: 1200px;
-            margin: auto;
-            padding-top: 100px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Banner */
         .banner {
-            background-color: #ff6f61;
-            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #388e3c;
             padding: 15px;
             text-align: center;
-            font-size: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            animation: fadeIn 1s ease;
+            color: white;
             display: none;
+            animation: slideIn 1s ease-out;
         }
 
         .banner.show {
             display: block;
         }
 
-        /* Formy */
-        .auth-form, .settings-form {
-            background-color: #2ecc71;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-            margin: 20px auto;
-            animation: fadeIn 1.5s ease;
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
         }
 
-        .auth-form h2, .settings-form h2 {
-            color: white;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .auth-form input, .settings-form input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+        .button-style {
+            padding: 10px 20px;
             font-size: 16px;
-            transition: border 0.3s ease;
-        }
-
-        .auth-form input:focus, .settings-form input:focus {
-            border-color: #3498db;
-        }
-
-        .auth-form button, .settings-form button {
-            background-color: #3498db;
+            background-color: #43a047;
             color: white;
+            border-radius: 5px;
             border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
             transition: background-color 0.3s ease;
         }
 
-        .auth-form button:hover, .settings-form button:hover {
-            background-color: #2980b9;
+        .button-style:hover {
+            background-color: #2e7d32;
         }
 
-        /* Media */
-        .social-media {
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
-            gap: 20px;
+        .card {
+            background-color: #fff;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            margin-top: 20px;
         }
 
-        .social-media a {
-            background-color: #3498db;
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .footer {
+            background-color: #388e3c;
             color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 16px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
 
-        .social-media a:hover {
-            background-color: #2980b9;
-        }
-
-        /* Responsive */
-        @media screen and (max-width: 768px) {
-            header h1 {
-                font-size: 24px;
-            }
-            .container {
-                width: 90%;
-            }
-            .auth-form, .settings-form {
-                width: 80%;
-            }
-        }
     </style>
 </head>
 <body>
 
+    <!-- Header with logo and buttons -->
     <header>
         <h1>PBGame</h1>
-        <div class="nav-buttons">
+        <div class="auth-buttons">
             <button onclick="showLoginForm()">Zaloguj</button>
             <button onclick="showRegisterForm()">Zarejestruj</button>
-            <button onclick="toggleSettings()">Ustawienia</button>
         </div>
     </header>
 
-    <!-- Banner -->
+    <!-- Banner that appears after 5 seconds -->
     <div id="welcomeBanner" class="banner">
-        Witamy na PBGame! Ciesz się naszą platformą.
+        Witaj na naszej stronie PBGame! Sprawdź nasze najnowsze funkcje!
     </div>
 
-    <div class="container">
-        <!-- Social Media -->
-        <div class="social-media">
-            <h3>Media Społecznościowe</h3>
-            <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">YouTube</a>
-            <a href="https://discord.gg/kmnVBUYxY7" target="_blank">Discord</a>
+    <!-- Main content -->
+    <div class="content">
+        <h2>Witaj na stronie PBGame!</h2>
+        <p>Dołącz do naszej społeczności gier i zacznij grać w najlepsze gry online. Zarejestruj się teraz!</p>
+
+        <!-- Example Cards -->
+        <div class="card">
+            <h3>Nowości</h3>
+            <p>Sprawdź nasze najnowsze gry, które właśnie pojawiły się na platformie.</p>
+        </div>
+        <div class="card">
+            <h3>Społeczność</h3>
+            <p>Dołącz do naszej aktywnej społeczności graczy na Discordzie i YouTube.</p>
         </div>
 
-        <!-- Ustawienia -->
-        <div id="settingsPanel" class="settings-form" style="display: none;">
-            <h2>Ustawienia</h2>
-            <label>Motyw:</label>
-            <button onclick="changeTheme('light')">Jasny</button>
-            <button onclick="changeTheme('dark')">Ciemny</button>
-            <hr>
-            <h3>Zmień hasło</h3>
-            <input type="password" id="newPassword" placeholder="Nowe hasło">
-            <button onclick="changePassword()">Zapisz</button>
-            <hr>
-            <h3>Zmień email</h3>
-            <input type="email" id="newEmail" placeholder="Nowy email">
-            <button onclick="changeEmail()">Zapisz</button>
-        </div>
-
-        <!-- Logowanie -->
-        <div id="loginForm" class="auth-form" style="display: none;">
-            <h2>Zaloguj się</h2>
-            <input type="email" id="loginEmail" placeholder="Email">
-            <input type="password" id="loginPassword" placeholder="Hasło">
-            <button onclick="login()">Zaloguj</button>
-            <button onclick="closeAuthForm()">Zamknij</button>
-        </div>
-
-        <!-- Rejestracja -->
-        <div id="registerForm" class="auth-form" style="display: none;">
-            <h2>Zarejestruj się</h2>
-            <input type="text" id="registerUsername" placeholder="Nazwa użytkownika">
-            <input type="email" id="registerEmail" placeholder="Email">
-            <input type="password" id="registerPassword" placeholder="Hasło">
-            <button onclick="register()">Zarejestruj</button>
-            <button onclick="closeAuthForm()">Zamknij</button>
+        <!-- Footer with social media -->
+        <div class="footer">
+            <p>Znajdź nas na: <a href="https://www.youtube.com/@PBGame-v6c" target="_blank" class="button-style">YouTube</a> | <a href="https://discord.gg/kmnVBUYxY7" target="_blank" class="button-style">Discord</a></p>
         </div>
     </div>
 
     <script>
-        function toggleSettings() {
-            const panel = document.getElementById('settingsPanel');
-            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function changeTheme(theme) {
-            document.body.className = theme === 'light' ? 'light-theme' : 'dark-theme';
-        }
-
-        function changePassword() {
-            alert('Hasło zmienione. Zaloguj się ponownie.');
-        }
-
-        function changeEmail() {
-            alert('Email zmieniony. Zaloguj się ponownie.');
-        }
-
-        function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'block';
-        }
-
-        function showRegisterForm() {
-            document.getElementById('registerForm').style.display = 'block';
-        }
-
-        function closeAuthForm() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-        }
-
-        function login() {
-            alert('Zalogowano!');
-            closeAuthForm();
-        }
-
-        function register() {
-            alert('Zarejestrowano!');
-            closeAuthForm();
-        }
-
-        // Banner display after page load
+        // Display the banner after 5 seconds
         window.onload = function() {
             setTimeout(function() {
                 document.getElementById('welcomeBanner').classList.add('show');
                 setTimeout(function() {
                     document.getElementById('welcomeBanner').classList.remove('show');
                 }, 5000);
-            }, 500);
+            }, 1000);
         };
+
+        // Example login and register functions
+        function showLoginForm() {
+            alert("Logowanie będzie wkrótce dostępne!");
+        }
+
+        function showRegisterForm() {
+            alert("Rejestracja będzie wkrótce dostępna!");
+        }
     </script>
 
 </body>
