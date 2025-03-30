@@ -131,11 +131,12 @@
             cursor: pointer;
         }
 
+        /* Nowy kolor tła bannera */
         .welcome-banner {
             position: fixed;
             top: 0;
             width: 100%;
-            background-color: #388e3c;
+            background-color: #333333;  /* Ciemny szary */
             color: white;
             text-align: center;
             padding: 10px;
@@ -275,6 +276,27 @@
             document.body.className = theme === 'light' ? 'light-theme' : 'dark-theme';
         }
 
+        function changePassword() {
+            alert('Hasło zmienione. Zaloguj się ponownie.');
+        }
+
+        function changeEmail() {
+            alert('Email zmieniony. Zaloguj się ponownie.');
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        function showRegisterForm() {
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function closeAuthForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
         function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
@@ -301,11 +323,7 @@
                 alert('Proszę uzupełnić wszystkie pola.');
             }
         }
-
-        function closeAuthForm() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-        }
     </script>
+
 </body>
 </html>
