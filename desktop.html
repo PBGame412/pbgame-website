@@ -1,52 +1,103 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa Europy - Pixel Art</title>
+    <title>Pixel Europe</title>
     <style>
         body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
-            color: white;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         canvas {
-            border: 1px solid white;
+            border: 1px solid black;
             cursor: crosshair;
         }
-        .controls {
+        #controls {
             margin: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Mapa Europy - Pixel Art</h1>
-    <div class="controls">
-        <label for="colorPicker">Wybierz kolor: </label>
+    <div id="controls">
         <input type="color" id="colorPicker" value="#ff0000">
+        <span id="timer">60s</span>
     </div>
-    <canvas id="mapCanvas" width="800" height="600"></canvas>
+    <canvas id="canvas"></canvas>
     <script>
-        const canvas = document.getElementById('mapCanvas');
-        const ctx = canvas.getContext('2d');
-        const colorPicker = document.getElementById('colorPicker');
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const colorPicker = document.getElementById("colorPicker");
+        const timerDisplay = document.getElementById("timer");
         
-        // Załaduj mapę Europy
-        const mapImage = new Image();
-        mapImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/BlankMap-Europe-v4.png/800px-BlankMap-Europe-v4.png';
-        mapImage.onload = () => {
-            ctx.drawImage(mapImage, 0, 0, canvas.width, canvas.height);
+        let isMouseDown = false;
+        let offsetX = 0, offsetY = 0;
+        let lastX, lastY;
+        let timeLeft = 60;
+        let pixelsPlaced = 0;
+        const gridSize = 10;
+        const mapWidth = 800;
+        const mapHeight = 600;
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight - 50;
+        
+        const image = new Image();
+        image.src = "https://upload.wikimedia.org/wikipedia/commons/6/69/Europe_blank_map.png";
+        
+        image.onload = () => {
+            ctx.drawImage(image, 0, 0, mapWidth, mapHeight);
         };
         
-        canvas.addEventListener('click', (event) => {
-            const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-            
-            ctx.fillStyle = colorPicker.value;
-            ctx.fillRect(x, y, 5, 5); // Rysowanie piksela 5x5
+        function drawPixel(x, y, color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, gridSize, gridSize);
+        }
+        
+        canvas.addEventListener("mousedown", (e) => {
+            if (timeLeft <= 0) return;
+            isMouseDown = true;
+            lastX = e.clientX;
+            lastY = e.clientY;
         });
+        
+        canvas.addEventListener("mouseup", () => {
+            isMouseDown = false;
+        });
+        
+        canvas.addEventListener("mousemove", (e) => {
+            if (isMouseDown) {
+                offsetX += e.clientX - lastX;
+                offsetY += e.clientY - lastY;
+                lastX = e.clientX;
+                lastY = e.clientY;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(image, offsetX, offsetY, mapWidth, mapHeight);
+            }
+        });
+        
+        canvas.addEventListener("click", (e) => {
+            if (timeLeft <= 0) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor((e.clientX - rect.left - offsetX) / gridSize) * gridSize;
+            const y = Math.floor((e.clientY - rect.top - offsetY) / gridSize) * gridSize;
+            drawPixel(x, y, colorPicker.value);
+            pixelsPlaced++;
+            timeLeft += 1;
+            timerDisplay.textContent = `${timeLeft}s`;
+        });
+        
+        const timer = setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timerDisplay.textContent = `${timeLeft}s`;
+            } else {
+                clearInterval(timer);
+            }
+        }, 1000);
     </script>
 </body>
 </html>
