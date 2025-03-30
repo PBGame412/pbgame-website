@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Profesjonalna</title>
+    <title>O mnie - Strona Profesjonalna</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -83,14 +83,40 @@
             transform: scale(1.05);
         }
 
-        .features {
+        .about-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .about-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #00bfae;
+        }
+
+        .about-section p {
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: #666;
+        }
+
+        .my-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        .skills-section {
             display: flex;
             justify-content: space-around;
             padding: 60px 20px;
             text-align: center;
         }
 
-        .feature {
+        .skill {
             background-color: white;
             padding: 40px;
             border-radius: 10px;
@@ -99,18 +125,18 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .feature:hover {
+        .skill:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
 
-        .feature h3 {
+        .skill h3 {
             font-size: 24px;
             margin-bottom: 15px;
             color: #00bfae;
         }
 
-        .feature p {
+        .skill p {
             font-size: 16px;
             color: #666;
         }
@@ -157,45 +183,47 @@
 <body>
 
     <header>
-        <h1>Strona Profesjonalna</h1>
+        <h1>O mnie</h1>
         <nav>
-            <a href="#about">O nas</a>
-            <a href="#services">Usługi</a>
+            <a href="#about">O mnie</a>
+            <a href="#skills">Umiejętności</a>
             <a href="#contact">Kontakt</a>
         </nav>
     </header>
 
     <section class="hero-section">
         <div class="fade-in-up">
-            <h2>Witamy na naszej stronie!</h2>
-            <p>Oferujemy profesjonalne usługi dla każdego, kto szuka jakości i innowacji.</p>
-            <button class="cta-btn">Zaczynaj teraz</button>
+            <h2>Witaj na mojej stronie!</h2>
+            <p>Jestem [Twoje Imię], profesjonalistą w [Twoja Specjalizacja]. Zajmuję się [Twoja Działalność].</p>
+            <button class="cta-btn">Dowiedz się więcej</button>
         </div>
     </section>
 
-    <section id="about" class="fade-in-up">
-        <h2 style="text-align: center; margin-top: 60px;">O nas</h2>
-        <p style="text-align: center; margin-bottom: 40px;">Nasza firma specjalizuje się w dostarczaniu rozwiązań, które usprawniają Twoje działania. Jesteśmy zespołem profesjonalistów, którzy z pasją podchodzą do każdego projektu.</p>
+    <section id="about" class="about-section fade-in-up">
+        <h2>Kim jestem?</h2>
+        <p>Jestem pasjonatem [Twoja pasja], a także profesjonalistą w [Twoja specjalność]. Moja kariera zaczęła się [opisz swoje początki], a teraz mam przyjemność pracować nad projektami, które łączą moją pasję i umiejętności.</p>
+        <img src="https://via.placeholder.com/200" alt="Moje zdjęcie" class="my-photo">
+        <p>Przez lata zdobywałem doświadczenie w różnych projektach, co pozwoliło mi rozwinąć moje umiejętności i być w stanie dostarczać wyjątkowe rezultaty w każdej dziedzinie, którą się zajmuję.</p>
     </section>
 
-    <section id="services" class="features fade-in-up">
-        <div class="feature">
-            <h3>Usługa 1</h3>
-            <p>Oferujemy kompleksowe rozwiązania w zakresie projektowania i rozwoju oprogramowania. Nasze usługi dostosowujemy do potrzeb każdego klienta.</p>
+    <section id="skills" class="skills-section fade-in-up">
+        <div class="skill">
+            <h3>Programowanie</h3>
+            <p>Posiadam szerokie doświadczenie w programowaniu w wielu językach, takich jak JavaScript, Python, PHP, a także w tworzeniu aplikacji webowych i mobilnych.</p>
         </div>
-        <div class="feature">
-            <h3>Usługa 2</h3>
-            <p>Specjalizujemy się w tworzeniu aplikacji webowych, które są intuicyjne i łatwe w użyciu, zapewniając jednocześnie wysoką wydajność i bezpieczeństwo.</p>
+        <div class="skill">
+            <h3>Projektowanie</h3>
+            <p>Jestem również specjalistą w zakresie projektowania UX/UI. Zawsze dbam o to, by moje projekty były zarówno funkcjonalne, jak i estetyczne.</p>
         </div>
-        <div class="feature">
-            <h3>Usługa 3</h3>
-            <p>Nasze doświadczenie w zakresie UX/UI pozwala nam tworzyć produkty, które są nie tylko funkcjonalne, ale również estetyczne i przyjazne użytkownikowi.</p>
+        <div class="skill">
+            <h3>Marketing</h3>
+            <p>Posiadam doświadczenie w zakresie marketingu cyfrowego, tworzenia strategii oraz wdrażania kampanii reklamowych online.</p>
         </div>
     </section>
 
     <footer>
         <p>&copy; 2025 Strona Profesjonalna. Wszystkie prawa zastrzeżone.</p>
-        <p>Zapraszamy do kontaktu - <a href="mailto:kontakt@profesjonalna-strona.pl">kontakt@profesjonalna-strona.pl</a></p>
+        <p>Zapraszam do kontaktu - <a href="mailto:kontakt@twojastrona.pl">kontakt@twojastrona.pl</a></p>
     </footer>
 
     <script>
@@ -203,4 +231,3 @@
     </script>
 </body>
 </html>
-
