@@ -229,6 +229,14 @@
         footer a:hover {
             color: #81c784;
         }
+
+        .social-media-header {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+
     </style>
 </head>
 <body class="dark-theme">
@@ -242,7 +250,7 @@
         <div class="auth-buttons">
             <button onclick="showLoginForm()" class="btn-green">Zaloguj</button>
             <button onclick="showRegisterForm()" class="btn-green">Zarejestruj</button>
-            <button onclick="toggleSettings()" class="btn-green">Ustawienia</button>
+            <button onclick="toggleSettings()" class="btn-green" id="settingsBtn" disabled>Ustawienia</button>
         </div>
     </header>
 
@@ -279,17 +287,18 @@
     </div>
 
     <footer>
+        <div class="social-media-header">Media Społecznościowe</div>
         <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">YouTube</a>
         <a href="https://discord.gg/kmnVBUYxY7" target="_blank">Discord</a>
     </footer>
 
     <script>
-        // Pokazanie bannera po załadowaniu strony
+        let loggedIn = false;
+
         window.onload = function() {
             document.getElementById('welcomeBanner').style.display = 'block';
         }
 
-        // Funkcja logowania
         function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
@@ -297,6 +306,7 @@
             if (email && password) {
                 loggedIn = true;
                 enableSettings(true);
+                document.getElementById('settingsBtn').disabled = false; // Enable settings button after login
                 alert('Zalogowano pomyślnie!');
                 closeAuthForm();
             } else {
@@ -323,6 +333,10 @@
         }
 
         function toggleSettings() {
+            if (!loggedIn) {
+                alert('Proszę się zalogować, aby uzyskać dostęp do ustawień.');
+                return;
+            }
             const panel = document.getElementById('settingsPanel');
             panel.classList.toggle('show');
         }
@@ -351,5 +365,6 @@
             alert('Email zmieniony. Zaloguj się ponownie.');
         }
     </script>
+
 </body>
 </html>
