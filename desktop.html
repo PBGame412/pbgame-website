@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O mnie - Strona Profesjonalna</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>O mnie - Strona Gamingowa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,23 +13,25 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            font-family: 'Press Start 2P', sans-serif;
+            background-color: #111;
+            color: white;
             overflow-x: hidden;
+            padding: 0;
+            margin: 0;
         }
 
         header {
-            background-color: #343a40;
-            color: white;
+            background-color: #0d0d0d;
+            color: #0ff;
             padding: 20px;
             text-align: center;
+            border-bottom: 2px solid #ff00ff;
         }
 
         header h1 {
-            font-size: 36px;
+            font-size: 40px;
             font-weight: 700;
-            margin-bottom: 10px;
         }
 
         header nav {
@@ -37,68 +39,77 @@
         }
 
         header nav a {
-            color: white;
+            color: #0ff;
             margin: 0 15px;
             text-decoration: none;
             font-weight: 600;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             transition: color 0.3s ease;
         }
 
         header nav a:hover {
-            color: #00bfae;
+            color: #ff00ff;
         }
 
         .hero-section {
-            background: linear-gradient(135deg, #6e7dff, #00bfae);
-            color: white;
+            background: linear-gradient(135deg, #1c1c1c, #ff0099);
+            color: #fff;
             padding: 120px 0;
             text-align: center;
+            background-size: cover;
         }
 
         .hero-section h2 {
-            font-size: 48px;
+            font-size: 50px;
             margin-bottom: 20px;
             font-weight: 700;
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.2);
         }
 
         .hero-section p {
-            font-size: 20px;
+            font-size: 24px;
             margin-bottom: 30px;
         }
 
         .cta-btn {
             padding: 15px 30px;
-            background-color: #00bfae;
+            background-color: #ff00ff;
             color: white;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
         }
 
         .cta-btn:hover {
-            background-color: #008c77;
-            transform: scale(1.05);
+            background-color: #d5008f;
+            transform: scale(1.1);
         }
 
         .about-section {
             padding: 60px 20px;
             text-align: center;
+            background-color: #181818;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
         .about-section h2 {
             font-size: 36px;
             margin-bottom: 20px;
-            color: #00bfae;
+            color: #ff00ff;
+            text-transform: uppercase;
         }
 
         .about-section p {
             font-size: 20px;
             line-height: 1.6;
             margin-bottom: 40px;
-            color: #666;
+            color: #aaa;
         }
 
         .my-photo {
@@ -114,35 +125,36 @@
             justify-content: space-around;
             padding: 60px 20px;
             text-align: center;
+            background-color: #1c1c1c;
         }
 
         .skill {
-            background-color: white;
+            background-color: #222;
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             width: 250px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .skill:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 15px rgba(255, 0, 255, 0.5);
         }
 
         .skill h3 {
             font-size: 24px;
             margin-bottom: 15px;
-            color: #00bfae;
+            color: #ff00ff;
         }
 
         .skill p {
             font-size: 16px;
-            color: #666;
+            color: #ccc;
         }
 
         footer {
-            background-color: #343a40;
+            background-color: #0d0d0d;
             color: white;
             text-align: center;
             padding: 20px 0;
@@ -154,13 +166,13 @@
         }
 
         footer a {
-            color: #00bfae;
+            color: #ff00ff;
             text-decoration: none;
             font-weight: 600;
         }
 
         footer a:hover {
-            color: #008c77;
+            color: #d5008f;
         }
 
         /* Animations */
@@ -183,7 +195,7 @@
 <body>
 
     <header>
-        <h1>O mnie</h1>
+        <h1>O mnie - Gracz i Twórca</h1>
         <nav>
             <a href="#about">O mnie</a>
             <a href="#skills">Umiejętności</a>
@@ -194,35 +206,35 @@
     <section class="hero-section">
         <div class="fade-in-up">
             <h2>Witaj na mojej stronie!</h2>
-            <p>Jestem [Twoje Imię], profesjonalistą w [Twoja Specjalizacja]. Zajmuję się [Twoja Działalność].</p>
-            <button class="cta-btn">Dowiedz się więcej</button>
+            <p>Jestem pasjonatem gier komputerowych i tworzę treści gamingowe, które inspirują i bawią innych.</p>
+            <button class="cta-btn">Zobacz moją pracę</button>
         </div>
     </section>
 
     <section id="about" class="about-section fade-in-up">
         <h2>Kim jestem?</h2>
-        <p>Jestem pasjonatem [Twoja pasja], a także profesjonalistą w [Twoja specjalność]. Moja kariera zaczęła się [opisz swoje początki], a teraz mam przyjemność pracować nad projektami, które łączą moją pasję i umiejętności.</p>
+        <p>Jestem [Twoje Imię], zapalonym graczem i twórcą treści gamingowych. Moje życie obraca się wokół gier i tworzonych przez mnie filmów, poradników, oraz streamów. Zaczynałem od prostych gier, a teraz angażuję się w profesjonalne projekty związane z gamingiem.</p>
         <img src="https://via.placeholder.com/200" alt="Moje zdjęcie" class="my-photo">
-        <p>Przez lata zdobywałem doświadczenie w różnych projektach, co pozwoliło mi rozwinąć moje umiejętności i być w stanie dostarczać wyjątkowe rezultaty w każdej dziedzinie, którą się zajmuję.</p>
+        <p>Wszystko, co tworzę, ma na celu nie tylko pokazanie moich umiejętności, ale także zainspirowanie innych do rozwijania swojej pasji do gier.</p>
     </section>
 
     <section id="skills" class="skills-section fade-in-up">
         <div class="skill">
-            <h3>Programowanie</h3>
-            <p>Posiadam szerokie doświadczenie w programowaniu w wielu językach, takich jak JavaScript, Python, PHP, a także w tworzeniu aplikacji webowych i mobilnych.</p>
+            <h3>Tworzenie Edytów</h3>
+            <p>Specjalizuję się w tworzeniu edytów do gier, montażu i postprodukcji, dzięki czemu moje filmy zyskują na jakości i atrakcyjności.</p>
         </div>
         <div class="skill">
-            <h3>Projektowanie</h3>
-            <p>Jestem również specjalistą w zakresie projektowania UX/UI. Zawsze dbam o to, by moje projekty były zarówno funkcjonalne, jak i estetyczne.</p>
+            <h3>Streamowanie</h3>
+            <p>Posiadam doświadczenie w streamowaniu na platformach takich jak Twitch i YouTube, z profesjonalnym podejściem do interakcji z widzami.</p>
         </div>
         <div class="skill">
-            <h3>Marketing</h3>
-            <p>Posiadam doświadczenie w zakresie marketingu cyfrowego, tworzenia strategii oraz wdrażania kampanii reklamowych online.</p>
+            <h3>Strategie i Poradniki</h3>
+            <p>Tworzę poradniki oraz strategie do gier, pomagając innym graczom osiągać lepsze wyniki i lepiej rozumieć mechanikę gier.</p>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Strona Profesjonalna. Wszystkie prawa zastrzeżone.</p>
+        <p>&copy; 2025 Strona Gamingowa. Wszystkie prawa zastrzeżone.</p>
         <p>Zapraszam do kontaktu - <a href="mailto:kontakt@twojastrona.pl">kontakt@twojastrona.pl</a></p>
     </footer>
 
