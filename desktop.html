@@ -76,11 +76,18 @@
     let time = 0; // Startujemy od 0 sekundy
     let pixelsPlaced = 0;
     let canPlacePixels = true;
-    
+
     // Ustawienia canvas
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
-    
+
+    // Ustawienie tła (mapa Europy)
+    const mapImage = new Image();
+    mapImage.src = 'https://t4.ftcdn.net/jpg/00/69/68/61/360_F_69686132_hhGgrZGQxReATU3VO1Nqv6VxqPe02MVZ.jpg';
+    mapImage.onload = function() {
+        ctx.drawImage(mapImage, 0, 0, canvasWidth, canvasHeight);  // Rysowanie mapy na canvasie
+    }
+
     // Funkcja rysująca piksele
     function drawPixel(x, y, color) {
         ctx.fillStyle = color;
@@ -118,6 +125,7 @@
     // Resetowanie
     resetButton.addEventListener('click', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Czyszczenie canvas
+        ctx.drawImage(mapImage, 0, 0, canvasWidth, canvasHeight);  // Na nowo rysowanie mapy
         time = 0; // Resetowanie czasu do 0
         pixelsPlaced = 0;
         canPlacePixels = true;
