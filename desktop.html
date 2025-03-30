@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PBGame - Moja Strona</title>
+    <title>PBGame - Strona dla Graczy</title>
     <style>
         /* Globalny styl */
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
-            color: #333;
+            background-color: #121212;
+            color: #fff;
         }
 
         /* Nagłówek */
         header {
-            background-color: #2d3e50;
-            color: white;
-            padding: 40px 0;
+            background-color: #1f1f1f;
+            padding: 50px 0;
             text-align: center;
             font-size: 3em;
-            font-weight: 700;
-            letter-spacing: 1px;
+            color: #ff6a00;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px #ff6a00;
         }
 
         header span {
@@ -31,7 +31,7 @@
 
         /* Nawigacja */
         nav {
-            background-color: #34495e;
+            background-color: #333;
             padding: 15px 0;
             text-align: center;
         }
@@ -39,16 +39,18 @@
         nav a {
             color: white;
             text-decoration: none;
-            padding: 15px 25px;
+            padding: 12px 25px;
             margin: 0 20px;
-            border-radius: 30px;
             font-size: 1.2em;
             text-transform: uppercase;
-            transition: background-color 0.3s ease;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: all 0.3s ease;
         }
 
         nav a:hover {
-            background-color: #f1c40f;
+            background-color: #ff6a00;
+            border-color: #ff6a00;
         }
 
         /* Sekcje */
@@ -56,40 +58,42 @@
             padding: 60px 20px;
             margin: 20px auto;
             max-width: 1200px;
-            background-color: white;
+            background-color: #1a1a1a;
             border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         section h2 {
-            font-size: 2.5em;
+            font-size: 2.8em;
+            color: #ff6a00;
             text-align: center;
-            color: #2d3e50;
             margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         section p {
             font-size: 1.1em;
             line-height: 1.7em;
             text-align: center;
-            color: #555;
+            color: #bbb;
         }
 
         /* Karty */
         .card {
-            background-color: #ecf0f1;
+            background-color: #222;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
             overflow: hidden;
             margin: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .card img {
             width: 100%;
             height: 250px;
             object-fit: cover;
-            border-bottom: 2px solid #ddd;
+            border-bottom: 3px solid #ff6a00;
         }
 
         .card-content {
@@ -98,18 +102,18 @@
 
         .card h3 {
             font-size: 1.8em;
-            color: #2d3e50;
+            color: #ff6a00;
             margin-bottom: 10px;
         }
 
         .card p {
             font-size: 1em;
-            color: #7f8c8d;
+            color: #bbb;
         }
 
         .card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
         }
 
         /* Formularz kontaktowy */
@@ -117,17 +121,18 @@
             width: 100%;
             padding: 12px;
             margin: 10px 0;
-            background-color: #ecf0f1;
-            border: 1px solid #ddd;
+            background-color: #333;
+            border: 1px solid #444;
             border-radius: 5px;
-            color: #333;
+            color: #fff;
         }
 
         form input[type="submit"] {
-            background-color: #f1c40f;
-            cursor: pointer;
+            background-color: #ff6a00;
             font-size: 1.2em;
             border: none;
+            cursor: pointer;
+            color: #fff;
         }
 
         form input[type="submit"]:hover {
@@ -136,18 +141,19 @@
 
         /* Stopka */
         footer {
-            background-color: #34495e;
-            color: white;
+            background-color: #333;
+            color: #bbb;
             text-align: center;
             padding: 20px 0;
             font-size: 1em;
+            border-top: 2px solid #444;
         }
 
         /* Styl responsywny */
         @media (max-width: 768px) {
             header {
-                font-size: 2.2em;
-                padding: 20px;
+                font-size: 2.5em;
+                padding: 30px 0;
             }
 
             nav a {
@@ -173,47 +179,47 @@
 <body>
 
     <header>
-        PBGame - <span>Witaj na mojej stronie!</span>
+        PBGame - <span>Strona dla Graczy</span>
     </header>
 
     <nav>
         <a href="#home">Strona Główna</a>
         <a href="#about">O Nas</a>
-        <a href="#services">Usługi</a>
+        <a href="#games">Nasze Gry</a>
         <a href="#contact">Kontakt</a>
     </nav>
 
     <section id="home">
-        <h2>Witaj na mojej stronie!</h2>
-        <p>Strona stworzona z myślą o prostocie i estetyce. Znajdziesz tutaj informacje o mnie oraz oferowanych usługach. Cieszę się, że tu jesteś!</p>
+        <h2>Witaj na PBGame!</h2>
+        <p>Strona stworzona z myślą o pasjonatach gier komputerowych. Znajdziesz tu informacje o nowych tytułach, promocjach oraz wydarzeniach gamingowych. Dołącz do naszej społeczności!</p>
     </section>
 
     <section id="about">
         <h2>O Nas</h2>
-        <p>PBGame to projekt stworzony przez pasjonata technologii i designu. Moim celem jest tworzenie estetycznych i funkcjonalnych stron internetowych, które pomogą Ci osiągnąć sukces w sieci.</p>
+        <p>PBGame to społeczność graczy, którzy kochają rozrywkę i technologię. Nasza misja to dostarczanie najnowszych informacji o grach, organizowanie wydarzeń i zapewnianie przestrzeni dla graczy, by dzielili się swoją pasją.</p>
     </section>
 
-    <section id="services">
-        <h2>Nasze Usługi</h2>
+    <section id="games">
+        <h2>Nasze Gry</h2>
         <div class="card">
-            <img src="https://via.placeholder.com/600x300" alt="Usługa 1">
+            <img src="https://via.placeholder.com/600x300" alt="Gra 1">
             <div class="card-content">
-                <h3>Projektowanie Stron</h3>
-                <p>Stworzymy dla Ciebie stronę, która będzie estetyczna, funkcjonalna i zoptymalizowana pod kątem SEO.</p>
+                <h3>Gra Akcji 1</h3>
+                <p>Ekstremalne walki i niesamowite efekty wizualne. Gra, która przeniesie cię do innego świata pełnego niebezpieczeństw.</p>
             </div>
         </div>
         <div class="card">
-            <img src="https://via.placeholder.com/600x300" alt="Usługa 2">
+            <img src="https://via.placeholder.com/600x300" alt="Gra 2">
             <div class="card-content">
-                <h3>Wsparcie Techniczne</h3>
-                <p>Oferuję pomoc techniczną, rozwiązywanie problemów oraz doradztwo w zakresie technologii webowych.</p>
+                <h3>Gra RPG 2</h3>
+                <p>Wejdź do fantastycznego świata pełnego magii i nieziemskich przygód. Gra z rozbudowaną fabułą i systemem walki.</p>
             </div>
         </div>
     </section>
 
     <section id="contact">
         <h2>Kontakt</h2>
-        <p>Masz pytania? Skontaktuj się ze mną przez formularz poniżej, a chętnie Ci pomogę.</p>
+        <p>Masz pytania, sugestie lub chcesz dołączyć do naszej społeczności? Napisz do nas!</p>
         <form>
             <label for="name">Imię:</label><br>
             <input type="text" id="name" name="name"><br><br>
