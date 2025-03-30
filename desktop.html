@@ -143,7 +143,7 @@
             font-weight: bold;
             z-index: 1000;
             display: none;
-            animation: slideDown 0.5s ease-in-out;
+            animation: slideDown 0.5s ease-in-out, fadeOut 1s ease 5s forwards; /* Animacja znikania po 5 sekundach */
         }
 
         @keyframes slideDown {
@@ -152,6 +152,15 @@
             }
             100% {
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
             }
         }
 
@@ -256,47 +265,14 @@
             }
         }
 
-        function enableSettings(enable) {
-            const passwordInput = document.getElementById('newPassword');
-            const emailInput = document.getElementById('newEmail');
-            const savePasswordButton = document.querySelector('button[onclick="changePassword()"]');
-            const saveEmailButton = document.querySelector('button[onclick="changeEmail()"]');
-            
-            passwordInput.disabled = !enable;
-            emailInput.disabled = !enable;
-            savePasswordButton.disabled = !enable;
-            saveEmailButton.disabled = !enable;
+        function enableSettings(status) {
+            document.getElementById('newPassword').disabled = !status;
+            document.getElementById('newEmail').disabled = !status;
+            document.querySelector('.btn-green').disabled = !status;
         }
 
         function changeTheme(theme) {
             document.body.className = theme === 'light' ? 'light-theme' : 'dark-theme';
-        }
-
-        function changePassword() {
-            alert('Hasło zmienione. Zaloguj się ponownie.');
-            loggedIn = false;
-            enableSettings(false);
-            closeAuthForm();
-        }
-
-        function changeEmail() {
-            alert('Email zmieniony. Zaloguj się ponownie.');
-            loggedIn = false;
-            enableSettings(false);
-            closeAuthForm();
-        }
-
-        function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'block';
-        }
-
-        function showRegisterForm() {
-            document.getElementById('registerForm').style.display = 'block';
-        }
-
-        function closeAuthForm() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
         }
 
         function login() {
@@ -324,6 +300,11 @@
             } else {
                 alert('Proszę uzupełnić wszystkie pola.');
             }
+        }
+
+        function closeAuthForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
         }
     </script>
 </body>
