@@ -413,136 +413,254 @@
             }, 500);
         }
     }
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona PBGame</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Dotychczasowy styl */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    // Funkcja zamykająca ustawienia
-    function closeSettings() {
-        const settingsSection = document.getElementById('settingsSection');
-        settingsSection.style.opacity = 0;
-        setTimeout(() => {
-            settingsSection.style.display = 'none';
-        }, 500);
-    }
-<!-- Kolumna z napisem "Ustawienia" -->
-<div id="settingsColumn" class="settings-column">
-    <div class="settings-header" onclick="toggleSettings()">
-        <h3>Ustawienia</h3>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2e7d32, #81c784);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        header {
+            background-color: #388e3c;
+            width: 80%;
+            max-width: 1000px;
+            padding: 30px;
+            text-align: center;
+            border-radius: 15px;
+            background-image: linear-gradient(to right, #1b5e20, #43a047);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease-in-out;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        header:hover {
+            transform: scale(1.05);
+        }
+
+        header h1 {
+            font-size: 42px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        /* Kolumna ustawień */
+        .settings-column {
+            background-color: #388e3c;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease-in-out;
+            margin-top: 20px;
+        }
+
+        .settings-header {
+            background-color: #2e7d32;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+        }
+
+        .settings-header h3 {
+            color: white;
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .settings-content {
+            padding: 20px;
+            display: none; /* Na początku ukryte */
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .settings-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .settings-content button {
+            width: 100%;
+            padding: 10px;
+            background-color: #388e3c;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .settings-content button:hover {
+            background-color: #2e7d32;
+        }
+
+        /* Reszta stylów */
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Strona PBGame</h1>
+        <div id="authButtons" class="auth-buttons">
+            <button id="loginButton" onclick="showLoginForm()">Zaloguj się</button>
+            <button id="registerButton" onclick="showRegisterForm()">Zarejestruj się</button>
+        </div>
+        <div id="userNick" style="display:none; font-size: 18px; color: #fff; font-weight: bold;"></div>
+    </header>
+
+    <div class="tabs">
+        <div class="tab" onclick="toggleAbout()">O mnie</div>
+        <div class="tab discord" onclick="window.location.href='https://discord.gg/kmnVBUYxY7'">Dołącz do Discorda</div>
     </div>
 
-    <!-- Sekcja ustawień (na początku jest ukryta) -->
-    <div id="settingsSection" class="settings-content">
-        <h2>Zmiana danych</h2>
-        <input type="email" id="newEmail" placeholder="Nowy email">
-        <input type="password" id="newPassword" placeholder="Nowe hasło (min. 6 znaków)">
-        <button onclick="updateSettings()">Zapisz zmiany</button>
-        <button onclick="closeSettings()">Zamknij</button>
+    <div id="about" class="about-section">
+        <h2>O mnie</h2>
+        <div class="about-content">
+            <p>
+                Witam, mam na imię Przemysław i prowadzę kanał YouTube PBGame!<br><br>
+                Znajdziesz u mnie gameplaye z gier i poradniki.<br><br>
+                <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Sprawdź mój kanał!</a>
+            </p>
+            <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
+        </div>
     </div>
-</div>
-/* Styl kolumny ustawień */
-.settings-column {
-    background-color: #388e3c;
-    width: 300px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.5s ease-in-out;
-    margin-top: 20px;
-}
 
-.settings-header {
-    background-color: #2e7d32;
-    padding: 15px;
-    text-align: center;
-    border-radius: 10px 10px 0 0;
-    cursor: pointer;
-}
+    <!-- Kolumna z ustawieniami -->
+    <div id="settingsColumn" class="settings-column">
+        <div class="settings-header" onclick="toggleSettings()">
+            <h3>Ustawienia</h3>
+        </div>
 
-.settings-header h3 {
-    color: white;
-    font-size: 22px;
-    margin: 0;
-}
+        <!-- Sekcja ustawień (na początku jest ukryta) -->
+        <div id="settingsSection" class="settings-content">
+            <h2>Zmiana danych</h2>
+            <input type="email" id="newEmail" placeholder="Nowy email">
+            <input type="password" id="newPassword" placeholder="Nowe hasło (min. 6 znaków)">
+            <button onclick="updateSettings()">Zapisz zmiany</button>
+            <button onclick="closeSettings()">Zamknij</button>
+        </div>
+    </div>
 
-.settings-content {
-    padding: 20px;
-    display: none; /* Na początku ukryte */
-    opacity: 0;
-    transition: all 0.5s ease-in-out;
-}
+    <div id="loginForm" class="auth-form">
+        <h2>Zaloguj się</h2>
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Hasło" required>
+        <button onclick="login()">Zaloguj się</button>
+        <button onclick="closeAuthForm()">Zamknij</button>
+    </div>
 
-.settings-content input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
+    <div id="registerForm" class="auth-form">
+        <h2>Zarejestruj się</h2>
+        <input type="text" id="registerUsername" placeholder="Nazwa użytkownika" required>
+        <input type="email" id="registerEmail" placeholder="Email" required>
+        <input type="password" id="registerPassword" placeholder="Hasło" required>
+        <button onclick="register()">Zarejestruj się</button>
+        <button onclick="closeAuthForm()">Zamknij</button>
+    </div>
 
-.settings-content button {
-    width: 100%;
-    padding: 10px;
-    background-color: #388e3c;
-    border: none;
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-<style>
-.settings-content button:hover {
-    background-color: #2e7d32;
-}
-// Funkcja pokazująca/ukrywająca ustawienia
-function toggleSettings() {
-    const settingsSection = document.getElementById('settingsSection');
-    const isVisible = settingsSection.style.display === 'block';
+    <script>
+        // Funkcja pokazująca/ukrywająca ustawienia
+        function toggleSettings() {
+            const settingsSection = document.getElementById('settingsSection');
+            const isVisible = settingsSection.style.display === 'block';
 
-    if (isVisible) {
-        // Ukrywanie ustawień
-        settingsSection.style.opacity = 0;
-        setTimeout(() => {
-            settingsSection.style.display = 'none';
-        }, 500);
-    } else {
-        // Pokazywanie ustawień
-        settingsSection.style.display = 'block';
-        setTimeout(() => {
-            settingsSection.style.opacity = 1;
-        }, 10);
-    }
-}
+            if (isVisible) {
+                // Ukrywanie ustawień
+                settingsSection.style.opacity = 0;
+                setTimeout(() => {
+                    settingsSection.style.display = 'none';
+                }, 500);
+            } else {
+                // Pokazywanie ustawień
+                settingsSection.style.display = 'block';
+                setTimeout(() => {
+                    settingsSection.style.opacity = 1;
+                }, 10);
+            }
+        }
 
-// Funkcja zamykająca ustawienia
-function closeSettings() {
-    const settingsSection = document.getElementById('settingsSection');
-    settingsSection.style.opacity = 0;
-    setTimeout(() => {
-        settingsSection.style.display = 'none';
-    }, 500);
-}
+        // Funkcja zamykająca ustawienia
+        function closeSettings() {
+            const settingsSection = document.getElementById('settingsSection');
+            settingsSection.style.opacity = 0;
+            setTimeout(() => {
+                settingsSection.style.display = 'none';
+            }, 500);
+        }
 
-// Funkcja aktualizująca dane użytkownika
-function updateSettings() {
-    const newEmail = document.getElementById('newEmail').value;
-    const newPassword = document.getElementById('newPassword').value;
+        // Funkcja aktualizująca dane użytkownika
+        function updateSettings() {
+            const newEmail = document.getElementById('newEmail').value;
+            const newPassword = document.getElementById('newPassword').value;
 
-    if (newPassword.length < 6) {
-        alert("Hasło musi mieć przynajmniej 6 znaków!");
-        return;
-    }
+            if (newPassword.length < 6) {
+                alert("Hasło musi mieć przynajmniej 6 znaków!");
+                return;
+            }
 
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-    let user = users.find(u => u.username === userNick);
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            let user = users.find(u => u.username === userNick);
 
-    if (user) {
-        if (newEmail) user.email = newEmail;
-        if (newPassword) user.password = newPassword;
+            if (user) {
+                if (newEmail) user.email = newEmail;
+                if (newPassword) user.password = newPassword;
 
-        localStorage.setItem('users', JSON.stringify(users));
-        alert("Dane zostały zaktualizowane!");
-        closeSettings();
-    } else {
-        alert("Nie znaleziono użytkownika.");
-    }
-}
-<script>
+                localStorage.setItem('users', JSON.stringify(users));
+                alert("Dane zostały zaktualizowane!");
+                closeSettings();
+            } else {
+                alert("Nie znaleziono użytkownika.");
+            }
+        }
+
+        // Pozostałe funkcje logowania i rejestracji
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'flex';
+            document.getElementById('loginForm').style.opacity = 1;
+        }
+
+        function showRegisterForm() {
+            document.getElementById('registerForm').style.display = 'flex';
+            document.getElementById('registerForm').style.opacity = 1;
+        }
+
+        function closeAuthForm() {
+            document.getElementById('loginForm').style.transition = 'opacity 0.5s ease-in-out';
+            document.getElementById('registerForm').style.transition = 'opacity 0.5s ease-in-out';
+            document.getElementById('loginForm').style.opacity = 0;
+            document.getElementById('registerForm').style.opacity = 0;
+
+            setTimeout(() => {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'none';
+            }, 500);
+        }
+    </script>
 </body>
 </html>
+
