@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desktop PBGame</title>
+    <title>Strona PBGame</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,159 +14,113 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            transition: background 0.5s ease-in-out;
-            color: white;
-            text-align: center;
-            padding: 20px;
+            transition: background 0.5s ease;
         }
 
-        .light-mode {
-            background: linear-gradient(135deg, #d4edda, #a5d6a7);
-        }
-
-        .dark-mode {
-            background: linear-gradient(135deg, #2e7d32, #1b5e20);
-        }
-
-        header {
+        .dark-theme {
             background: #1b5e20;
-            padding: 20px;
-            border-radius: 10px;
-            color: white;
-            margin-bottom: 20px;
+            color: #fff;
         }
 
-        button {
-            padding: 10px 15px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .auth-form, .settings {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background: rgba(46, 125, 50, 0.9);
-            border-radius: 10px;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .auth-form input, .settings input {
-            padding: 10px;
-            margin: 10px 0;
-            width: 100%;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            background-color: #fff;
+        .light-theme {
+            background: #a5d6a7;
             color: #000;
         }
 
-        .settings {
-            background: rgba(30, 30, 30, 0.9);
+        header {
+            background-color: #388e3c;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
+
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .settings {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.5s ease-in-out, opacity 0.5s;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .settings.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-green { background: #388e3c; color: white; }
+        .btn-red { background: #d32f2f; color: white; }
     </style>
 </head>
-<body class="light-mode">
+<body class="dark-theme">
 
     <header>
-        <h1>Desktop PBGame</h1>
-        <button onclick="showLoginForm()">Zaloguj się</button>
-        <button onclick="showRegisterForm()">Zarejestruj się</button>
-        <button onclick="toggleSettings()">Ustawienia</button>
+        <h1>Strona PBGame</h1>
+        <button onclick="toggleSettings()" class="btn-green">Ustawienia</button>
     </header>
 
-    <div id="loginForm" class="auth-form">
-        <h2>Zaloguj się</h2>
-        <input type="email" id="loginEmail" placeholder="Email" required>
-        <input type="password" id="loginPassword" placeholder="Hasło" required>
-        <button onclick="login()">Zaloguj się</button>
-        <button onclick="closeAuthForm()">Zamknij</button>
-    </div>
-
-    <div id="registerForm" class="auth-form">
-        <h2>Zarejestruj się</h2>
-        <input type="text" id="registerUsername" placeholder="Nazwa użytkownika" required>
-        <input type="email" id="registerEmail" placeholder="Email" required>
-        <input type="password" id="registerPassword" placeholder="Hasło" required>
-        <button onclick="register()">Zarejestruj się</button>
-        <button onclick="closeAuthForm()">Zamknij</button>
-    </div>
-
-    <div id="settings" class="settings">
+    <div class="settings" id="settingsPanel">
         <h2>Ustawienia</h2>
-        <button onclick="toggleTheme()">Zmień Motyw</button>
-        <input type="password" id="newPassword" placeholder="Nowe Hasło">
-        <input type="email" id="newEmail" placeholder="Nowy Email">
-        <button onclick="updateCredentials()">Zmień Dane</button>
-        <button onclick="toggleSettings()">Zamknij</button>
+        <label>Motyw:</label>
+        <button onclick="changeTheme('light')" class="btn-green">Jasny</button>
+        <button onclick="changeTheme('dark')" class="btn-red">Ciemny</button>
+        <hr>
+        <h3>Zmień hasło</h3>
+        <input type="password" id="newPassword" placeholder="Nowe hasło">
+        <button onclick="changePassword()" class="btn-green">Zapisz</button>
+        <hr>
+        <h3>Zmień email</h3>
+        <input type="email" id="newEmail" placeholder="Nowy email">
+        <button onclick="changeEmail()" class="btn-green">Zapisz</button>
     </div>
 
     <script>
-        function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'flex';
-        }
-
-        function showRegisterForm() {
-            document.getElementById('registerForm').style.display = 'flex';
-        }
-
-        function closeAuthForm() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-        }
-
-        function login() {
-            alert("Zalogowano pomyślnie!");
-            closeAuthForm();
-        }
-
-        function register() {
-            alert("Rejestracja zakończona sukcesem!");
-            closeAuthForm();
-        }
-
         function toggleSettings() {
-            let settings = document.getElementById('settings');
-            if (settings.style.display === 'none' || settings.style.display === '') {
-                settings.style.display = 'flex';
-                settings.style.opacity = 1;
+            const panel = document.getElementById('settingsPanel');
+            panel.classList.toggle('show');
+        }
+
+        function changeTheme(theme) {
+            if (theme === 'light') {
+                document.body.classList.remove('dark-theme');
+                document.body.classList.add('light-theme');
             } else {
-                settings.style.opacity = 0;
-                setTimeout(() => { settings.style.display = 'none'; }, 500);
+                document.body.classList.remove('light-theme');
+                document.body.classList.add('dark-theme');
             }
         }
 
-        function toggleTheme() {
-            let body = document.body;
-            if (body.classList.contains('light-mode')) {
-                body.classList.remove('light-mode');
-                body.classList.add('dark-mode');
-            } else {
-                body.classList.remove('dark-mode');
-                body.classList.add('light-mode');
-            }
+        function changePassword() {
+            alert('Hasło zmienione. Zaloguj się ponownie.');
+            // Implementacja zmiany hasła
         }
 
-        function updateCredentials() {
-            let newEmail = document.getElementById('newEmail').value;
-            let newPassword = document.getElementById('newPassword').value;
-            if (newEmail || newPassword) {
-                alert("Dane zmienione! Zostaniesz wylogowany.");
-                window.location.reload();
-            } else {
-                alert("Wpisz nowe dane!");
-            }
+        function changeEmail() {
+            alert('Email zmieniony. Zaloguj się ponownie.');
+            // Implementacja zmiany emaila
         }
     </script>
 </body>
 </html>
+
