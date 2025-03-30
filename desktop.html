@@ -782,8 +782,6 @@
     </style>
 </head>
 <body>
-    <header>
-    </header>
     <!-- Kolumna ustawień -->
     <div class="settings-column">
         <div class="settings-header" onclick="toggleSettings()">
@@ -820,16 +818,21 @@
         // Funkcja zmiany emaila
         function changeEmail() {
             const newEmail = document.getElementById('newEmail').value;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            // Sprawdzenie, czy email jest już taki sam jak obecny
+            if (newEmail === currentUser.email) {
+                alert('Nowy email nie może być taki sam jak obecny email!');
+                return;
+            }
+
             if (newEmail) {
                 // Wylogowanie użytkownika po zmianie emaila
                 logout();
 
                 // Zaktualizowanie emaila w lokalnej pamięci
-                let user = JSON.parse(localStorage.getItem('currentUser'));
-                if (user) {
-                    user.email = newEmail;
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }
+                currentUser.email = newEmail;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
                 alert(`Email został zmieniony na: ${newEmail}`);
                 window.location.reload(); // Przeładowanie strony, aby użytkownik mógł się ponownie zalogować
@@ -841,16 +844,21 @@
         // Funkcja zmiany hasła
         function changePassword() {
             const newPassword = document.getElementById('newPassword').value;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            // Sprawdzenie, czy hasło jest takie samo jak obecne
+            if (newPassword === currentUser.password) {
+                alert('Nowe hasło nie może być takie samo jak obecne hasło!');
+                return;
+            }
+
             if (newPassword.length >= 6) {
                 // Wylogowanie użytkownika po zmianie hasła
                 logout();
 
                 // Zaktualizowanie hasła w lokalnej pamięci
-                let user = JSON.parse(localStorage.getItem('currentUser'));
-                if (user) {
-                    user.password = newPassword;
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }
+                currentUser.password = newPassword;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
                 alert(`Hasło zostało zmienione na: ${newPassword}`);
                 window.location.reload(); // Przeładowanie strony, aby użytkownik mógł się ponownie zalogować
