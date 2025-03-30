@@ -6,7 +6,6 @@
     <title>Strona PBGame</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Dotychczasowy styl */
         * {
             margin: 0;
             padding: 0;
@@ -50,36 +49,192 @@
             color: #fff;
         }
 
-        /* Dodajemy miejsce na serwery */
-        #serverList {
-            margin-top: 20px;
+        .auth-buttons {
+            position: absolute;
+            top: 20px;
+            right: 30px;
             display: flex;
+            gap: 20px;
+        }
+
+        .auth-buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #1b5e20;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .auth-buttons button:hover {
+            background-color: #388e3c;
+        }
+
+        .auth-form {
+            display: none;
             flex-direction: column;
             align-items: center;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .server {
+            justify-content: center;
+            padding: 20px;
             background-color: #388e3c;
-            padding: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .auth-form input {
+            padding: 10px;
             margin: 10px;
-            width: 100%;
-            text-align: center;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .auth-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #1b5e20;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .auth-form button:nth-child(2) { 
+            margin-top: 30px; 
+        }
+
+        .auth-form button:hover {
+            background-color: #388e3c;
+        }
+
+        .tabs {
+            display: flex;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .tab {
+            background-color: #388e3c;
+            padding: 14px 28px;
             border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .server h3 {
             font-size: 24px;
-            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .server p {
-            font-size: 18px;
+        .tab:hover {
+            background-color: #1b5e20;
+            transform: scale(1.1);
         }
 
-        /* Reszta stylów */
+        .tab.discord {
+            margin-left: 20px;
+        }
+
+        .about-section {
+            background-color: #388e3c;
+            color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            width: 85%;
+            max-width: 750px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+            animation: fadeInUp 0.5s forwards;
+        }
+
+        .about-section h2 {
+            font-size: 30px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: left;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .about-section p {
+            font-size: 20px;
+            line-height: 1.8;
+            width: 55%;
+            padding-left: 20px;
+        }
+
+        .about-section img {
+            width: 30%;
+            border-radius: 10px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .about-section img:hover {
+            box-shadow: 0 0 20px 5px rgba(0, 255, 0, 0.8);
+        }
+
+        .about-section a {
+            color: #81c784;
+            font-size: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .about-section a:hover {
+            color: #fff;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOutDown {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(30px); }
+        }
+
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+                text-align: center;
+                width: 90%;
+            }
+
+            .about-section p {
+                width: 100%;
+                padding-left: 0;
+                margin-top: 10px;
+            }
+
+            .about-section img {
+                width: 60%;
+                margin-bottom: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -110,8 +265,6 @@
         </div>
     </div>
 
-    <div id="serverList"></div>
-
     <div id="loginForm" class="auth-form">
         <h2>Zaloguj się</h2>
         <input type="email" id="loginEmail" placeholder="Email" required>
@@ -130,54 +283,19 @@
     </div>
 
     <script>
-        // Funkcja pobierania danych z API i wyświetlania serwerów
-        async function loadServers() {
-            try {
-                // Podmień poniższy URL na URL API PBGame
-                const response = await fetch('https://api.pbgame.com/servers');
-                const data = await response.json();
-
-                const serverList = document.getElementById('serverList');
-                serverList.innerHTML = '';
-
-                data.servers.forEach(server => {
-                    const serverElement = document.createElement('div');
-                    serverElement.classList.add('server');
-
-                    const serverTitle = document.createElement('h3');
-                    serverTitle.innerText = server.name;
-                    serverElement.appendChild(serverTitle);
-
-                    const serverDetails = document.createElement('p');
-                    serverDetails.innerText = Graczy: ${server.players} | Status: ${server.status};
-                    serverElement.appendChild(serverDetails);
-
-                    serverList.appendChild(serverElement);
-                });
-            } catch (error) {
-                console.error('Błąd podczas ładowania serwerów:', error);
-            }
-        }
-
-        // Wywołanie funkcji ładowania serwerów przy załadowaniu strony
-        window.onload = function() {
-            loadServers();
-            if (localStorage.getItem('isLoggedIn')) {
-                updateUserNick();
-            }
-        }
-
-        // Pozostałe funkcje logowania i rejestracji
+        // Funkcja do pokazania formularza logowania
         function showLoginForm() {
             document.getElementById('loginForm').style.display = 'flex';
             document.getElementById('loginForm').style.opacity = 1;
         }
 
+        // Funkcja do pokazania formularza rejestracji
         function showRegisterForm() {
             document.getElementById('registerForm').style.display = 'flex';
             document.getElementById('registerForm').style.opacity = 1;
         }
 
+        // Funkcja do zamknięcia formularza
         function closeAuthForm() {
             document.getElementById('loginForm').style.transition = 'opacity 0.5s ease-in-out';
             document.getElementById('registerForm').style.transition = 'opacity 0.5s ease-in-out';
@@ -190,6 +308,7 @@
             }, 500);
         }
 
+        // Funkcja rejestracji
         let users = JSON.parse(localStorage.getItem('users')) || [];
         let userNick = '';
 
@@ -203,6 +322,7 @@
                 return;
             }
 
+            // Sprawdzanie, czy email już istnieje
             for (let user of users) {
                 if (user.email === email) {
                     alert("Ten email jest już zajęty. Spróbuj inny.");
@@ -218,6 +338,7 @@
             closeAuthForm();
         }
 
+        // Funkcja logowania
         function login() {
             let email = document.getElementById('loginEmail').value;
             let password = document.getElementById('loginPassword').value;
@@ -247,6 +368,7 @@
             }
         }
 
+        // Funkcja do aktualizacji widoku po zalogowaniu
         function updateUserNick() {
             if (localStorage.getItem('isLoggedIn')) {
                 document.getElementById('authButtons').style.display = 'none';
@@ -255,6 +377,14 @@
             }
         }
 
+        // Wykrywanie, czy użytkownik jest już zalogowany
+        window.onload = function() {
+            if (localStorage.getItem('isLoggedIn')) {
+                updateUserNick();
+            }
+        }
+
+        // Funkcja do pokazania sekcji 'O mnie'
         function toggleAbout() {
             let aboutSection = document.getElementById('about');
             if (aboutSection.style.display === 'none') {
