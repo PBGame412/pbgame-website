@@ -15,7 +15,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             transition: background 0.5s ease;
-            animation: fadeIn 1s ease-out; /* Animacja fade-in przy wejściu na stronę */
+            animation: fadeIn 1s ease-out;
         }
 
         @keyframes fadeIn {
@@ -123,7 +123,7 @@
             text-align: center;
             color: white;
             opacity: 0;
-            animation: slideIn 0.5s ease-out forwards; /* Płynne wchodzenie */
+            animation: slideIn 0.5s ease-out forwards;
         }
 
         @keyframes slideIn {
@@ -305,8 +305,9 @@
 
             if (email && password) {
                 loggedIn = true;
+                localStorage.setItem('loggedIn', true);
                 enableSettings(true);
-                document.getElementById('settingsBtn').disabled = false; // Enable settings button after login
+                document.getElementById('settingsBtn').disabled = false;
                 alert('Zalogowano pomyślnie!');
                 closeAuthForm();
             } else {
