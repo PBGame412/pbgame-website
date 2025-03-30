@@ -28,11 +28,18 @@
         }
 
         header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background-color: #388e3c;
-            text-align: center;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
         }
 
         .container {
@@ -44,15 +51,16 @@
         .settings {
             display: none;
             position: absolute;
-            top: 50px;
+            top: 60px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             color: white;
             padding: 20px;
             border-radius: 8px;
             transition: transform 0.5s ease-in-out, opacity 0.5s;
             opacity: 0;
             transform: translateY(-20px);
+            width: 250px;
         }
 
         .settings.show {
@@ -69,15 +77,31 @@
             border-radius: 5px;
         }
 
-        .btn-green { background: #388e3c; color: white; }
+        .btn-green { background: #43a047; color: white; }
         .btn-red { background: #d32f2f; color: white; }
+
+        .auth-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body class="dark-theme">
 
     <header>
         <h1>Strona PBGame</h1>
-        <button onclick="toggleSettings()" class="btn-green">Ustawienia</button>
+        <div class="auth-buttons">
+            <button onclick="showLoginForm()" class="btn-green">Zaloguj</button>
+            <button onclick="showRegisterForm()" class="btn-green">Zarejestruj</button>
+            <button onclick="toggleSettings()" class="btn-green">Ustawienia</button>
+        </div>
     </header>
 
     <div class="settings" id="settingsPanel">
@@ -95,6 +119,23 @@
         <button onclick="changeEmail()" class="btn-green">Zapisz</button>
     </div>
 
+    <div id="loginForm" class="auth-form">
+        <h2>Zaloguj się</h2>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Hasło">
+        <button onclick="login()" class="btn-green">Zaloguj</button>
+        <button onclick="closeAuthForm()" class="btn-red">Zamknij</button>
+    </div>
+
+    <div id="registerForm" class="auth-form">
+        <h2>Zarejestruj się</h2>
+        <input type="text" id="registerUsername" placeholder="Nazwa użytkownika">
+        <input type="email" id="registerEmail" placeholder="Email">
+        <input type="password" id="registerPassword" placeholder="Hasło">
+        <button onclick="register()" class="btn-green">Zarejestruj</button>
+        <button onclick="closeAuthForm()" class="btn-red">Zamknij</button>
+    </div>
+
     <script>
         function toggleSettings() {
             const panel = document.getElementById('settingsPanel');
@@ -102,25 +143,29 @@
         }
 
         function changeTheme(theme) {
-            if (theme === 'light') {
-                document.body.classList.remove('dark-theme');
-                document.body.classList.add('light-theme');
-            } else {
-                document.body.classList.remove('light-theme');
-                document.body.classList.add('dark-theme');
-            }
+            document.body.className = theme === 'light' ? 'light-theme' : 'dark-theme';
         }
 
         function changePassword() {
             alert('Hasło zmienione. Zaloguj się ponownie.');
-            // Implementacja zmiany hasła
         }
 
         function changeEmail() {
             alert('Email zmieniony. Zaloguj się ponownie.');
-            // Implementacja zmiany emaila
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        function showRegisterForm() {
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function closeAuthForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
         }
     </script>
 </body>
 </html>
-
