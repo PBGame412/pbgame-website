@@ -45,6 +45,7 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
+            position: relative;
         }
 
         .auth-buttons {
@@ -85,11 +86,18 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
-            transition: all 0.3s ease; /* Animacja przejścia */
+            transition: all 0.3s ease;
         }
 
-        .btn-green { background: #43a047; color: white; }
-        .btn-red { background: #d32f2f; color: white; }
+        .btn-green {
+            background: #43a047;
+            color: white;
+        }
+
+        .btn-red {
+            background: #d32f2f;
+            color: white;
+        }
 
         .btn-green:hover {
             transform: scale(1.1);
@@ -114,6 +122,19 @@
             width: 320px;
             text-align: center;
             color: white;
+            opacity: 0;
+            animation: slideIn 0.5s ease-out forwards; /* Płynne wchodzenie */
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
         }
 
         .auth-form h2 {
@@ -142,7 +163,6 @@
             cursor: pointer;
         }
 
-        /* Nowy kolor tła bannera */
         .welcome-banner {
             position: fixed;
             top: 0;
@@ -155,7 +175,7 @@
             font-weight: bold;
             z-index: 1000;
             display: none;
-            animation: slideDown 0.5s ease-in-out, fadeOut 1s ease 5s forwards; /* Animacja znikania po 5 sekundach */
+            animation: slideDown 0.5s ease-in-out, fadeOut 1s ease 5s forwards;
         }
 
         @keyframes slideDown {
@@ -186,6 +206,16 @@
             max-width: 400px;
             margin-left: auto;
             margin-right: auto;
+            animation: footerFadeIn 0.7s ease-out;
+        }
+
+        @keyframes footerFadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         footer a {
@@ -193,7 +223,7 @@
             text-decoration: none;
             margin: 0 15px;
             font-size: 18px;
-            transition: color 0.3s ease; /* Animacja przejścia dla linków */
+            transition: color 0.3s ease;
         }
 
         footer a:hover {
@@ -249,72 +279,17 @@
     </div>
 
     <footer>
-        <p>Dołącz do naszej społeczności!</p>
-        <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Kanał YouTube</a>
-        <a href="https://discord.gg/kmnVBUYxY7" target="_blank">Serwer Discord</a>
+        <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">YouTube</a>
+        <a href="https://discord.gg/kmnVBUYxY7" target="_blank">Discord</a>
     </footer>
 
     <script>
-        let loggedIn = false;
-
+        // Pokazanie bannera po załadowaniu strony
         window.onload = function() {
-            // Wyświetlanie bannera powitalnego po załadowaniu strony
-            const banner = document.getElementById('welcomeBanner');
-            banner.style.display = 'block';
-
-            // Animacja po 5 sekundach
-            setTimeout(function() {
-                banner.style.animation = 'fadeOut 1s ease forwards';
-            }, 5000);
+            document.getElementById('welcomeBanner').style.display = 'block';
         }
 
-        function toggleSettings() {
-            if (loggedIn) {
-                const panel = document.getElementById('settingsPanel');
-                panel.classList.toggle('show');
-                enableSettings(true);
-            } else {
-                alert('Musisz się zalogować, aby zmienić ustawienia.');
-            }
-        }
-
-        function enableSettings(isEnabled) {
-            const newPassword = document.getElementById('newPassword');
-            const newEmail = document.getElementById('newEmail');
-            const savePasswordBtn = document.querySelector('.settings button:nth-child(4)');
-            const saveEmailBtn = document.querySelector('.settings button:nth-child(6)');
-
-            newPassword.disabled = !isEnabled;
-            newEmail.disabled = !isEnabled;
-            savePasswordBtn.disabled = !isEnabled;
-            saveEmailBtn.disabled = !isEnabled;
-        }
-
-        function changeTheme(theme) {
-            document.body.className = theme === 'light' ? 'light-theme' : 'dark-theme';
-        }
-
-        function changePassword() {
-            alert('Hasło zmienione. Zaloguj się ponownie.');
-        }
-
-        function changeEmail() {
-            alert('Email zmieniony. Zaloguj się ponownie.');
-        }
-
-        function showLoginForm() {
-            document.getElementById('loginForm').style.display = 'block';
-        }
-
-        function showRegisterForm() {
-            document.getElementById('registerForm').style.display = 'block';
-        }
-
-        function closeAuthForm() {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-        }
-
+        // Funkcja logowania
         function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
@@ -340,6 +315,40 @@
             } else {
                 alert('Proszę uzupełnić wszystkie pola.');
             }
+        }
+
+        function closeAuthForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            panel.classList.toggle('show');
+        }
+
+        function enableSettings(isEnabled) {
+            const newPassword = document.getElementById('newPassword');
+            const newEmail = document.getElementById('newEmail');
+            const savePasswordBtn = document.querySelector('.settings button:nth-child(4)');
+            const saveEmailBtn = document.querySelector('.settings button:nth-child(6)');
+
+            newPassword.disabled = !isEnabled;
+            newEmail.disabled = !isEnabled;
+            savePasswordBtn.disabled = !isEnabled;
+            saveEmailBtn.disabled = !isEnabled;
+        }
+
+        function changeTheme(theme) {
+            document.body.className = theme === 'light' ? 'light-theme' : 'dark-theme';
+        }
+
+        function changePassword() {
+            alert('Hasło zmienione. Zaloguj się ponownie.');
+        }
+
+        function changeEmail() {
+            alert('Email zmieniony. Zaloguj się ponownie.');
         }
     </script>
 </body>
