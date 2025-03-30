@@ -712,33 +712,16 @@
             color: #fff;
         }
 
-        /* Zmieniamy układ na flex, aby kolumny były obok siebie */
-        .content-wrapper {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 1200px;
-            margin-top: 30px;
-        }
-
-        /* Styl dla sekcji "O mnie" */
-        .about-column {
-            background-color: #388e3c;
-            width: 48%;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Styl dla kolumny "Ustawienia" */
+        /* Kolumna ustawień */
         .settings-column {
             background-color: #388e3c;
-            width: 48%;
+            width: 300px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            transition: all 0.5s ease-in-out;
         }
 
-        /* Styl dla nagłówka ustawień */
         .settings-header {
             background-color: #2e7d32;
             padding: 15px;
@@ -799,38 +782,21 @@
     </style>
 </head>
 <body>
-    <!-- Kontener na obie kolumny -->
-    <div class="content-wrapper">
-        
-        <!-- Kolumna O mnie (bez zmian) -->
-        <div class="about-column">
-            <h2>O mnie</h2>
-            <div class="about-content">
-                <p>
-                    Witam, mam na imię Przemysław i prowadzę kanał YouTube PBGame!<br><br>
-                    Znajdziesz u mnie gameplaye z gier i poradniki.<br><br>
-                    <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Sprawdź mój kanał!</a>
-                </p>
-                <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame">
-            </div>
+    <!-- Kolumna ustawień -->
+    <div class="settings-column">
+        <div class="settings-header" onclick="toggleSettings()">
+            <h3>Ustawienia</h3>
         </div>
 
-        <!-- Kolumna Ustawienia -->
-        <div class="settings-column">
-            <div class="settings-header" onclick="toggleSettings()">
-                <h3>Ustawienia</h3>
-            </div>
+        <!-- Sekcja ustawień -->
+        <div id="settingsSection" class="settings-content">
+            <h4>Zmień email</h4>
+            <input type="email" id="newEmail" placeholder="Nowy Email">
+            <button onclick="changeEmail()">Zmień Email</button>
 
-            <!-- Sekcja ustawień -->
-            <div id="settingsSection" class="settings-content">
-                <h4>Zmień email</h4>
-                <input type="email" id="newEmail" placeholder="Nowy Email">
-                <button onclick="changeEmail()">Zmień Email</button>
-
-                <h4>Zmień hasło</h4>
-                <input type="password" id="newPassword" placeholder="Nowe Hasło">
-                <button onclick="changePassword()">Zmień Hasło</button>
-            </div>
+            <h4>Zmień hasło</h4>
+            <input type="password" id="newPassword" placeholder="Nowe Hasło">
+            <button onclick="changePassword()">Zmień Hasło</button>
         </div>
     </div>
 
@@ -908,8 +874,21 @@
             alert("Zostałeś wylogowany.");
         }
 
+        // Funkcja logowania
+        function login() {
+            let email = document.getElementById('loginEmail').value;
+            let password = document.getElementById('loginPassword').value;
+
+            let user = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (user && user.email === email && user.password === password) {
+                localStorage.setItem('isLoggedIn', true);
+                alert("Zalogowano pomyślnie!");
+            } else {
+                alert("Nieprawidłowy email lub hasło!");
+            }
+        }
     </script>
 
 </body>
 </html>
-
