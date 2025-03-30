@@ -3,85 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja Strona</title>
+    <title>PBGame - Moja Strona</title>
     <style>
+        /* Globalny styl */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f7fa;
+            background-color: #1e1e1e;
+            color: #fff;
         }
 
+        /* Nagłówek */
         header {
-            background-color: #3b4cca;
+            background: linear-gradient(45deg, #ff6a00, #ffcc00);
             color: white;
             padding: 20px;
             text-align: center;
-            font-size: 2em;
+            font-size: 3em;
+            letter-spacing: 2px;
         }
 
+        header span {
+            color: #1e1e1e;
+        }
+
+        /* Nawigacja */
         nav {
-            background-color: #2c3e50;
-            overflow: hidden;
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
         }
 
         nav a {
-            float: left;
-            display: block;
             color: white;
-            text-align: center;
-            padding: 14px 20px;
             text-decoration: none;
+            padding: 14px 25px;
+            margin: 0 15px;
+            border-radius: 5px;
+            font-size: 1.2em;
         }
 
         nav a:hover {
-            background-color: #3498db;
+            background-color: #ff6a00;
+            transition: background-color 0.3s ease;
         }
 
+        /* Sekcje */
         section {
-            padding: 20px;
+            padding: 40px;
             margin: 20px;
-            background-color: white;
+            background-color: #2c2f38;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
-        footer {
-            background-color: #2c3e50;
-            color: white;
+        section h2 {
+            font-size: 2.5em;
+            color: #ffcc00;
             text-align: center;
+        }
+
+        section p {
+            font-size: 1.1em;
+            line-height: 1.8em;
+            text-align: center;
+        }
+
+        /* Karty */
+        .card {
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.8em;
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #bbb;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Formularz kontaktowy */
+        form input, form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: #444;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+
+        form input[type="submit"] {
+            background-color: #ff6a00;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #ffcc00;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Stopka */
+        footer {
+            background-color: #333;
+            color: #bbb;
             padding: 15px;
+            text-align: center;
+            font-size: 1em;
             position: fixed;
             width: 100%;
             bottom: 0;
         }
 
-        .card {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin: 10px;
-            text-align: center;
-        }
-
-        .card img {
-            width: 100%;
-            border-radius: 8px;
-        }
-
-        .card h3 {
-            color: #333;
-            margin: 10px 0;
-        }
-
-        .card p {
-            color: #666;
-        }
-
+        /* Styl responsywny */
         @media (max-width: 768px) {
+            header {
+                font-size: 2.5em;
+            }
+
+            nav a {
+                padding: 10px 15px;
+                font-size: 1em;
+            }
+
+            section h2 {
+                font-size: 2em;
+            }
+
             .card {
-                margin: 10px 0;
+                margin: 10px;
+                width: 100%;
             }
         }
     </style>
@@ -89,7 +163,7 @@
 <body>
 
     <header>
-        Moja Strona
+        PBGame - <span>Twoje źródło najlepszych gier</span>
     </header>
 
     <nav>
@@ -100,47 +174,50 @@
     </nav>
 
     <section id="home">
-        <h2>Witaj na mojej stronie!</h2>
-        <p>To przykładowa strona stworzona z użyciem HTML i CSS. Znajdziesz tutaj podstawowe informacje oraz przykłady designu.</p>
+        <h2>Witaj na stronie PBGame!</h2>
+        <p>PBGame to platforma, która oferuje najnowsze gry oraz pomoc w tworzeniu własnych projektów. Zainspiruj się i wzbogać swoją grę dzięki naszej pomocy!</p>
     </section>
 
     <section id="about">
         <h2>O Nas</h2>
-        <p>Jesteśmy zespołem pasjonatów web designu i programowania. Naszym celem jest tworzenie nowoczesnych i funkcjonalnych stron internetowych.</p>
+        <p>PBGame to grupa pasjonatów gier komputerowych i programowania. Naszą misją jest rozwój społeczności graczy oraz dostarczanie najlepszych narzędzi do tworzenia gier. Dołącz do nas!</p>
     </section>
 
     <section id="services">
         <h2>Nasze Usługi</h2>
         <div class="card">
-            <img src="https://via.placeholder.com/300x200" alt="Usługa 1">
-            <h3>Projektowanie Stron</h3>
-            <p>Tworzymy responsywne i estetyczne strony internetowe dostosowane do Twoich potrzeb.</p>
+            <img src="https://via.placeholder.com/600x300" alt="Projektowanie gier">
+            <div class="card-content">
+                <h3>Projektowanie Gier</h3>
+                <p>Tworzymy gry od podstaw - od pomysłu po finalny produkt. Możemy pomóc Ci w każdym etapie produkcji gry!</p>
+            </div>
         </div>
         <div class="card">
-            <img src="https://via.placeholder.com/300x200" alt="Usługa 2">
-            <h3>SEO i Marketing</h3>
-            <p>Pomagamy w optymalizacji stron internetowych oraz ich promocji w sieci.</p>
+            <img src="https://via.placeholder.com/600x300" alt="Konsultacje i wsparcie">
+            <div class="card-content">
+                <h3>Konsultacje i Wsparcie</h3>
+                <p>Pomagamy w rozwiązywaniu problemów z Twoimi projektami, oferujemy doradztwo oraz wsparcie w zakresie technologii związanych z grami.</p>
+            </div>
         </div>
     </section>
 
     <section id="contact">
         <h2>Kontakt</h2>
-        <p>Masz pytania? Skontaktuj się z nami poprzez formularz poniżej.</p>
+        <p>Chcesz nawiązać współpracę lub masz pytania? Skontaktuj się z nami poprzez poniższy formularz.</p>
         <form>
             <label for="name">Imię:</label><br>
             <input type="text" id="name" name="name"><br><br>
             <label for="email">E-mail:</label><br>
             <input type="email" id="email" name="email"><br><br>
             <label for="message">Wiadomość:</label><br>
-            <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
+            <textarea id="message" name="message" rows="4"></textarea><br><br>
             <input type="submit" value="Wyślij">
         </form>
     </section>
 
     <footer>
-        &copy; 2025 Moja Strona | Wszystkie prawa zastrzeżone
+        &copy; 2025 PBGame | Wszystkie prawa zastrzeżone
     </footer>
 
 </body>
 </html>
-
