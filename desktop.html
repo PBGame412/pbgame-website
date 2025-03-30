@@ -7,22 +7,22 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
-            overflow: hidden;
         }
         .container {
             position: relative;
             width: 80vw;
             height: 80vh;
-            border: 1px solid #ccc;
-            overflow: hidden;
+            background-color: white;
+            border: 2px solid #ccc;
             cursor: crosshair;
+            overflow: hidden;
         }
         canvas {
             position: absolute;
@@ -43,55 +43,39 @@
             margin: 5px;
             font-size: 16px;
         }
-        #timer {
-            font-size: 18px;
-            margin-top: 10px;
-        }
-        #pixelCount {
-            font-size: 18px;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="canvasContainer">
     <canvas id="pixelCanvas"></canvas>
 </div>
 
 <div class="controls">
     <label for="colorPicker">Wybierz kolor: </label>
     <input type="color" id="colorPicker" value="#ff0000">
-    <div id="timer">Czas: 0s</div>
-    <div id="pixelCount">Liczba postawionych pikseli: 0</div>
-    <button id="resetButton">Resetuj</button>
+    <button id="resetButton">Resetuj Mapa</button>
 </div>
 
 <script>
     const canvas = document.getElementById('pixelCanvas');
     const ctx = canvas.getContext('2d');
     const colorPicker = document.getElementById('colorPicker');
-    const timerDisplay = document.getElementById('timer');
-    const pixelCountDisplay = document.getElementById('pixelCount');
     const resetButton = document.getElementById('resetButton');
     
     const pixelSize = 10;
-    const canvasWidth = 800;
-    const canvasHeight = 800;
-    let time = 0;
-    let pixelsPlaced = 0;
-    let canPlacePixels = true;
+    const canvasWidth = 1000;
+    const canvasHeight = 1000;
+
+    let mapImage = new Image();
+    mapImage.src = 'https://t4.ftcdn.net/jpg/00/69/68/61/360_F_69686132_hhGgrZGQxReATU3VO1Nqv6VxqPe02MVZ.jpg'; // Image URL
+    mapImage.onload = function() {
+        ctx.drawImage(mapImage, 0, 0, canvasWidth, canvasHeight);
+    };
 
     // Ustawienia canvas
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
-
-    // Ustawienie tła (mapa Europy)
-    const mapImage = new Image();
-    mapImage.src = 'https://t4.ftcdn.net/jpg/00/69/68/61/360_F_69686132_hhGgrZGQxReATU3VO1Nqv6VxqPe02MVZ.jpg';
-    mapImage.onload = function() {
-        ctx.drawImage(mapImage, 0, 0, canvasWidth, canvasHeight);
-    }
 
     // Funkcja rysująca piksele
     function drawPixel(x, y, color) {
@@ -101,47 +85,18 @@
 
     // Funkcja obsługująca kliknięcia
     canvas.addEventListener('click', function(event) {
-        if (!canPlacePixels) return;
-
         const rect = canvas.getBoundingClientRect();
         const x = Math.floor((event.clientX - rect.left) / pixelSize);
         const y = Math.floor((event.clientY - rect.top) / pixelSize);
 
         // Rysowanie piksela
         drawPixel(x, y, colorPicker.value);
-
-        // Dodawanie 1 sekundy za każdy postawiony piksel
-        pixelsPlaced++;
-        time += 1;
-        updateTimer();
-        updatePixelCount();
-
-        // Sprawdzenie, czy minęła 60 sekund
-        if (time >= 60) {
-            canPlacePixels = false;
-            timerDisplay.innerText = "Czas minął! Nie możesz już stawiać pikseli.";
-        }
     });
 
-    // Funkcja odświeżająca licznik czasu
-    function updateTimer() {
-        timerDisplay.innerText = "Czas: " + time + "s";
-    }
-
-    // Funkcja odświeżająca licznik pikseli
-    function updatePixelCount() {
-        pixelCountDisplay.innerText = "Liczba postawionych pikseli: " + pixelsPlaced;
-    }
-
-    // Resetowanie
+    // Resetowanie mapy
     resetButton.addEventListener('click', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Czyszczenie canvas
-        ctx.drawImage(mapImage, 0, 0, canvasWidth, canvasHeight);  // Na nowo rysowanie mapy
-        time = 0; // Resetowanie czasu do 0
-        pixelsPlaced = 0;
-        canPlacePixels = true;
-        updateTimer();
-        updatePixelCount();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(mapImage, 0, 0, canvasWidth, canvasHeight);
     });
 
 </script>
