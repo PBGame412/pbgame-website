@@ -120,6 +120,25 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #388e3c;
+            color: white;
+            border-radius: 8px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body class="dark-theme">
@@ -164,6 +183,12 @@
         <button onclick="register()" class="btn-green">Zarejestruj</button>
         <button onclick="closeAuthForm()" class="btn-red">Zamknij</button>
     </div>
+
+    <footer>
+        <p>Dołącz do naszej społeczności!</p>
+        <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">Kanał YouTube</a>
+        <a href="https://discord.gg/kmnVBUYxY7" target="_blank">Serwer Discord</a>
+    </footer>
 
     <script>
         let loggedIn = false;
@@ -225,7 +250,6 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
 
-            // Możesz tutaj dodać dodatkową logikę do sprawdzania loginu
             if (email && password) {
                 loggedIn = true;
                 enableSettings(true);
@@ -241,7 +265,6 @@
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
 
-            // Możesz tutaj dodać logikę rejestracji
             if (username && email && password) {
                 alert('Zarejestrowano pomyślnie! Możesz się teraz zalogować.');
                 closeAuthForm();
