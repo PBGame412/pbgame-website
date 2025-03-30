@@ -728,6 +728,12 @@
             text-align: center;
             border-radius: 10px 10px 0 0;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Animacja najechania na przycisk */
+        .settings-header:hover {
+            transform: scale(1.1);
         }
 
         .settings-header h3 {
@@ -767,6 +773,7 @@
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .settings-content button:hover {
@@ -775,6 +782,8 @@
     </style>
 </head>
 <body>
+    <header>
+    </header>
     <!-- Kolumna ustawień -->
     <div class="settings-column">
         <div class="settings-header" onclick="toggleSettings()">
@@ -812,8 +821,18 @@
         function changeEmail() {
             const newEmail = document.getElementById('newEmail').value;
             if (newEmail) {
+                // Wylogowanie użytkownika po zmianie emaila
+                logout();
+
+                // Zaktualizowanie emaila w lokalnej pamięci
+                let user = JSON.parse(localStorage.getItem('currentUser'));
+                if (user) {
+                    user.email = newEmail;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                }
+
                 alert(`Email został zmieniony na: ${newEmail}`);
-                // Możesz dodać kod do zapisania nowego emaila
+                window.location.reload(); // Przeładowanie strony, aby użytkownik mógł się ponownie zalogować
             } else {
                 alert('Proszę podać nowy email');
             }
@@ -823,10 +842,42 @@
         function changePassword() {
             const newPassword = document.getElementById('newPassword').value;
             if (newPassword.length >= 6) {
+                // Wylogowanie użytkownika po zmianie hasła
+                logout();
+
+                // Zaktualizowanie hasła w lokalnej pamięci
+                let user = JSON.parse(localStorage.getItem('currentUser'));
+                if (user) {
+                    user.password = newPassword;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                }
+
                 alert(`Hasło zostało zmienione na: ${newPassword}`);
-                // Możesz dodać kod do zapisania nowego hasła
+                window.location.reload(); // Przeładowanie strony, aby użytkownik mógł się ponownie zalogować
             } else {
                 alert('Hasło musi mieć co najmniej 6 znaków');
+            }
+        }
+
+        // Funkcja wylogowująca użytkownika
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            alert("Zostałeś wylogowany.");
+        }
+
+        // Funkcja logowania
+        function login() {
+            let email = document.getElementById('loginEmail').value;
+            let password = document.getElementById('loginPassword').value;
+
+            let user = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (user && user.email === email && user.password === password) {
+                localStorage.setItem('isLoggedIn', true);
+                alert("Zalogowano pomyślnie!");
+            } else {
+                alert("Nieprawidłowy email lub hasło!");
             }
         }
     </script>
