@@ -1,150 +1,51 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PBGame - YouTuber Style</title>
-    <!-- Google Fonts for modern font -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Pixel Europe</title>
     <style>
-        /* Global styles */
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        /* Header style */
-        header {
-            background: linear-gradient(to right, #ff0000, #ff4500);
-            padding: 20px 0;
+            text-align: center;
+            background-color: #111;
             color: white;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            font-family: Arial, sans-serif;
         }
-
-        header h1 {
-            font-size: 3.5em;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: bold;
-        }
-
-        /* Main content */
-        .content {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        .content h2 {
-            font-size: 2.5em;
-            color: #ff4500;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .content p {
-            font-size: 1.2em;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .content img {
-            width: 100%;
-            max-width: 850px;
-            height: auto;
-            margin: 20px 0;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .content .cta {
-            background-color: #ff4500;
-            color: white;
-            padding: 12px 30px;
-            font-size: 1.5em;
-            border-radius: 25px;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            display: inline-block;
-            margin-top: 30px;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .content .cta:hover {
-            background-color: #ff6347;
-            transform: scale(1.05);
-        }
-
-        /* Footer style */
-        footer {
-            background-color: #222;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            border-top: 4px solid #ff4500;
-        }
-
-        footer p {
-            font-size: 1em;
-            margin: 0;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2.5em;
-            }
-
-            .content h2 {
-                font-size: 2em;
-            }
-
-            .content p {
-                font-size: 1em;
-            }
-
-            .content img {
-                width: 100%;
-            }
+        canvas {
+            border: 2px solid white;
+            margin-top: 20px;
+            cursor: crosshair;
         }
     </style>
 </head>
-
 <body>
-
-    <!-- Header -->
-    <header>
-        <h1>PBGame</h1>
-    </header>
-
-    <!-- Main Content -->
-    <div class="content">
-        <h2>Witaj na PBGame!</h2>
-        <p>PBGame to strona stworzona przez pasjonata gier. Tutaj znajdziesz najnowsze informacje, recenzje, poradniki i inne materiały, które pozwolą Ci rozwinąć Twoje umiejętności w grach!</p>
+    <h1>Pixel Europe</h1>
+    <p>Kliknij na mapę, aby dodać kolorowy piksel!</p>
+    <canvas id="pixelCanvas" width="800" height="600"></canvas>
+    <br>
+    <button onclick="clearCanvas()">Wyczyść</button>
+    
+    <script>
+        const canvas = document.getElementById('pixelCanvas');
+        const ctx = canvas.getContext('2d');
+        const pixelSize = 10;
         
-        <!-- YouTube Image -->
-        <img src="https://i.ytimg.com/vi/1BwM86RXr_o/maxresdefault.jpg" alt="PBGame Image">
+        function getRandomColor() {
+            return '#' + Math.floor(Math.random()*16777215).toString(16);
+        }
         
-        <p>Oto obrazek, który doskonale oddaje naszą pasję do gier! Wchodź na naszą stronę, aby być na bieżąco z najnowszymi trendami w świecie gamingowym!</p>
+        canvas.addEventListener('click', function(event) {
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor((event.clientX - rect.left) / pixelSize) * pixelSize;
+            const y = Math.floor((event.clientY - rect.top) / pixelSize) * pixelSize;
+            
+            ctx.fillStyle = getRandomColor();
+            ctx.fillRect(x, y, pixelSize, pixelSize);
+        });
         
-        <!-- Call-to-Action Button -->
-        <a href="#" class="cta">Dołącz do naszej społeczności!</a>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 PBGame. Wszystkie prawa zastrzeżone. | <a href="https://www.youtube.com" target="_blank" style="color: #ff4500; text-decoration: none;">Nasza strona na YouTube</a></p>
-    </footer>
-
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
 </body>
-
 </html>
