@@ -293,10 +293,14 @@
     </footer>
 
     <script>
-        let loggedIn = false;
+        let loggedIn = localStorage.getItem('loggedIn') === 'true';
 
         window.onload = function() {
             document.getElementById('welcomeBanner').style.display = 'block';
+            if (loggedIn) {
+                enableSettings(true);
+                document.getElementById('settingsBtn').disabled = false;
+            }
         }
 
         function login() {
@@ -305,7 +309,7 @@
 
             if (email && password) {
                 loggedIn = true;
-                localStorage.setItem('loggedIn', true);
+                localStorage.setItem('loggedIn', 'true');
                 enableSettings(true);
                 document.getElementById('settingsBtn').disabled = false;
                 alert('Zalogowano pomyślnie!');
