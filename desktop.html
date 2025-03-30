@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,112 +17,123 @@
             background-color: #f4f4f9;
             color: #333;
             line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
-            background: #2e7d32;
-            color: white;
-            padding: 20px 0;
+            background-color: #2e7d32;
+            color: #fff;
+            padding: 20px;
             text-align: center;
-            font-size: 24px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-size: 36px;
-            letter-spacing: 1px;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .auth-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .auth-buttons button {
-            padding: 12px 25px;
-            font-size: 18px;
-            border: none;
+            padding: 12px 20px;
             background-color: #43a047;
             color: white;
-            cursor: pointer;
+            font-size: 16px;
+            border: none;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .auth-buttons button:hover {
             background-color: #66bb6a;
+            transform: translateY(-2px);
         }
 
         .container {
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 15px;
+            flex-grow: 1;
         }
 
         .card {
-            background: #fff;
+            background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            padding: 40px;
             margin-bottom: 30px;
             text-align: center;
         }
 
         .card h2 {
-            font-size: 28px;
+            font-size: 2rem;
             margin-bottom: 15px;
+            color: #2e7d32;
         }
 
         .card p {
-            font-size: 18px;
-            margin-bottom: 30px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555;
         }
 
         .social-media {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 30px;
             margin-top: 20px;
         }
 
         .social-media a {
-            font-size: 18px;
-            color: #2e7d32;
+            font-size: 1.2rem;
+            color: #43a047;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease;
         }
 
         .social-media a:hover {
-            color: #43a047;
+            color: #66bb6a;
         }
 
         footer {
             background-color: #2e7d32;
             color: white;
-            padding: 20px 0;
+            padding: 20px;
             text-align: center;
+            font-size: 1rem;
         }
 
         footer p {
-            font-size: 16px;
+            margin: 0;
         }
 
+        /* Auth Form Styles */
         .auth-form {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #ffffff;
+            background: #fff;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
             text-align: center;
             width: 400px;
             z-index: 1000;
+        }
+
+        .auth-form h2 {
+            margin-bottom: 20px;
+            color: #2e7d32;
         }
 
         .auth-form input {
@@ -133,6 +143,11 @@
             border-radius: 5px;
             border: 1px solid #ddd;
             font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .auth-form input:focus {
+            border-color: #66bb6a;
         }
 
         .auth-form button {
@@ -144,17 +159,31 @@
             border: none;
             font-size: 18px;
             cursor: pointer;
-            margin-top: 20px;
+            transition: background-color 0.3s ease;
         }
 
         .auth-form button:hover {
             background-color: #66bb6a;
         }
 
+        .auth-form .close-btn {
+            background-color: #d32f2f;
+            margin-top: 10px;
+        }
+
+        .auth-form .close-btn:hover {
+            background-color: #e57373;
+        }
+
         /* Mobile responsiveness */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 28px;
+            header {
+                font-size: 1.5rem;
+            }
+
+            .auth-buttons button {
+                font-size: 14px;
+                padding: 10px 15px;
             }
 
             .container {
@@ -162,17 +191,20 @@
             }
 
             .card {
-                padding: 20px;
+                padding: 30px;
             }
 
             .auth-form {
-                width: 90%;
+                width: 80%;
+            }
+
+            .social-media {
+                flex-direction: column;
+                gap: 15px;
             }
         }
-
     </style>
 </head>
-
 <body>
 
     <header>
@@ -186,7 +218,7 @@
     <div class="container">
         <div class="card">
             <h2>Witaj na stronie PBGame!</h2>
-            <p>Strona oferuje najnowsze informacje o grach, dostęp do społeczności i dużo więcej!</p>
+            <p>Strona oferuje najnowsze informacje o grach, dostęp do społeczności i wiele więcej!</p>
             <div class="social-media">
                 <a href="https://www.youtube.com/@PBGame-v6c" target="_blank">YouTube</a>
                 <a href="https://discord.gg/kmnVBUYxY7" target="_blank">Discord</a>
@@ -201,26 +233,26 @@
     <!-- Login Form -->
     <div id="loginForm" class="auth-form">
         <h2>Zaloguj się</h2>
-        <input type="email" id="loginEmail" placeholder="Email">
-        <input type="password" id="loginPassword" placeholder="Hasło">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Hasło" required>
         <button onclick="login()">Zaloguj</button>
-        <button onclick="closeAuthForm()">Zamknij</button>
+        <button class="close-btn" onclick="closeAuthForm()">Zamknij</button>
     </div>
 
     <!-- Register Form -->
     <div id="registerForm" class="auth-form">
         <h2>Zarejestruj się</h2>
-        <input type="text" id="registerUsername" placeholder="Nazwa użytkownika">
-        <input type="email" id="registerEmail" placeholder="Email">
-        <input type="password" id="registerPassword" placeholder="Hasło">
+        <input type="text" id="registerUsername" placeholder="Nazwa użytkownika" required>
+        <input type="email" id="registerEmail" placeholder="Email" required>
+        <input type="password" id="registerPassword" placeholder="Hasło" required>
         <button onclick="register()">Zarejestruj</button>
-        <button onclick="closeAuthForm()">Zamknij</button>
+        <button class="close-btn" onclick="closeAuthForm()">Zamknij</button>
     </div>
 
     <script>
         let loggedIn = false;
 
-        // Funkcje logowania i rejestracji
+        // Funkcja logowania
         function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
@@ -229,12 +261,12 @@
                 loggedIn = true;
                 alert('Zalogowano pomyślnie!');
                 closeAuthForm();
-                toggleButtons();
             } else {
                 alert('Proszę podać poprawny email i hasło.');
             }
         }
 
+        // Funkcja rejestracji
         function register() {
             const username = document.getElementById('registerUsername').value;
             const email = document.getElementById('registerEmail').value;
@@ -248,33 +280,25 @@
             }
         }
 
+        // Zamknięcie formularza
         function closeAuthForm() {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('registerForm').style.display = 'none';
         }
 
+        // Pokazywanie formularza logowania
         function showLoginForm() {
+            if (loggedIn) {
+                alert('Jesteś już zalogowany!');
+                return;
+            }
             document.getElementById('loginForm').style.display = 'block';
         }
 
+        // Pokazywanie formularza rejestracji
         function showRegisterForm() {
             document.getElementById('registerForm').style.display = 'block';
         }
-
-        function toggleButtons() {
-            const loginButton = document.querySelector('.auth-buttons button:nth-child(1)');
-            const registerButton = document.querySelector('.auth-buttons button:nth-child(2)');
-            if (loggedIn) {
-                loginButton.disabled = true;
-                registerButton.disabled = true;
-            } else {
-                loginButton.disabled = false;
-                registerButton.disabled = false;
-            }
-        }
-
     </script>
-
 </body>
-
 </html>
