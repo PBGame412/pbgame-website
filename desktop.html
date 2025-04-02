@@ -87,16 +87,25 @@
                     bullet.style.top = `${parseInt(this.element.style.top) + 20}px`;
                     game.appendChild(bullet);
                     this.moveBullet(bullet);
-                }, 2000);
+                }, 1500);
             }
             moveBullet(bullet) {
                 let interval = setInterval(() => {
                     bullet.style.left = `${parseInt(bullet.style.left) + 5}px`;
+                    this.checkCollision(bullet);
                     if (parseInt(bullet.style.left) > 800) {
                         bullet.remove();
                         clearInterval(interval);
                     }
                 }, 50);
+            }
+            checkCollision(bullet) {
+                document.querySelectorAll('.zombie').forEach(zombie => {
+                    if (bullet.getBoundingClientRect().intersects(zombie.getBoundingClientRect())) {
+                        bullet.remove();
+                        zombie.remove();
+                    }
+                });
             }
         }
 
@@ -111,7 +120,7 @@
             }
             move() {
                 let interval = setInterval(() => {
-                    this.element.style.left = `${parseInt(this.element.style.left) - 2}px`;
+                    this.element.style.left = `${parseInt(this.element.style.left) - (1 + Math.random() * 2)}px`;
                     if (parseInt(this.element.style.left) < 0) {
                         gameOver();
                         clearInterval(interval);
@@ -129,9 +138,10 @@
         });
 
         new Plant(100, 150);
+        new Plant(100, 250);
         setInterval(() => {
             new Zombie(750, Math.random() * 350);
-        }, 3000);
+        }, 2500);
     </script>
 </body>
 </html>
