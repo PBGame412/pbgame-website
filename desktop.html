@@ -20,8 +20,8 @@
         .plant { 
             width: 50px; 
             height: 50px; 
-            background: url('https://static.wikia.nocookie.net/plantsvszombies/images/0/09/1769829-plant_peashooter_thumb.png/revision/latest?cb=20200213115004') no-repeat center center; 
-            background-size: contain; 
+            background-color: green; 
+            border-radius: 50%;
         }
         .zombie { width: 40px; height: 40px; background-color: red; right: 0; }
         .bullet { width: 10px; height: 10px; background-color: yellow; border-radius: 50%; }
@@ -29,10 +29,16 @@
 </head>
 <body>
     <h1>Plants vs. Zombies - Mini Gra</h1>
-    <p>Kliknij w pole gry, aby zasadzić roślinę</p>
+    <p>Kliknij w pole gry, aby zasadzić roślinę (3 sekundy cooldown)</p>
     <div id="gameArea" onclick="placePlant(event)"></div>
     <script>
+        let canPlacePlant = true;
+
         function placePlant(event) {
+            if (!canPlacePlant) return;
+            canPlacePlant = false;
+            setTimeout(() => canPlacePlant = true, 3000);
+            
             let gameArea = document.getElementById("gameArea");
             let rect = gameArea.getBoundingClientRect();
             let plant = document.createElement("div");
