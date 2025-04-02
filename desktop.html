@@ -3,168 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PVZ2 - Mini Gra</title>
+    <title>Angry Birds - Demo</title>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        #gameArea { 
-            width: 600px; 
-            height: 337px; 
-            border: 2px solid black; 
-            position: relative; 
-            margin: auto;
-            background-color: #A9DFBF; /* Tło w kolorze jasnozielonym */
+        body {
+            margin: 0;
+            padding: 0;
             overflow: hidden;
+            background-color: #87CEEB;
         }
-        .plant, .zombie, .bullet { position: absolute; }
-        .plant { 
-            width: 50px; 
-            height: 50px; 
-            background-color: green; 
-            border-radius: 50%;
+        canvas {
+            display: block;
+            background-color: #ffffff;
+            margin: auto;
         }
-        .zombie { width: 40px; height: 40px; background-color: red; left: 0; }
-        .bullet { width: 10px; height: 10px; background-color: yellow; border-radius: 50%; }
-
-        .column { 
-            width: 100px;
-            border-left: 1px solid black;
-            position: absolute;
-        }
-
-        .column:nth-child(1) { left: 0; }
-        .column:nth-child(2) { left: 100px; }
-        .column:nth-child(3) { left: 200px; }
-        .column:nth-child(4) { left: 300px; }
-        .column:nth-child(5) { left: 400px; }
-        .column:nth-child(6) { left: 500px; }
     </style>
 </head>
 <body>
-    <h1>Plants vs. Zombies - Mini Gra</h1>
-    <p>Kliknij w pole gry, aby zasadzić roślinę (3 sekundy cooldown)</p>
-    <div id="gameArea" onclick="placePlant(event)">
-        <!-- Kolumny, w których będą stawiane rośliny -->
-        <div class="column" id="col1"></div>
-        <div class="column" id="col2"></div>
-        <div class="column" id="col3"></div>
-        <div class="column" id="col4"></div>
-        <div class="column" id="col5"></div>
-        <div class="column" id="col6"></div>
-    </div>
+    <canvas id="gameCanvas"></canvas>
+
     <script>
-        let canPlacePlant = true;
-        const plantSize = 50; // Rozmiar rośliny (50px)
-        const columns = [0, 100, 200, 300, 400, 500]; // Kolumny w poziomie
+        // Ustawienia canvas
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        // Tablica do przechowywania pozycji roślin w kolumnach
-        let plants = [[], [], [], [], [], []];
+        // Parametry ptaka
+        let bird = {
+            x: 150,
+            y: canvas.height / 2,
+            radius: 20,
+            color: 'red',
+            velocityX: 0,
+            velocityY: 0,
+            gravity: 0.8,
+            lift: -15,
+            isFlying: false
+        };
 
-        function placePlant(event) {
-            if (!canPlacePlant) return;
-            canPlacePlant = false;
-            setTimeout(() => canPlacePlant = true, 3000);
+        // Funkcja rysująca ptaka
+        function drawBird() {
+            ctx.beginPath();
+            ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
+            ctx.fillStyle = bird.color;
+            ctx.fill();
+            ctx.closePath();
+        }
 
-            let gameArea = document.getElementById("gameArea");
-            let rect = gameArea.getBoundingClientRect();
-            let xPosition = event.clientX - rect.left;
+        // Funkcja rysująca wszystko
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBird();
 
-            // Określamy, w której kolumnie kliknięto
-            let columnIndex = getColumn(xPosition);
-
-            // Sprawdzamy, czy kliknięte miejsce w danej kolumnie nie jest zajęte
-            if (plants[columnIndex].length >= 5) {
-                alert("Ta kolumna jest pełna!");
-                return; // Jeśli kolumna jest pełna, nie pozwalamy postawić rośliny
+            if (bird.isFlying) {
+                bird.velocityY += bird.gravity; // Grawitacja
+                bird.y += bird.velocityY; // Aktualizacja pozycji ptaka
             }
 
-            let yPosition = 67 * plants[columnIndex].length; // Ustawiamy rośliny w różnych rzędach w kolumnie
-            let plant = document.createElement("div");
-            plant.classList.add("plant");
-            plant.style.top = yPosition + "px";
-            plant.style.left = columns[columnIndex] + 25 + "px"; // Stawiamy roślinę w odpowiedniej kolumnie
-            gameArea.appendChild(plant);
-
-            // Zapisz pozycję rośliny w danej kolumnie
-            plants[columnIndex].push({ x: xPosition, y: yPosition });
-
-            setInterval(() => shootBullet(plant), 2000);
-        }
-
-        function getColumn(xPosition) {
-            // Zwróć indeks kolumny na podstawie pozycji x
-            for (let i = 0; i < columns.length; i++) {
-                if (xPosition >= columns[i] && xPosition < columns[i] + 100) {
-                    return i;
-                }
-            }
-            return 0;
-        }
-
-        function shootBullet(plant) {
-            let bullet = document.createElement("div");
-            bullet.classList.add("bullet");
-            bullet.style.top = parseInt(plant.style.top) + 20 + "px";
-            bullet.style.left = parseInt(plant.style.left) + 50 + "px";
-            document.getElementById("gameArea").appendChild(bullet);
-            moveBullet(bullet);
-        }
-
-        function moveBullet(bullet) {
-            let interval = setInterval(() => {
-                let currentLeft = parseInt(bullet.style.left);
-                if (currentLeft >= 600) {
-                    bullet.remove();
-                    clearInterval(interval);
-                }
-                bullet.style.left = (currentLeft + 5) + "px";
-                checkCollision(bullet, interval);
-            }, 50);
-        }
-
-        function checkCollision(bullet, interval) {
-            let zombies = document.getElementsByClassName("zombie");
-            for (let zombie of zombies) {
-                let bulletRect = bullet.getBoundingClientRect();
-                let zombieRect = zombie.getBoundingClientRect();
-                if (
-                    bulletRect.left < zombieRect.right &&
-                    bulletRect.right > zombieRect.left &&
-                    bulletRect.top < zombieRect.bottom &&
-                    bulletRect.bottom > zombieRect.top
-                ) {
-                    zombie.remove();
-                    bullet.remove();
-                    clearInterval(interval);
-                    return;
-                }
+            // Odbicia od ziemi
+            if (bird.y + bird.radius > canvas.height) {
+                bird.y = canvas.height - bird.radius;
+                bird.velocityY = 0;
             }
         }
 
-        function spawnZombie() {
-            let gameArea = document.getElementById("gameArea");
-            let zombie = document.createElement("div");
-            zombie.classList.add("zombie");
-
-            // Zombie poruszają się w losowej kolumnie
-            let columnIndex = Math.floor(Math.random() * columns.length);
-            zombie.style.top = Math.random() * 300 + "px"; // Losowa pozycja Y w obrębie obszaru gry
-            zombie.style.left = columns[columnIndex] + "px"; // Losowa kolumna
-            gameArea.appendChild(zombie);
-            moveZombie(zombie, columnIndex);
+        // Funkcja, która wystrzeliwuje ptaka
+        function startFlying(e) {
+            if (!bird.isFlying) {
+                bird.isFlying = true;
+                bird.velocityX = 10;
+                bird.velocityY = bird.lift;
+            }
         }
 
-        function moveZombie(zombie, columnIndex) {
-            let interval = setInterval(() => {
-                let currentLeft = parseInt(zombie.style.left);
-                if (currentLeft >= 560) {
-                    alert("Zombie wygrały!");
-                    clearInterval(interval);
-                }
-                zombie.style.left = (currentLeft + 5) + "px"; // Zombie porusza się w prawo
-            }, 500);
+        // Dodanie zdarzenia kliknięcia
+        window.addEventListener('click', startFlying);
+
+        // Główna pętla gry
+        function gameLoop() {
+            draw();
+            requestAnimationFrame(gameLoop);
         }
 
-        setInterval(spawnZombie, 3000); // Zombie respią się automatycznie co 3 sekundy
+        gameLoop(); // Uruchomienie gry
     </script>
 </body>
 </html>
