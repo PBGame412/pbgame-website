@@ -11,10 +11,9 @@
             height: 337px; 
             border: 2px solid black; 
             position: relative; 
-            margin: auto; 
-            background: url('https://i.redd.it/ext8waid79e81.jpg') no-repeat center center; 
-            background-size: cover; 
-            overflow: hidden; 
+            margin: auto;
+            background-color: #A9DFBF; /* Tło w kolorze jasnozielonym */
+            overflow: hidden;
         }
         .plant, .zombie, .bullet { position: absolute; }
         .plant { 
@@ -26,18 +25,31 @@
         .zombie { width: 40px; height: 40px; background-color: red; right: 0; }
         .bullet { width: 10px; height: 10px; background-color: yellow; border-radius: 50%; }
 
-        .row { height: 67px; } /* Dzieli planszę na 5 równych rzędów */
+        .row { 
+            height: 67px; 
+            position: absolute; 
+            width: 100%; 
+            background-color: rgba(0, 0, 0, 0.2); 
+            top: 0; 
+        }
+
+        .row:nth-child(1) { top: 0px; }
+        .row:nth-child(2) { top: 67px; }
+        .row:nth-child(3) { top: 134px; }
+        .row:nth-child(4) { top: 201px; }
+        .row:nth-child(5) { top: 268px; }
     </style>
 </head>
 <body>
     <h1>Plants vs. Zombies - Mini Gra</h1>
     <p>Kliknij w pole gry, aby zasadzić roślinę (3 sekundy cooldown)</p>
     <div id="gameArea" onclick="placePlant(event)">
-        <div class="row" style="top: 0px;"></div>
-        <div class="row" style="top: 67px;"></div>
-        <div class="row" style="top: 134px;"></div>
-        <div class="row" style="top: 201px;"></div>
-        <div class="row" style="top: 268px;"></div>
+        <!-- Przestrzenie do stawiania roślin -->
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
     </div>
     <script>
         let canPlacePlant = true;
