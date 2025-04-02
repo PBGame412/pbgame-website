@@ -22,43 +22,42 @@
             background-color: green; 
             border-radius: 50%;
         }
-        .zombie { width: 40px; height: 40px; background-color: red; right: 0; }
+        .zombie { width: 40px; height: 40px; background-color: red; left: 0; }
         .bullet { width: 10px; height: 10px; background-color: yellow; border-radius: 50%; }
 
-        .row { 
-            height: 67px; 
-            position: absolute; 
-            width: 100%; 
-            background-color: rgba(0, 0, 0, 0.2); 
-            top: 0; 
+        .column { 
+            width: 100px;
+            border-left: 1px solid black;
+            position: absolute;
         }
 
-        .row:nth-child(1) { top: 0px; border-top: 2px solid black; }
-        .row:nth-child(2) { top: 67px; border-top: 2px solid black; }
-        .row:nth-child(3) { top: 134px; border-top: 2px solid black; }
-        .row:nth-child(4) { top: 201px; border-top: 2px solid black; }
-        .row:nth-child(5) { top: 268px; border-top: 2px solid black; }
+        .column:nth-child(1) { left: 0; }
+        .column:nth-child(2) { left: 100px; }
+        .column:nth-child(3) { left: 200px; }
+        .column:nth-child(4) { left: 300px; }
+        .column:nth-child(5) { left: 400px; }
+        .column:nth-child(6) { left: 500px; }
     </style>
 </head>
 <body>
     <h1>Plants vs. Zombies - Mini Gra</h1>
     <p>Kliknij w pole gry, aby zasadzić roślinę (3 sekundy cooldown)</p>
     <div id="gameArea" onclick="placePlant(event)">
-        <!-- Przestrzenie do stawiania roślin -->
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
+        <!-- Kolumny, w których będą stawiane rośliny -->
+        <div class="column" id="col1"></div>
+        <div class="column" id="col2"></div>
+        <div class="column" id="col3"></div>
+        <div class="column" id="col4"></div>
+        <div class="column" id="col5"></div>
+        <div class="column" id="col6"></div>
     </div>
     <script>
         let canPlacePlant = true;
-        const rows = [0, 67, 134, 201, 268]; // Rzędów Y
         const plantSize = 50; // Rozmiar rośliny (50px)
-        const gridWidth = 600; // Szerokość obszaru gry
+        const columns = [0, 100, 200, 300, 400, 500]; // Kolumny w poziomie
 
-        // Tablica do przechowywania pozycji roślin
-        let plants = [];
+        // Tablica do przechowywania pozycji roślin w kolumnach
+        let plants = [[], [], [], [], [], []];
 
         function placePlant(event) {
             if (!canPlacePlant) return;
@@ -68,47 +67,37 @@
             let gameArea = document.getElementById("gameArea");
             let rect = gameArea.getBoundingClientRect();
             let xPosition = event.clientX - rect.left;
-            let yPosition = event.clientY - rect.top;
 
-            // Sprawdzamy, czy kliknięte miejsce jest wolne
-            if (isOccupied(xPosition, yPosition)) {
-                return; // Jeśli miejsce jest zajęte, nie stawiamy rośliny
+            // Określamy, w której kolumnie kliknięto
+            let columnIndex = getColumn(xPosition);
+
+            // Sprawdzamy, czy kliknięte miejsce w danej kolumnie nie jest zajęte
+            if (plants[columnIndex].length >= 5) {
+                alert("Ta kolumna jest pełna!");
+                return; // Jeśli kolumna jest pełna, nie pozwalamy postawić rośliny
             }
 
-            // Dopasowanie rośliny do odpowiedniego rzędu
-            let plantRow = getRow(yPosition);
+            let yPosition = 67 * plants[columnIndex].length; // Ustawiamy rośliny w różnych rzędach w kolumnie
             let plant = document.createElement("div");
             plant.classList.add("plant");
-            plant.style.top = plantRow + "px";
-            plant.style.left = (xPosition - 25) + "px"; // Centrujemy roślinę
-
+            plant.style.top = yPosition + "px";
+            plant.style.left = columns[columnIndex] + 25 + "px"; // Stawiamy roślinę w odpowiedniej kolumnie
             gameArea.appendChild(plant);
 
-            // Zapisz pozycję rośliny
-            plants.push({x: xPosition, y: plantRow});
+            // Zapisz pozycję rośliny w danej kolumnie
+            plants[columnIndex].push({ x: xPosition, y: yPosition });
 
             setInterval(() => shootBullet(plant), 2000);
         }
 
-        function getRow(yPosition) {
-            // Zwróć najbliższy rząd na podstawie pozycji y
-            for (let i = 0; i < rows.length; i++) {
-                if (yPosition < rows[i] + 33) {
-                    return rows[i];
+        function getColumn(xPosition) {
+            // Zwróć indeks kolumny na podstawie pozycji x
+            for (let i = 0; i < columns.length; i++) {
+                if (xPosition >= columns[i] && xPosition < columns[i] + 100) {
+                    return i;
                 }
             }
-            return rows[0];
-        }
-
-        // Funkcja sprawdzająca, czy dane miejsce jest już zajęte przez roślinę
-        function isOccupied(xPosition, yPosition) {
-            for (let plant of plants) {
-                // Sprawdzamy, czy kliknięte miejsce pokrywa się z jakąś rośliną
-                if (Math.abs(plant.x - xPosition) < plantSize && Math.abs(plant.y - yPosition) < plantSize) {
-                    return true;
-                }
-            }
-            return false;
+            return 0;
         }
 
         function shootBullet(plant) {
@@ -155,23 +144,23 @@
             let gameArea = document.getElementById("gameArea");
             let zombie = document.createElement("div");
             zombie.classList.add("zombie");
-            
-            // Zombie wchodzą tylko w określonych rzędach
-            let row = rows[Math.floor(Math.random() * rows.length)];
-            zombie.style.top = row + "px";
-            zombie.style.right = "10px";
+
+            // Zombie poruszają się w losowej kolumnie
+            let columnIndex = Math.floor(Math.random() * columns.length);
+            zombie.style.top = Math.random() * 300 + "px"; // Losowa pozycja Y w obrębie obszaru gry
+            zombie.style.left = columns[columnIndex] + "px"; // Losowa kolumna
             gameArea.appendChild(zombie);
-            moveZombie(zombie);
+            moveZombie(zombie, columnIndex);
         }
 
-        function moveZombie(zombie) {
+        function moveZombie(zombie, columnIndex) {
             let interval = setInterval(() => {
-                let currentRight = parseInt(zombie.style.right);
-                if (currentRight >= 560) {
+                let currentLeft = parseInt(zombie.style.left);
+                if (currentLeft >= 560) {
                     alert("Zombie wygrały!");
                     clearInterval(interval);
                 }
-                zombie.style.right = (currentRight + 5) + "px";
+                zombie.style.left = (currentLeft + 5) + "px"; // Zombie porusza się w prawo
             }, 500);
         }
 
