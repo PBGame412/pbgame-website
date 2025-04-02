@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
@@ -55,6 +54,11 @@
     <script>
         let canPlacePlant = true;
         const rows = [0, 67, 134, 201, 268]; // Rzędów Y
+        const plantSize = 50; // Rozmiar rośliny (50px)
+        const gridWidth = 600; // Szerokość obszaru gry
+
+        // Tablica do przechowywania pozycji roślin
+        let plants = [];
 
         function placePlant(event) {
             if (!canPlacePlant) return;
@@ -63,15 +67,26 @@
 
             let gameArea = document.getElementById("gameArea");
             let rect = gameArea.getBoundingClientRect();
+            let xPosition = event.clientX - rect.left;
             let yPosition = event.clientY - rect.top;
+
+            // Sprawdzamy, czy kliknięte miejsce jest wolne
+            if (isOccupied(xPosition, yPosition)) {
+                return; // Jeśli miejsce jest zajęte, nie stawiamy rośliny
+            }
 
             // Dopasowanie rośliny do odpowiedniego rzędu
             let plantRow = getRow(yPosition);
             let plant = document.createElement("div");
             plant.classList.add("plant");
             plant.style.top = plantRow + "px";
-            plant.style.left = (event.clientX - rect.left - 25) + "px";
+            plant.style.left = (xPosition - 25) + "px"; // Centrujemy roślinę
+
             gameArea.appendChild(plant);
+
+            // Zapisz pozycję rośliny
+            plants.push({x: xPosition, y: plantRow});
+
             setInterval(() => shootBullet(plant), 2000);
         }
 
@@ -83,6 +98,17 @@
                 }
             }
             return rows[0];
+        }
+
+        // Funkcja sprawdzająca, czy dane miejsce jest już zajęte przez roślinę
+        function isOccupied(xPosition, yPosition) {
+            for (let plant of plants) {
+                // Sprawdzamy, czy kliknięte miejsce pokrywa się z jakąś rośliną
+                if (Math.abs(plant.x - xPosition) < plantSize && Math.abs(plant.y - yPosition) < plantSize) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         function shootBullet(plant) {
