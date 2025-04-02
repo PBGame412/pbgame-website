@@ -6,7 +6,7 @@
     <title>PVZ2 - Mini Gra</title>
     <style>
         body { text-align: center; font-family: Arial, sans-serif; }
-        #gameArea { width: 600px; height: 400px; border: 2px solid black; position: relative; margin: auto; background-color: lightgreen; }
+        #gameArea { width: 600px; height: 400px; border: 2px solid black; position: relative; margin: auto; background-color: lightgreen; overflow: hidden; }
         .plant, .zombie { width: 40px; height: 40px; position: absolute; }
         .plant { background-color: green; }
         .zombie { background-color: red; right: 0; }
@@ -18,19 +18,22 @@
     <div id="gameArea" onclick="placePlant(event)"></div>
     <script>
         function placePlant(event) {
+            let gameArea = document.getElementById("gameArea");
+            let rect = gameArea.getBoundingClientRect();
             let plant = document.createElement("div");
             plant.classList.add("plant");
-            plant.style.top = (event.clientY - 50) + "px";
-            plant.style.left = (event.clientX - 50) + "px";
-            document.getElementById("gameArea").appendChild(plant);
+            plant.style.top = (event.clientY - rect.top - 20) + "px";
+            plant.style.left = (event.clientX - rect.left - 20) + "px";
+            gameArea.appendChild(plant);
         }
 
         function spawnZombie() {
+            let gameArea = document.getElementById("gameArea");
             let zombie = document.createElement("div");
             zombie.classList.add("zombie");
-            zombie.style.top = Math.random() * 360 + "px";
+            zombie.style.top = Math.random() * (gameArea.clientHeight - 40) + "px";
             zombie.style.right = "10px";
-            document.getElementById("gameArea").appendChild(zombie);
+            gameArea.appendChild(zombie);
             moveZombie(zombie);
         }
 
