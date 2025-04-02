@@ -25,28 +25,51 @@
         }
         .zombie { width: 40px; height: 40px; background-color: red; right: 0; }
         .bullet { width: 10px; height: 10px; background-color: yellow; border-radius: 50%; }
+
+        .row { height: 67px; } /* Dzieli planszę na 5 równych rzędów */
     </style>
 </head>
 <body>
     <h1>Plants vs. Zombies - Mini Gra</h1>
     <p>Kliknij w pole gry, aby zasadzić roślinę (3 sekundy cooldown)</p>
-    <div id="gameArea" onclick="placePlant(event)"></div>
+    <div id="gameArea" onclick="placePlant(event)">
+        <div class="row" style="top: 0px;"></div>
+        <div class="row" style="top: 67px;"></div>
+        <div class="row" style="top: 134px;"></div>
+        <div class="row" style="top: 201px;"></div>
+        <div class="row" style="top: 268px;"></div>
+    </div>
     <script>
         let canPlacePlant = true;
+        const rows = [0, 67, 134, 201, 268]; // Rzędów Y
 
         function placePlant(event) {
             if (!canPlacePlant) return;
             canPlacePlant = false;
             setTimeout(() => canPlacePlant = true, 3000);
-            
+
             let gameArea = document.getElementById("gameArea");
             let rect = gameArea.getBoundingClientRect();
+            let yPosition = event.clientY - rect.top;
+
+            // Dopasowanie rośliny do odpowiedniego rzędu
+            let plantRow = getRow(yPosition);
             let plant = document.createElement("div");
             plant.classList.add("plant");
-            plant.style.top = (event.clientY - rect.top - 25) + "px";
+            plant.style.top = plantRow + "px";
             plant.style.left = (event.clientX - rect.left - 25) + "px";
             gameArea.appendChild(plant);
             setInterval(() => shootBullet(plant), 2000);
+        }
+
+        function getRow(yPosition) {
+            // Zwróć najbliższy rząd na podstawie pozycji y
+            for (let i = 0; i < rows.length; i++) {
+                if (yPosition < rows[i] + 33) {
+                    return rows[i];
+                }
+            }
+            return rows[0];
         }
 
         function shootBullet(plant) {
@@ -93,7 +116,10 @@
             let gameArea = document.getElementById("gameArea");
             let zombie = document.createElement("div");
             zombie.classList.add("zombie");
-            zombie.style.top = Math.random() * (gameArea.clientHeight - 40) + "px";
+            
+            // Zombie wchodzą tylko w określonych rzędach
+            let row = rows[Math.floor(Math.random() * rows.length)];
+            zombie.style.top = row + "px";
             zombie.style.right = "10px";
             gameArea.appendChild(zombie);
             moveZombie(zombie);
