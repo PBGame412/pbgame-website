@@ -19,33 +19,54 @@
         document.body.appendChild(renderer.domElement);
 
         // Ground
-        const geometry = new THREE.PlaneGeometry(10, 10);
-        const material = new THREE.MeshBasicMaterial({ color: 0x228B22, side: THREE.DoubleSide });
-        const ground = new THREE.Mesh(geometry, material);
+        const groundGeometry = new THREE.PlaneGeometry(10, 10);
+        const groundMaterial = new THREE.MeshBasicMaterial({ color: 0x228B22, side: THREE.DoubleSide });
+        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
         ground.rotation.x = -Math.PI / 2;
         scene.add(ground);
 
-        // Peashooter (Basic Representation)
-        const peaGeometry = new THREE.SphereGeometry(0.3, 16, 16);
-        const peaMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00 });
-        const peashooter = new THREE.Mesh(peaGeometry, peaMaterial);
-        peashooter.position.set(-3, 0.5, 0);
-        scene.add(peashooter);
+        // Peashooter
+        function createPeashooter(x, z) {
+            const peaGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+            const peaMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00 });
+            const peashooter = new THREE.Mesh(peaGeometry, peaMaterial);
+            peashooter.position.set(x, 0.5, z);
+            scene.add(peashooter);
+            return peashooter;
+        }
 
-        // Zombie (Basic Representation)
-        const zombieGeometry = new THREE.BoxGeometry(0.7, 1.2, 0.7);
-        const zombieMaterial = new THREE.MeshBasicMaterial({ color: 0x556B2F });
-        const zombie = new THREE.Mesh(zombieGeometry, zombieMaterial);
-        zombie.position.set(3, 0.6, 0);
-        scene.add(zombie);
+        // Sunflower
+        function createSunflower(x, z) {
+            const sunGeometry = new THREE.CylinderGeometry(0.3, 0.3, 1, 16);
+            const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xFFD700 });
+            const sunflower = new THREE.Mesh(sunGeometry, sunMaterial);
+            sunflower.position.set(x, 0.5, z);
+            scene.add(sunflower);
+            return sunflower;
+        }
 
-        camera.position.set(0, 5, 5);
+        // Zombie
+        function createZombie(x, z) {
+            const zombieGeometry = new THREE.BoxGeometry(0.7, 1.2, 0.7);
+            const zombieMaterial = new THREE.MeshBasicMaterial({ color: 0x556B2F });
+            const zombie = new THREE.Mesh(zombieGeometry, zombieMaterial);
+            zombie.position.set(x, 0.6, z);
+            scene.add(zombie);
+            return zombie;
+        }
+
+        // Entities
+        const peashooter = createPeashooter(-3, 0);
+        const sunflower = createSunflower(-4, 2);
+        const zombies = [createZombie(3, 0), createZombie(5, -1)];
+
+        camera.position.set(0, 5, 7);
         camera.lookAt(0, 0, 0);
 
         // Animation loop
         function animate() {
             requestAnimationFrame(animate);
-            zombie.position.x -= 0.01; // Move zombie
+            zombies.forEach(zombie => zombie.position.x -= 0.01); // Move zombies forward
             renderer.render(scene, camera);
         }
         animate();
