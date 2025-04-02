@@ -1,147 +1,54 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plants vs Zombies - Mini Gra</title>
+    <title>PVZ 3D Prototype</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        body {
-            background-color: #7ec850;
-            font-family: Arial, sans-serif;
-        }
-        #game {
-            width: 800px;
-            height: 400px;
-            border: 2px solid black;
-            position: relative;
-            overflow: hidden;
-            background: url('grass.png') repeat;
-        }
-        .plant, .zombie, .bullet {
-            position: absolute;
-        }
-        .plant {
-            width: 50px;
-            height: 50px;
-            background: url('plant.png') no-repeat center/cover;
-        }
-        .zombie {
-            width: 50px;
-            height: 50px;
-            background: url('zombie.png') no-repeat center/cover;
-        }
-        .bullet {
-            width: 10px;
-            height: 10px;
-            background: red;
-            border-radius: 50%;
-        }
-        #gameOverScreen {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 10px;
-        }
-        #restartButton {
-            margin-top: 10px;
-            padding: 10px;
-            background: red;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+        body { margin: 0; overflow: hidden; }
     </style>
 </head>
 <body>
-    <h1>Plants vs Zombies - Mini Gra</h1>
-    <div id="game"></div>
-    <div id="gameOverScreen">
-        <h2>Koniec Gry!</h2>
-        <button id="restartButton">Restart</button>
-    </div>
     <script>
-        const game = document.getElementById("game");
-        const gameOverScreen = document.getElementById("gameOverScreen");
-        const restartButton = document.getElementById("restartButton");
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-        class Plant {
-            constructor(x, y) {
-                this.element = document.createElement("div");
-                this.element.classList.add("plant");
-                this.element.style.left = `${x}px`;
-                this.element.style.top = `${y}px`;
-                game.appendChild(this.element);
-                this.shoot();
-            }
-            shoot() {
-                setInterval(() => {
-                    const bullet = document.createElement("div");
-                    bullet.classList.add("bullet");
-                    bullet.style.left = `${parseInt(this.element.style.left) + 40}px`;
-                    bullet.style.top = `${parseInt(this.element.style.top) + 20}px`;
-                    game.appendChild(bullet);
-                    this.moveBullet(bullet);
-                }, 1500);
-            }
-            moveBullet(bullet) {
-                let interval = setInterval(() => {
-                    bullet.style.left = `${parseInt(bullet.style.left) + 5}px`;
-                    this.checkCollision(bullet);
-                    if (parseInt(bullet.style.left) > 800) {
-                        bullet.remove();
-                        clearInterval(interval);
-                    }
-                }, 50);
-            }
-            checkCollision(bullet) {
-                document.querySelectorAll('.zombie').forEach(zombie => {
-                    if (bullet.getBoundingClientRect().intersects(zombie.getBoundingClientRect())) {
-                        bullet.remove();
-                        zombie.remove();
-                    }
-                });
-            }
+        // Ground
+        const geometry = new THREE.PlaneGeometry(10, 10);
+        const material = new THREE.MeshBasicMaterial({ color: 0x228B22, side: THREE.DoubleSide });
+        const ground = new THREE.Mesh(geometry, material);
+        ground.rotation.x = -Math.PI / 2;
+        scene.add(ground);
+
+        // Peashooter (Basic Representation)
+        const peaGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+        const peaMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00 });
+        const peashooter = new THREE.Mesh(peaGeometry, peaMaterial);
+        peashooter.position.set(-3, 0.5, 0);
+        scene.add(peashooter);
+
+        // Zombie (Basic Representation)
+        const zombieGeometry = new THREE.BoxGeometry(0.7, 1.2, 0.7);
+        const zombieMaterial = new THREE.MeshBasicMaterial({ color: 0x556B2F });
+        const zombie = new THREE.Mesh(zombieGeometry, zombieMaterial);
+        zombie.position.set(3, 0.6, 0);
+        scene.add(zombie);
+
+        camera.position.set(0, 5, 5);
+        camera.lookAt(0, 0, 0);
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            zombie.position.x -= 0.01; // Move zombie
+            renderer.render(scene, camera);
         }
-
-        class Zombie {
-            constructor(x, y) {
-                this.element = document.createElement("div");
-                this.element.classList.add("zombie");
-                this.element.style.left = `${x}px`;
-                this.element.style.top = `${y}px`;
-                game.appendChild(this.element);
-                this.move();
-            }
-            move() {
-                let interval = setInterval(() => {
-                    this.element.style.left = `${parseInt(this.element.style.left) - (1 + Math.random() * 2)}px`;
-                    if (parseInt(this.element.style.left) < 0) {
-                        gameOver();
-                        clearInterval(interval);
-                    }
-                }, 100);
-            }
-        }
-
-        function gameOver() {
-            gameOverScreen.style.display = "block";
-        }
-
-        restartButton.addEventListener("click", () => {
-            location.reload();
-        });
-
-        new Plant(100, 150);
-        new Plant(100, 250);
-        setInterval(() => {
-            new Zombie(750, Math.random() * 350);
-        }, 2500);
+        animate();
     </script>
 </body>
 </html>
