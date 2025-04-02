@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PVZ 2D Prototype</title>
+    <title>Plants vs Zombies 2D</title>
     <style>
         body { margin: 0; padding: 0; overflow: hidden; }
         canvas { display: block; background-color: #8B8B8B; }
@@ -21,48 +21,74 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+        #sun-count {
+            font-weight: bold;
+        }
+        #level-info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 18px;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div id="plant-selection">
         <button class="plant-button" onclick="selectPlant('peashooter')">Peashooter (100 Sun)</button>
         <button class="plant-button" onclick="selectPlant('sunflower')">Sunflower (50 Sun)</button>
-        <p>Sun: <span id="sun-count">0</span></p>
+        <button class="plant-button" onclick="selectPlant('wallnut')">Wallnut (50 Sun)</button>
+        <button class="plant-button" onclick="selectPlant('cherrybomb')">Cherry Bomb (150 Sun)</button>
+        <button class="plant-button" onclick="selectPlant('snowpea')">Snowpea (125 Sun)</button>
+        <p>Sun: <span id="sun-count">100</span></p>
     </div>
+    <div id="level-info">Level: 1</div>
     <canvas id="gameCanvas"></canvas>
-    
+
     <script>
-        // Setup canvas
+        // Setup Canvas and Game Variables
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Game Variables
         let sunPoints = 100;
+        let level = 1;
         let selectedPlant = null;
-        const plants = [];
-        const zombies = [];
+        let plants = [];
+        let zombies = [];
+        let sunflowers = [];
+        let peashooters = [];
+        let wallnuts = [];
+        let cherryBombs = [];
+        let snowPeas = [];
+
+        // Textures
         let plantTextures = {};
         let zombieTexture = new Image();
         let backgroundTexture = new Image();
 
-        // Load assets (textures)
+        // Load Assets
         function loadTextures() {
             plantTextures.peashooter = new Image();
-            plantTextures.peashooter.src = 'peashooter.png'; // Replace with your image path
+            plantTextures.peashooter.src = 'https://via.placeholder.com/50'; // Replace with actual path
             plantTextures.sunflower = new Image();
-            plantTextures.sunflower.src = 'sunflower.png'; // Replace with your image path
-            zombieTexture.src = 'zombie.png'; // Replace with your image path
-            backgroundTexture.src = 'background.png'; // Replace with your image path
+            plantTextures.sunflower.src = 'https://via.placeholder.com/50'; // Replace with actual path
+            plantTextures.wallnut = new Image();
+            plantTextures.wallnut.src = 'https://via.placeholder.com/50'; // Replace with actual path
+            plantTextures.cherrybomb = new Image();
+            plantTextures.cherrybomb.src = 'https://via.placeholder.com/50'; // Replace with actual path
+            plantTextures.snowpea = new Image();
+            plantTextures.snowpea.src = 'https://via.placeholder.com/50'; // Replace with actual path
+            zombieTexture.src = 'https://via.placeholder.com/50'; // Replace with actual path
+            backgroundTexture.src = 'https://via.placeholder.com/800x600'; // Replace with actual path
         }
 
-        // Game Update
+        // Game Loop
         function update() {
-            // Clear the canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw background
+            // Draw Background
             ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
 
             // Draw Plants
@@ -73,16 +99,68 @@
             // Draw Zombies
             zombies.forEach(zombie => {
                 ctx.drawImage(zombieTexture, zombie.x, zombie.y, 50, 50);
-                zombie.x -= 1; // Move zombies leftwards
+                zombie.x -= zombie.speed; // Zombies move leftwards
+            });
+
+            // Sunflower generates sun points
+            sunflowers.forEach(sunflower => {
+                if (Math.random() < 0.02) { // Sun generation chance
+                    sunPoints += 25;
+                    updateSunCount();
+                }
+            });
+
+            // Snowpea slows down zombies
+            snowPeas.forEach(snowpea => {
+                zombies.forEach(zombie => {
+                    if (Math.abs(zombie.x - snowpea.x) < 50) {
+                        zombie.speed = 0.5; // Slow down zombies near snowpea
+                    }
+                });
+            });
+
+            // Cherry Bomb explodes zombies nearby
+            cherryBombs.forEach(bomb => {
+                if (Math.abs(bomb.x - zombies[0].x) < 50) {
+                    zombies = zombies.filter(z => Math.abs(z.x - bomb.x) > 50); // Remove zombies
+                    cherryBombs = cherryBombs.filter(b => b !== bomb); // Remove bomb
+                }
             });
 
             // Update Sun Points UI
-            document.getElementById('sun-count').textContent = sunPoints;
+            updateSunCount();
+
+            // Collision Detection (Peashooter vs Zombie)
+            peashooters.forEach(peashooter => {
+                peashooter.bullets.forEach((bullet, index) => {
+                    bullet.x += bullet.speed;
+                    zombies.forEach((zombie, zIndex) => {
+                        if (Math.abs(bullet.x - zombie.x) < 25 && Math.abs(bullet.y - zombie.y) < 25) {
+                            zombie.health -= bullet.damage;
+                            peashooter.bullets.splice(index, 1);
+                            if (zombie.health <= 0) {
+                                zombies.splice(zIndex, 1);
+                            }
+                        }
+                    });
+                });
+            });
+
+            // Check if all zombies are defeated
+            if (zombies.length === 0) {
+                level++;
+                spawnZombies();
+            }
 
             requestAnimationFrame(update);
         }
 
-        // Handle clicks for placing plants
+        // Update Sun Points UI
+        function updateSunCount() {
+            document.getElementById('sun-count').textContent = sunPoints;
+        }
+
+        // Handle Clicks for Plant Placement
         canvas.addEventListener('click', (event) => {
             const mouseX = event.clientX;
             const mouseY = event.clientY;
@@ -90,33 +168,90 @@
             if (selectedPlant) {
                 if (selectedPlant === 'peashooter' && sunPoints >= 100) {
                     sunPoints -= 100;
-                    plants.push({ type: 'peashooter', x: mouseX - 25, y: mouseY - 25 });
+                    peashooters.push(createPeashooter(mouseX, mouseY));
                 } else if (selectedPlant === 'sunflower' && sunPoints >= 50) {
                     sunPoints -= 50;
-                    plants.push({ type: 'sunflower', x: mouseX - 25, y: mouseY - 25 });
+                    sunflowers.push(createSunflower(mouseX, mouseY));
+                } else if (selectedPlant === 'wallnut' && sunPoints >= 50) {
+                    sunPoints -= 50;
+                    wallnuts.push(createWallnut(mouseX, mouseY));
+                } else if (selectedPlant === 'cherrybomb' && sunPoints >= 150) {
+                    sunPoints -= 150;
+                    cherryBombs.push(createCherryBomb(mouseX, mouseY));
+                } else if (selectedPlant === 'snowpea' && sunPoints >= 125) {
+                    sunPoints -= 125;
+                    snowPeas.push(createSnowpea(mouseX, mouseY));
                 }
             }
         });
 
-        // Handle plant selection
+        // Plant Selection
         function selectPlant(plantType) {
             selectedPlant = plantType;
         }
 
+        // Create Peashooter
+        function createPeashooter(x, y) {
+            return {
+                type: 'peashooter',
+                x: x - 25,
+                y: y - 25,
+                bullets: [{x: x, y: y, speed: 5, damage: 1}]
+            };
+        }
+
+        // Create Sunflower
+        function createSunflower(x, y) {
+            return {
+                type: 'sunflower',
+                x: x - 25,
+                y: y - 25
+            };
+        }
+
+        // Create Wallnut
+        function createWallnut(x, y) {
+            return {
+                type: 'wallnut',
+                x: x - 25,
+                y: y - 25
+            };
+        }
+
+        // Create Cherry Bomb
+        function createCherryBomb(x, y) {
+            return {
+                type: 'cherrybomb',
+                x: x - 25,
+                y: y - 25
+            };
+        }
+
+        // Create Snowpea
+        function createSnowpea(x, y) {
+            return {
+                type: 'snowpea',
+                x: x - 25,
+                y: y - 25
+            };
+        }
+
         // Spawn Zombies
-        function spawnZombie() {
-            zombies.push({ x: canvas.width, y: Math.random() * canvas.height });
+        function spawnZombies() {
+            for (let i = 0; i < level; i++) {
+                zombies.push({
+                    x: canvas.width,
+                    y: Math.random() * canvas.height,
+                    speed: 1,
+                    health: 3
+                });
+            }
         }
 
-        // Start the game
-        function startGame() {
-            loadTextures();
-            setInterval(spawnZombie, 3000); // Spawn zombie every 3 seconds
-            update();
-        }
-
-        // Initialize the game
-        startGame();
+        // Spawn initial zombies and start the game
+        spawnZombies();
+        loadTextures();
+        update();
     </script>
 </body>
 </html>
