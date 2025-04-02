@@ -3,52 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angry Birds - Demo</title>
+    <title>Angry Birds - Clone</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #87CEEB;
-        }
-        canvas {
-            display: block;
-            background-color: #ffffff;
-            margin: auto;
-        }
+        body { margin: 0; overflow: hidden; background-color: #87CEEB; }
+        canvas { display: block; background-color: #ffffff; margin: auto; }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas"></canvas>
-
     <script>
-        // Ustawienia canvas
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Parametry ptaka
-        let bird = {
-            x: 150,
-            y: canvas.height / 2,
-            radius: 20,
-            color: 'red',
-            velocityX: 0,
-            velocityY: 0,
-            gravity: 0.8,
-            lift: -15,
-            isFlying: false
-        };
-
-        // Bloki do zniszczenia
+        let bird = { x: 150, y: canvas.height - 200, radius: 20, color: 'red', velocityX: 0, velocityY: 0, gravity: 0.6, isFlying: false };
         let blocks = [
             { x: canvas.width - 400, y: canvas.height - 100, width: 50, height: 50, color: 'green', isDestroyed: false },
             { x: canvas.width - 450, y: canvas.height - 150, width: 50, height: 50, color: 'green', isDestroyed: false },
             { x: canvas.width - 350, y: canvas.height - 150, width: 50, height: 50, color: 'green', isDestroyed: false }
         ];
+        let score = 0;
 
-        // Funkcja rysująca ptaka
         function drawBird() {
             ctx.beginPath();
             ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
@@ -57,93 +33,84 @@
             ctx.closePath();
         }
 
-        // Funkcja rysująca blok
         function drawBlocks() {
             blocks.forEach(block => {
                 if (!block.isDestroyed) {
-                    ctx.beginPath();
-                    ctx.rect(block.x, block.y, block.width, block.height);
                     ctx.fillStyle = block.color;
-                    ctx.fill();
-                    ctx.closePath();
+                    ctx.fillRect(block.x, block.y, block.width, block.height);
                 }
             });
         }
 
-        // Funkcja sprawdzająca kolizje
         function checkCollisions() {
             blocks.forEach(block => {
                 if (!block.isDestroyed) {
                     const distX = Math.abs(bird.x - (block.x + block.width / 2));
                     const distY = Math.abs(bird.y - (block.y + block.height / 2));
-
                     if (distX <= (block.width / 2 + bird.radius) && distY <= (block.height / 2 + bird.radius)) {
                         block.isDestroyed = true;
+                        score += 10;
                     }
                 }
             });
         }
 
-        // Funkcja rysująca wszystko
+        function drawScore() {
+            ctx.fillStyle = 'black';
+            ctx.font = '20px Arial';
+            ctx.fillText('Punkty: ' + score, 20, 30);
+        }
+
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Rysowanie tła
             ctx.fillStyle = '#87CEEB';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             drawBird();
             drawBlocks();
+            drawScore();
 
             if (bird.isFlying) {
-                bird.velocityY += bird.gravity; // Grawitacja
-                bird.x += bird.velocityX; // Pozycja X
-                bird.y += bird.velocityY; // Pozycja Y
+                bird.velocityY += bird.gravity;
+                bird.x += bird.velocityX;
+                bird.y += bird.velocityY;
             }
 
-            checkCollisions(); // Sprawdzanie kolizji
-
-            // Odbicia od ziemi
+            checkCollisions();
             if (bird.y + bird.radius > canvas.height) {
-                bird.y = canvas.height - bird.radius;
-                bird.velocityY = 0;
                 bird.isFlying = false;
+                bird.x = 150;
+                bird.y = canvas.height - 200;
+                bird.velocityX = 0;
+                bird.velocityY = 0;
             }
         }
 
-        // Funkcja wystrzału ptaka
         let angle = 0;
-        let strength = 15;
+        let strength = 10;
+        function setLaunchPower(e) {
+            if (!bird.isFlying) {
+                angle = Math.atan2(e.clientY - bird.y, e.clientX - bird.x);
+                strength = Math.min(Math.hypot(e.clientX - bird.x, e.clientY - bird.y) / 15, 25);
+            }
+        }
 
         function startFlying(e) {
             if (!bird.isFlying) {
-                angle = Math.atan2(e.clientY - bird.y, e.clientX - bird.x); // Kąt
-                bird.velocityX = Math.cos(angle) * strength; // Siła w poziomie
-                bird.velocityY = Math.sin(angle) * strength; // Siła w pionie
+                bird.velocityX = Math.cos(angle) * strength;
+                bird.velocityY = Math.sin(angle) * strength;
                 bird.isFlying = true;
             }
         }
 
-        // Funkcja ustawiająca siłę strzału (kliknięcie lewego przycisku myszy)
-        window.addEventListener('mousedown', function (e) {
-            bird.isFlying = false;
-            bird.x = 150;
-            bird.y = canvas.height / 2;
-            bird.velocityX = 0;
-            bird.velocityY = 0;
-            strength = Math.min(Math.abs(e.clientY - bird.y) / 10 + 5, 25); // Siła na podstawie odległości
-        });
+        window.addEventListener('mousedown', setLaunchPower);
+        window.addEventListener('mouseup', startFlying);
 
-        // Dodanie zdarzenia kliknięcia
-        window.addEventListener('click', startFlying);
-
-        // Główna pętla gry
         function gameLoop() {
             draw();
             requestAnimationFrame(gameLoop);
         }
-
-        gameLoop(); // Uruchomienie gry
+        gameLoop();
     </script>
 </body>
 </html>
