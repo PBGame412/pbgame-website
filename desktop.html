@@ -81,7 +81,6 @@
             plantTextures.snowpea = new Image();
             plantTextures.snowpea.src = 'https://via.placeholder.com/50'; // Replace with actual path
             zombieTexture.src = 'https://via.placeholder.com/50'; // Replace with actual path
-            backgroundTexture.src = 'https://via.placeholder.com/800x600'; // Replace with actual path
         }
 
         // Game Loop
@@ -89,7 +88,8 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Draw Background
-            ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#228B22'; // Green background to represent grass
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Draw Plants
             plants.forEach(plant => {
