@@ -47,16 +47,19 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Ground with a beautiful texture
+        // Tło (tekstura z obrazka)
         const textureLoader = new THREE.TextureLoader();
-        const groundTexture = textureLoader.load('https://www.example.com/your_image_path/grass_texture.jpg'); // Replace with an actual image URL
-        const groundMaterial = new THREE.MeshLambertMaterial({ map: groundTexture });
+        const backgroundTexture = textureLoader.load('/mnt/data/A_2D_digital_rendering_screenshot_from_"Plants_vs.png'); // Użyj lokalnego linku do zdjęcia
+        scene.background = backgroundTexture; // Ustawiamy jako tło całej sceny
+
+        // Ground (ziemia) z materiałem
         const groundGeometry = new THREE.PlaneGeometry(10, 10);
+        const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x228B22 });
         const ground = new THREE.Mesh(groundGeometry, groundMaterial);
         ground.rotation.x = -Math.PI / 2;
         scene.add(ground);
 
-        // Grid Helper with finer lines
+        // Grid Helper dla łatwiejszej orientacji
         const gridHelper = new THREE.GridHelper(10, 10, 0x888888, 0x444444);
         scene.add(gridHelper);
 
@@ -66,17 +69,17 @@
         let sunPoints = 100;
         let selectedPlant = null;
 
-        // Update Sun Count UI
+        // Aktualizacja UI punktów słońca
         function updateSunCount() {
             document.getElementById("sun-count").innerText = sunPoints;
         }
 
-        // Plant Selection
+        // Wybór rośliny
         function selectPlant(plant) {
             selectedPlant = plant;
         }
 
-        // Peashooter Model
+        // Model Peashooter
         function createPeashooter(x, z) {
             if (sunPoints >= 100) {
                 sunPoints -= 100;
@@ -90,7 +93,7 @@
             }
         }
 
-        // Sunflower Model
+        // Model Sunflower
         function createSunflower(x, z) {
             if (sunPoints >= 50) {
                 sunPoints -= 50;
@@ -104,7 +107,7 @@
             }
         }
 
-        // Zombie Model
+        // Model Zombie
         function createZombie(x, z) {
             const zombieGeometry = new THREE.BoxGeometry(0.7, 1.5, 0.7);
             const zombieMaterial = new THREE.MeshLambertMaterial({ color: 0x556B2F });
@@ -115,7 +118,7 @@
             zombies.push(zombie);
         }
 
-        // Shoot Pea
+        // Strzał z Peashootera
         function shootPea(x, z) {
             const peaGeometry = new THREE.SphereGeometry(0.1, 8, 8);
             const peaMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00 });
@@ -125,7 +128,7 @@
             peas.push(pea);
         }
 
-        // Mouse Click to Plant
+        // Kliknięcie myszką do postawienia rośliny
         window.addEventListener('click', (event) => {
             const mouse = new THREE.Vector2();
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -142,7 +145,7 @@
             }
         });
 
-        // Mouse Move to highlight planting area
+        // Ruch kursora do zaznaczenia obszaru
         window.addEventListener('mousemove', (event) => {
             const mouse = new THREE.Vector2();
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -161,12 +164,12 @@
             }
         });
 
-        // Initial Zombies
+        // Inicjalizacja Zombie
         createZombie(3, 0);
         createZombie(5, -1);
         updateSunCount();
 
-        // Lighting for better visuals
+        // Światło dla lepszej wizualizacji
         const light = new THREE.PointLight(0xFFFFFF, 1, 100);
         light.position.set(5, 5, 5);
         scene.add(light);
@@ -174,11 +177,11 @@
         camera.position.set(0, 5, 7);
         camera.lookAt(0, 0, 0);
 
-        // Animation loop
+        // Pętla animacji
         function animate() {
             requestAnimationFrame(animate);
             
-            // Move peas
+            // Ruch strzałów
             peas.forEach((pea, index) => {
                 pea.position.x += 0.05;
                 zombies.forEach((zombie, zIndex) => {
@@ -194,7 +197,7 @@
                 });
             });
             
-            // Move zombies
+            // Ruch Zombie
             zombies.forEach(zombie => zombie.position.x -= 0.01);
             
             renderer.render(scene, camera);
