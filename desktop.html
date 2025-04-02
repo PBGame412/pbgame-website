@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PVZ 3D Prototype</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>PVZ 2D Prototype</title>
     <style>
-        body { margin: 0; overflow: hidden; position: relative; }
+        body { margin: 0; padding: 0; overflow: hidden; }
+        canvas { display: block; background-color: #8B8B8B; }
         #plant-selection {
             position: absolute;
             top: 10px;
@@ -14,20 +14,12 @@
             background: rgba(255, 255, 255, 0.8);
             padding: 10px;
             border-radius: 5px;
+            z-index: 10;
         }
         .plant-button {
             margin: 5px;
             padding: 5px 10px;
             cursor: pointer;
-        }
-        .highlight {
-            border: 2px solid #FF6347;
-            position: absolute;
-            width: 1.5;
-            height: 1.5;
-            background-color: rgba(255, 99, 71, 0.3);
-            border-radius: 5px;
-            pointer-events: none;
         }
     </style>
 </head>
@@ -37,172 +29,94 @@
         <button class="plant-button" onclick="selectPlant('sunflower')">Sunflower (50 Sun)</button>
         <p>Sun: <span id="sun-count">0</span></p>
     </div>
-    <div id="highlight"></div>
+    <canvas id="gameCanvas"></canvas>
     
     <script>
-        // Scene setup
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+        // Setup canvas
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        // Tło (tekstura z obrazka)
-        const textureLoader = new THREE.TextureLoader();
-        const backgroundTexture = textureLoader.load('/mnt/data/A_2D_digital_rendering_screenshot_from_"Plants_vs.png'); // Użyj lokalnego linku do zdjęcia
-        scene.background = backgroundTexture; // Ustawiamy jako tło całej sceny
-
-        // Ground (ziemia) z materiałem
-        const groundGeometry = new THREE.PlaneGeometry(10, 10);
-        const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x228B22 });
-        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-        ground.rotation.x = -Math.PI / 2;
-        scene.add(ground);
-
-        // Grid Helper dla łatwiejszej orientacji
-        const gridHelper = new THREE.GridHelper(10, 10, 0x888888, 0x444444);
-        scene.add(gridHelper);
-
-        // Entities lists
-        const zombies = [];
-        const peas = [];
+        // Game Variables
         let sunPoints = 100;
         let selectedPlant = null;
+        const plants = [];
+        const zombies = [];
+        let plantTextures = {};
+        let zombieTexture = new Image();
+        let backgroundTexture = new Image();
 
-        // Aktualizacja UI punktów słońca
-        function updateSunCount() {
-            document.getElementById("sun-count").innerText = sunPoints;
+        // Load assets (textures)
+        function loadTextures() {
+            plantTextures.peashooter = new Image();
+            plantTextures.peashooter.src = 'peashooter.png'; // Replace with your image path
+            plantTextures.sunflower = new Image();
+            plantTextures.sunflower.src = 'sunflower.png'; // Replace with your image path
+            zombieTexture.src = 'zombie.png'; // Replace with your image path
+            backgroundTexture.src = 'background.png'; // Replace with your image path
         }
 
-        // Wybór rośliny
-        function selectPlant(plant) {
-            selectedPlant = plant;
-        }
+        // Game Update
+        function update() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Model Peashooter
-        function createPeashooter(x, z) {
-            if (sunPoints >= 100) {
-                sunPoints -= 100;
-                updateSunCount();
-                const peashooterGeometry = new THREE.CylinderGeometry(0.2, 0.3, 1, 32);
-                const peashooterMaterial = new THREE.MeshLambertMaterial({ color: 0x00FF00 });
-                const peashooter = new THREE.Mesh(peashooterGeometry, peashooterMaterial);
-                peashooter.position.set(x, 0.5, z);
-                scene.add(peashooter);
-                setInterval(() => shootPea(peashooter.position.x, peashooter.position.z), 2000);
-            }
-        }
+            // Draw background
+            ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
 
-        // Model Sunflower
-        function createSunflower(x, z) {
-            if (sunPoints >= 50) {
-                sunPoints -= 50;
-                updateSunCount();
-                const sunflowerGeometry = new THREE.CylinderGeometry(0.3, 0.3, 1.5, 32);
-                const sunflowerMaterial = new THREE.MeshLambertMaterial({ color: 0xFFD700 });
-                const sunflower = new THREE.Mesh(sunflowerGeometry, sunflowerMaterial);
-                sunflower.position.set(x, 0.75, z);
-                scene.add(sunflower);
-                setInterval(() => { sunPoints += 25; updateSunCount(); }, 5000);
-            }
-        }
-
-        // Model Zombie
-        function createZombie(x, z) {
-            const zombieGeometry = new THREE.BoxGeometry(0.7, 1.5, 0.7);
-            const zombieMaterial = new THREE.MeshLambertMaterial({ color: 0x556B2F });
-            const zombie = new THREE.Mesh(zombieGeometry, zombieMaterial);
-            zombie.position.set(x, 0.75, z);
-            zombie.health = 3;
-            scene.add(zombie);
-            zombies.push(zombie);
-        }
-
-        // Strzał z Peashootera
-        function shootPea(x, z) {
-            const peaGeometry = new THREE.SphereGeometry(0.1, 8, 8);
-            const peaMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00 });
-            const pea = new THREE.Mesh(peaGeometry, peaMaterial);
-            pea.position.set(x, 0.5, z);
-            scene.add(pea);
-            peas.push(pea);
-        }
-
-        // Kliknięcie myszką do postawienia rośliny
-        window.addEventListener('click', (event) => {
-            const mouse = new THREE.Vector2();
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-            
-            const raycaster = new THREE.Raycaster();
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObject(ground);
-            
-            if (intersects.length > 0 && selectedPlant) {
-                const point = intersects[0].point;
-                if (selectedPlant === 'peashooter') createPeashooter(point.x, point.z);
-                if (selectedPlant === 'sunflower') createSunflower(point.x, point.z);
-            }
-        });
-
-        // Ruch kursora do zaznaczenia obszaru
-        window.addEventListener('mousemove', (event) => {
-            const mouse = new THREE.Vector2();
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-
-            const raycaster = new THREE.Raycaster();
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObject(ground);
-
-            if (intersects.length > 0) {
-                const point = intersects[0].point;
-                const highlight = document.getElementById("highlight");
-                highlight.style.left = `${event.clientX - 15}px`;
-                highlight.style.top = `${event.clientY - 15}px`;
-                highlight.style.display = 'block';
-            }
-        });
-
-        // Inicjalizacja Zombie
-        createZombie(3, 0);
-        createZombie(5, -1);
-        updateSunCount();
-
-        // Światło dla lepszej wizualizacji
-        const light = new THREE.PointLight(0xFFFFFF, 1, 100);
-        light.position.set(5, 5, 5);
-        scene.add(light);
-
-        camera.position.set(0, 5, 7);
-        camera.lookAt(0, 0, 0);
-
-        // Pętla animacji
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            // Ruch strzałów
-            peas.forEach((pea, index) => {
-                pea.position.x += 0.05;
-                zombies.forEach((zombie, zIndex) => {
-                    if (Math.abs(pea.position.x - zombie.position.x) < 0.3 && Math.abs(pea.position.z - zombie.position.z) < 0.3) {
-                        zombie.health -= 1;
-                        scene.remove(pea);
-                        peas.splice(index, 1);
-                        if (zombie.health <= 0) {
-                            scene.remove(zombie);
-                            zombies.splice(zIndex, 1);
-                        }
-                    }
-                });
+            // Draw Plants
+            plants.forEach(plant => {
+                ctx.drawImage(plantTextures[plant.type], plant.x, plant.y, 50, 50);
             });
-            
-            // Ruch Zombie
-            zombies.forEach(zombie => zombie.position.x -= 0.01);
-            
-            renderer.render(scene, camera);
+
+            // Draw Zombies
+            zombies.forEach(zombie => {
+                ctx.drawImage(zombieTexture, zombie.x, zombie.y, 50, 50);
+                zombie.x -= 1; // Move zombies leftwards
+            });
+
+            // Update Sun Points UI
+            document.getElementById('sun-count').textContent = sunPoints;
+
+            requestAnimationFrame(update);
         }
-        animate();
+
+        // Handle clicks for placing plants
+        canvas.addEventListener('click', (event) => {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            if (selectedPlant) {
+                if (selectedPlant === 'peashooter' && sunPoints >= 100) {
+                    sunPoints -= 100;
+                    plants.push({ type: 'peashooter', x: mouseX - 25, y: mouseY - 25 });
+                } else if (selectedPlant === 'sunflower' && sunPoints >= 50) {
+                    sunPoints -= 50;
+                    plants.push({ type: 'sunflower', x: mouseX - 25, y: mouseY - 25 });
+                }
+            }
+        });
+
+        // Handle plant selection
+        function selectPlant(plantType) {
+            selectedPlant = plantType;
+        }
+
+        // Spawn Zombies
+        function spawnZombie() {
+            zombies.push({ x: canvas.width, y: Math.random() * canvas.height });
+        }
+
+        // Start the game
+        function startGame() {
+            loadTextures();
+            setInterval(spawnZombie, 3000); // Spawn zombie every 3 seconds
+            update();
+        }
+
+        // Initialize the game
+        startGame();
     </script>
 </body>
 </html>
