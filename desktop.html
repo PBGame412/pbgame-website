@@ -7,9 +7,10 @@
     <style>
         body { text-align: center; font-family: Arial, sans-serif; }
         #gameArea { width: 600px; height: 400px; border: 2px solid black; position: relative; margin: auto; background-color: lightgreen; overflow: hidden; }
-        .plant, .zombie { width: 40px; height: 40px; position: absolute; }
+        .plant, .zombie, .bullet { width: 40px; height: 40px; position: absolute; }
         .plant { background-color: green; }
         .zombie { background-color: red; right: 0; }
+        .bullet { width: 10px; height: 10px; background-color: yellow; border-radius: 50%; }
     </style>
 </head>
 <body>
@@ -25,6 +26,47 @@
             plant.style.top = (event.clientY - rect.top - 20) + "px";
             plant.style.left = (event.clientX - rect.left - 20) + "px";
             gameArea.appendChild(plant);
+            setInterval(() => shootBullet(plant), 2000);
+        }
+
+        function shootBullet(plant) {
+            let bullet = document.createElement("div");
+            bullet.classList.add("bullet");
+            bullet.style.top = parseInt(plant.style.top) + 15 + "px";
+            bullet.style.left = parseInt(plant.style.left) + 40 + "px";
+            document.getElementById("gameArea").appendChild(bullet);
+            moveBullet(bullet);
+        }
+
+        function moveBullet(bullet) {
+            let interval = setInterval(() => {
+                let currentLeft = parseInt(bullet.style.left);
+                if (currentLeft >= 600) {
+                    bullet.remove();
+                    clearInterval(interval);
+                }
+                bullet.style.left = (currentLeft + 5) + "px";
+                checkCollision(bullet, interval);
+            }, 50);
+        }
+
+        function checkCollision(bullet, interval) {
+            let zombies = document.getElementsByClassName("zombie");
+            for (let zombie of zombies) {
+                let bulletRect = bullet.getBoundingClientRect();
+                let zombieRect = zombie.getBoundingClientRect();
+                if (
+                    bulletRect.left < zombieRect.right &&
+                    bulletRect.right > zombieRect.left &&
+                    bulletRect.top < zombieRect.bottom &&
+                    bulletRect.bottom > zombieRect.top
+                ) {
+                    zombie.remove();
+                    bullet.remove();
+                    clearInterval(interval);
+                    return;
+                }
+            }
         }
 
         function spawnZombie() {
