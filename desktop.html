@@ -16,9 +16,9 @@
             background-size: cover; 
             overflow: hidden; 
         }
-        .plant, .zombie, .bullet { width: 40px; height: 40px; position: absolute; }
-        .plant { background-color: green; }
-        .zombie { background-color: red; right: 0; }
+        .plant, .zombie, .bullet { position: absolute; }
+        .plant { width: 50px; height: 50px; background: url('https://static.wikia.nocookie.net/plantsvszombies/images/0/09/1769829-plant_peashooter_thumb.png/revision/latest?cb=20200213115004') no-repeat center center; background-size: contain; }
+        .zombie { width: 40px; height: 40px; background-color: red; right: 0; }
         .bullet { width: 10px; height: 10px; background-color: yellow; border-radius: 50%; }
     </style>
 </head>
@@ -32,8 +32,8 @@
             let rect = gameArea.getBoundingClientRect();
             let plant = document.createElement("div");
             plant.classList.add("plant");
-            plant.style.top = (event.clientY - rect.top - 20) + "px";
-            plant.style.left = (event.clientX - rect.left - 20) + "px";
+            plant.style.top = (event.clientY - rect.top - 25) + "px";
+            plant.style.left = (event.clientX - rect.left - 25) + "px";
             gameArea.appendChild(plant);
             setInterval(() => shootBullet(plant), 2000);
         }
@@ -41,8 +41,8 @@
         function shootBullet(plant) {
             let bullet = document.createElement("div");
             bullet.classList.add("bullet");
-            bullet.style.top = parseInt(plant.style.top) + 15 + "px";
-            bullet.style.left = parseInt(plant.style.left) + 40 + "px";
+            bullet.style.top = parseInt(plant.style.top) + 20 + "px";
+            bullet.style.left = parseInt(plant.style.left) + 50 + "px";
             document.getElementById("gameArea").appendChild(bullet);
             moveBullet(bullet);
         }
