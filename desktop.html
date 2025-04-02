@@ -63,94 +63,45 @@
         let cherryBombs = [];
         let snowPeas = [];
 
-        // Textures
-        let plantTextures = {};
-        let zombieTexture = new Image();
-        let backgroundTexture = new Image();
+        // Draw background with green grid
+        function drawBackground() {
+            const rows = 5;
+            const cols = 9;
+            const cellWidth = canvas.width / cols;
+            const cellHeight = canvas.height / rows;
 
-        // Load Assets
-        function loadTextures() {
-            plantTextures.peashooter = new Image();
-            plantTextures.peashooter.src = 'https://via.placeholder.com/50'; // Replace with actual path
-            plantTextures.sunflower = new Image();
-            plantTextures.sunflower.src = 'https://via.placeholder.com/50'; // Replace with actual path
-            plantTextures.wallnut = new Image();
-            plantTextures.wallnut.src = 'https://via.placeholder.com/50'; // Replace with actual path
-            plantTextures.cherrybomb = new Image();
-            plantTextures.cherrybomb.src = 'https://via.placeholder.com/50'; // Replace with actual path
-            plantTextures.snowpea = new Image();
-            plantTextures.snowpea.src = 'https://via.placeholder.com/50'; // Replace with actual path
-            zombieTexture.src = 'https://via.placeholder.com/50'; // Replace with actual path
-            backgroundTexture.src = 'https://via.placeholder.com/1500x800'; // Replace with actual background image path
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    ctx.fillStyle = '#228B22'; // Green color for the ground
+                    ctx.fillRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
+                    ctx.strokeStyle = '#006400';
+                    ctx.strokeRect(col * cellWidth, row * cellHeight, cellWidth, cellHeight); // Border of the cells
+                }
+            }
         }
 
         // Game Loop
         function update() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw Background
-            ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
+            // Draw Background (grid-like)
+            drawBackground();
 
             // Draw Plants
             plants.forEach(plant => {
-                ctx.drawImage(plantTextures[plant.type], plant.x, plant.y, 50, 50);
+                ctx.fillStyle = plant.color;
+                ctx.fillRect(plant.x, plant.y, 50, 50);
             });
 
             // Draw Zombies
             zombies.forEach(zombie => {
-                ctx.drawImage(zombieTexture, zombie.x, zombie.y, 50, 50);
+                ctx.fillStyle = zombie.color;
+                ctx.fillRect(zombie.x, zombie.y, 50, 50);
                 zombie.x -= zombie.speed; // Zombies move leftwards
-            });
-
-            // Sunflower generates sun points
-            sunflowers.forEach(sunflower => {
-                if (Math.random() < 0.02) { // Sun generation chance
-                    sunPoints += 25;
-                    updateSunCount();
-                }
-            });
-
-            // Snowpea slows down zombies
-            snowPeas.forEach(snowpea => {
-                zombies.forEach(zombie => {
-                    if (Math.abs(zombie.x - snowpea.x) < 50) {
-                        zombie.speed = 0.5; // Slow down zombies near snowpea
-                    }
-                });
-            });
-
-            // Cherry Bomb explodes zombies nearby
-            cherryBombs.forEach(bomb => {
-                if (Math.abs(bomb.x - zombies[0].x) < 50) {
-                    zombies = zombies.filter(z => Math.abs(z.x - bomb.x) > 50); // Remove zombies
-                    cherryBombs = cherryBombs.filter(b => b !== bomb); // Remove bomb
-                }
             });
 
             // Update Sun Points UI
             updateSunCount();
-
-            // Collision Detection (Peashooter vs Zombie)
-            peashooters.forEach(peashooter => {
-                peashooter.bullets.forEach((bullet, index) => {
-                    bullet.x += bullet.speed;
-                    zombies.forEach((zombie, zIndex) => {
-                        if (Math.abs(bullet.x - zombie.x) < 25 && Math.abs(bullet.y - zombie.y) < 25) {
-                            zombie.health -= bullet.damage;
-                            peashooter.bullets.splice(index, 1);
-                            if (zombie.health <= 0) {
-                                zombies.splice(zIndex, 1);
-                            }
-                        }
-                    });
-                });
-            });
-
-            // Check if all zombies are defeated
-            if (zombies.length === 0) {
-                level++;
-                spawnZombies();
-            }
 
             requestAnimationFrame(update);
         }
@@ -165,22 +116,38 @@
             const mouseX = event.clientX;
             const mouseY = event.clientY;
 
+            // Calculate which cell clicked
+            const col = Math.floor(mouseX / (canvas.width / 9));
+            const row = Math.floor(mouseY / (canvas.height / 5));
+
+            const cellWidth = canvas.width / 9;
+            const cellHeight = canvas.height / 5;
+
             if (selectedPlant) {
+                // Ensure the plant is within the grid
+                const plantX = col * cellWidth + (cellWidth - 50) / 2;  // Center plant
+                const plantY = row * cellHeight + (cellHeight - 50) / 2;
+
                 if (selectedPlant === 'peashooter' && sunPoints >= 100) {
                     sunPoints -= 100;
-                    peashooters.push(createPeashooter(mouseX, mouseY));
+                    peashooters.push({ x: plantX, y: plantY, color: '#FF0000' });
+                    plants.push({ x: plantX, y: plantY, color: '#FF0000', type: 'peashooter' });
                 } else if (selectedPlant === 'sunflower' && sunPoints >= 50) {
                     sunPoints -= 50;
-                    sunflowers.push(createSunflower(mouseX, mouseY));
+                    sunflowers.push({ x: plantX, y: plantY, color: '#FFD700' });
+                    plants.push({ x: plantX, y: plantY, color: '#FFD700', type: 'sunflower' });
                 } else if (selectedPlant === 'wallnut' && sunPoints >= 50) {
                     sunPoints -= 50;
-                    wallnuts.push(createWallnut(mouseX, mouseY));
+                    wallnuts.push({ x: plantX, y: plantY, color: '#8B4513' });
+                    plants.push({ x: plantX, y: plantY, color: '#8B4513', type: 'wallnut' });
                 } else if (selectedPlant === 'cherrybomb' && sunPoints >= 150) {
                     sunPoints -= 150;
-                    cherryBombs.push(createCherryBomb(mouseX, mouseY));
+                    cherryBombs.push({ x: plantX, y: plantY, color: '#FF1493' });
+                    plants.push({ x: plantX, y: plantY, color: '#FF1493', type: 'cherrybomb' });
                 } else if (selectedPlant === 'snowpea' && sunPoints >= 125) {
                     sunPoints -= 125;
-                    snowPeas.push(createSnowpea(mouseX, mouseY));
+                    snowPeas.push({ x: plantX, y: plantY, color: '#ADD8E6' });
+                    plants.push({ x: plantX, y: plantY, color: '#ADD8E6', type: 'snowpea' });
                 }
             }
         });
@@ -190,52 +157,6 @@
             selectedPlant = plantType;
         }
 
-        // Create Peashooter
-        function createPeashooter(x, y) {
-            return {
-                type: 'peashooter',
-                x: x - 25,
-                y: y - 25,
-                bullets: [{x: x, y: y, speed: 5, damage: 1}]
-            };
-        }
-
-        // Create Sunflower
-        function createSunflower(x, y) {
-            return {
-                type: 'sunflower',
-                x: x - 25,
-                y: y - 25
-            };
-        }
-
-        // Create Wallnut
-        function createWallnut(x, y) {
-            return {
-                type: 'wallnut',
-                x: x - 25,
-                y: y - 25
-            };
-        }
-
-        // Create Cherry Bomb
-        function createCherryBomb(x, y) {
-            return {
-                type: 'cherrybomb',
-                x: x - 25,
-                y: y - 25
-            };
-        }
-
-        // Create Snowpea
-        function createSnowpea(x, y) {
-            return {
-                type: 'snowpea',
-                x: x - 25,
-                y: y - 25
-            };
-        }
-
         // Spawn Zombies
         function spawnZombies() {
             for (let i = 0; i < level; i++) {
@@ -243,16 +164,15 @@
                     x: canvas.width,
                     y: Math.random() * canvas.height,
                     speed: 1,
-                    health: 3
+                    health: 3,
+                    color: '#556B2F'
                 });
             }
         }
 
-        // Spawn initial zombies and start the game
+        // Start the Game
         spawnZombies();
-        loadTextures();
         update();
     </script>
 </body>
 </html>
-
