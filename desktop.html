@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -49,8 +49,8 @@
 
         // Ground with a beautiful texture
         const textureLoader = new THREE.TextureLoader();
-        const groundTexture = textureLoader.load('https://your_image_path/grass_texture.jpg'); // Replace with an actual image URL
-        const groundMaterial = new THREE.MeshBasicMaterial({ map: groundTexture });
+        const groundTexture = textureLoader.load('https://www.example.com/your_image_path/grass_texture.jpg'); // Replace with an actual image URL
+        const groundMaterial = new THREE.MeshLambertMaterial({ map: groundTexture });
         const groundGeometry = new THREE.PlaneGeometry(10, 10);
         const ground = new THREE.Mesh(groundGeometry, groundMaterial);
         ground.rotation.x = -Math.PI / 2;
