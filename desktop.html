@@ -41,6 +41,13 @@
             isFlying: false
         };
 
+        // Bloki do zniszczenia
+        let blocks = [
+            { x: canvas.width - 400, y: canvas.height - 100, width: 50, height: 50, color: 'green', isDestroyed: false },
+            { x: canvas.width - 450, y: canvas.height - 150, width: 50, height: 50, color: 'green', isDestroyed: false },
+            { x: canvas.width - 350, y: canvas.height - 150, width: 50, height: 50, color: 'green', isDestroyed: false }
+        ];
+
         // Funkcja rysująca ptaka
         function drawBird() {
             ctx.beginPath();
@@ -50,31 +57,82 @@
             ctx.closePath();
         }
 
+        // Funkcja rysująca blok
+        function drawBlocks() {
+            blocks.forEach(block => {
+                if (!block.isDestroyed) {
+                    ctx.beginPath();
+                    ctx.rect(block.x, block.y, block.width, block.height);
+                    ctx.fillStyle = block.color;
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            });
+        }
+
+        // Funkcja sprawdzająca kolizje
+        function checkCollisions() {
+            blocks.forEach(block => {
+                if (!block.isDestroyed) {
+                    const distX = Math.abs(bird.x - (block.x + block.width / 2));
+                    const distY = Math.abs(bird.y - (block.y + block.height / 2));
+
+                    if (distX <= (block.width / 2 + bird.radius) && distY <= (block.height / 2 + bird.radius)) {
+                        block.isDestroyed = true;
+                    }
+                }
+            });
+        }
+
         // Funkcja rysująca wszystko
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Rysowanie tła
+            ctx.fillStyle = '#87CEEB';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
             drawBird();
+            drawBlocks();
 
             if (bird.isFlying) {
                 bird.velocityY += bird.gravity; // Grawitacja
-                bird.y += bird.velocityY; // Aktualizacja pozycji ptaka
+                bird.x += bird.velocityX; // Pozycja X
+                bird.y += bird.velocityY; // Pozycja Y
             }
+
+            checkCollisions(); // Sprawdzanie kolizji
 
             // Odbicia od ziemi
             if (bird.y + bird.radius > canvas.height) {
                 bird.y = canvas.height - bird.radius;
                 bird.velocityY = 0;
+                bird.isFlying = false;
             }
         }
 
-        // Funkcja, która wystrzeliwuje ptaka
+        // Funkcja wystrzału ptaka
+        let angle = 0;
+        let strength = 15;
+
         function startFlying(e) {
             if (!bird.isFlying) {
+                angle = Math.atan2(e.clientY - bird.y, e.clientX - bird.x); // Kąt
+                bird.velocityX = Math.cos(angle) * strength; // Siła w poziomie
+                bird.velocityY = Math.sin(angle) * strength; // Siła w pionie
                 bird.isFlying = true;
-                bird.velocityX = 10;
-                bird.velocityY = bird.lift;
             }
         }
+
+        // Funkcja ustawiająca siłę strzału (kliknięcie lewego przycisku myszy)
+        window.addEventListener('mousedown', function (e) {
+            bird.isFlying = false;
+            bird.x = 150;
+            bird.y = canvas.height / 2;
+            bird.velocityX = 0;
+            bird.velocityY = 0;
+            strength = Math.min(Math.abs(e.clientY - bird.y) / 10 + 5, 25); // Siła na podstawie odległości
+        });
 
         // Dodanie zdarzenia kliknięcia
         window.addEventListener('click', startFlying);
