@@ -6,10 +6,29 @@
     <title>PVZ 3D Prototype</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        body { margin: 0; overflow: hidden; }
+        body { margin: 0; overflow: hidden; position: relative; }
+        #plant-selection {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .plant-button {
+            margin: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <div id="plant-selection">
+        <button class="plant-button" onclick="selectPlant('peashooter')">Peashooter (100 Sun)</button>
+        <button class="plant-button" onclick="selectPlant('sunflower')">Sunflower (50 Sun)</button>
+        <p>Sun: <span id="sun-count">0</span></p>
+    </div>
+    
     <script>
         // Scene setup
         const scene = new THREE.Scene();
@@ -25,24 +44,48 @@
         ground.rotation.x = -Math.PI / 2;
         scene.add(ground);
 
+        // Entities lists
+        const zombies = [];
+        const peas = [];
+        let sunPoints = 100;
+        let selectedPlant = null;
+
+        // Update Sun Count UI
+        function updateSunCount() {
+            document.getElementById("sun-count").innerText = sunPoints;
+        }
+
+        // Plant Selection
+        function selectPlant(plant) {
+            selectedPlant = plant;
+        }
+
         // Peashooter
         function createPeashooter(x, z) {
-            const peaGeometry = new THREE.SphereGeometry(0.3, 16, 16);
-            const peaMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00 });
-            const peashooter = new THREE.Mesh(peaGeometry, peaMaterial);
-            peashooter.position.set(x, 0.5, z);
-            scene.add(peashooter);
-            return peashooter;
+            if (sunPoints >= 100) {
+                sunPoints -= 100;
+                updateSunCount();
+                const peaGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+                const peaMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00 });
+                const peashooter = new THREE.Mesh(peaGeometry, peaMaterial);
+                peashooter.position.set(x, 0.5, z);
+                scene.add(peashooter);
+                setInterval(() => shootPea(peashooter.position.x, peashooter.position.z), 2000);
+            }
         }
 
         // Sunflower
         function createSunflower(x, z) {
-            const sunGeometry = new THREE.CylinderGeometry(0.3, 0.3, 1, 16);
-            const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xFFD700 });
-            const sunflower = new THREE.Mesh(sunGeometry, sunMaterial);
-            sunflower.position.set(x, 0.5, z);
-            scene.add(sunflower);
-            return sunflower;
+            if (sunPoints >= 50) {
+                sunPoints -= 50;
+                updateSunCount();
+                const sunGeometry = new THREE.CylinderGeometry(0.3, 0.3, 1, 16);
+                const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xFFD700 });
+                const sunflower = new THREE.Mesh(sunGeometry, sunMaterial);
+                sunflower.position.set(x, 0.5, z);
+                scene.add(sunflower);
+                setInterval(() => { sunPoints += 25; updateSunCount(); }, 5000);
+            }
         }
 
         // Zombie
@@ -51,14 +94,42 @@
             const zombieMaterial = new THREE.MeshBasicMaterial({ color: 0x556B2F });
             const zombie = new THREE.Mesh(zombieGeometry, zombieMaterial);
             zombie.position.set(x, 0.6, z);
+            zombie.health = 3;
             scene.add(zombie);
-            return zombie;
+            zombies.push(zombie);
         }
 
-        // Entities
-        const peashooter = createPeashooter(-3, 0);
-        const sunflower = createSunflower(-4, 2);
-        const zombies = [createZombie(3, 0), createZombie(5, -1)];
+        // Shoot Pea
+        function shootPea(x, z) {
+            const peaGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+            const peaMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00 });
+            const pea = new THREE.Mesh(peaGeometry, peaMaterial);
+            pea.position.set(x, 0.5, z);
+            scene.add(pea);
+            peas.push(pea);
+        }
+
+        // Mouse Click to Plant
+        window.addEventListener('click', (event) => {
+            const mouse = new THREE.Vector2();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+            
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObject(ground);
+            
+            if (intersects.length > 0 && selectedPlant) {
+                const point = intersects[0].point;
+                if (selectedPlant === 'peashooter') createPeashooter(point.x, point.z);
+                if (selectedPlant === 'sunflower') createSunflower(point.x, point.z);
+            }
+        });
+
+        // Initial Zombies
+        createZombie(3, 0);
+        createZombie(5, -1);
+        updateSunCount();
 
         camera.position.set(0, 5, 7);
         camera.lookAt(0, 0, 0);
@@ -66,7 +137,26 @@
         // Animation loop
         function animate() {
             requestAnimationFrame(animate);
-            zombies.forEach(zombie => zombie.position.x -= 0.01); // Move zombies forward
+            
+            // Move peas
+            peas.forEach((pea, index) => {
+                pea.position.x += 0.05;
+                zombies.forEach((zombie, zIndex) => {
+                    if (Math.abs(pea.position.x - zombie.position.x) < 0.3 && Math.abs(pea.position.z - zombie.position.z) < 0.3) {
+                        zombie.health -= 1;
+                        scene.remove(pea);
+                        peas.splice(index, 1);
+                        if (zombie.health <= 0) {
+                            scene.remove(zombie);
+                            zombies.splice(zIndex, 1);
+                        }
+                    }
+                });
+            });
+            
+            // Move zombies
+            zombies.forEach(zombie => zombie.position.x -= 0.01);
+            
             renderer.render(scene, camera);
         }
         animate();
