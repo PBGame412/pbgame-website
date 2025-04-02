@@ -20,6 +20,15 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+        .highlight {
+            border: 2px dashed #FF6347;
+            position: absolute;
+            width: 1.5;
+            height: 1.5;
+            background-color: rgba(255, 99, 71, 0.3);
+            border-radius: 5px;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -28,6 +37,7 @@
         <button class="plant-button" onclick="selectPlant('sunflower')">Sunflower (50 Sun)</button>
         <p>Sun: <span id="sun-count">0</span></p>
     </div>
+    <div id="highlight"></div>
     
     <script>
         // Scene setup
@@ -37,12 +47,18 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Ground
+        // Ground with texture
+        const textureLoader = new THREE.TextureLoader();
+        const groundTexture = textureLoader.load('https://threejsfundamentals.org/threejs/resources/images/stone.jpg');
+        const groundMaterial = new THREE.MeshBasicMaterial({ map: groundTexture });
         const groundGeometry = new THREE.PlaneGeometry(10, 10);
-        const groundMaterial = new THREE.MeshBasicMaterial({ color: 0x228B22, side: THREE.DoubleSide });
         const ground = new THREE.Mesh(groundGeometry, groundMaterial);
         ground.rotation.x = -Math.PI / 2;
         scene.add(ground);
+
+        // Grid Helper
+        const gridHelper = new THREE.GridHelper(10, 10);
+        scene.add(gridHelper);
 
         // Entities lists
         const zombies = [];
@@ -123,6 +139,25 @@
                 const point = intersects[0].point;
                 if (selectedPlant === 'peashooter') createPeashooter(point.x, point.z);
                 if (selectedPlant === 'sunflower') createSunflower(point.x, point.z);
+            }
+        });
+
+        // Mouse Move to highlight planting area
+        window.addEventListener('mousemove', (event) => {
+            const mouse = new THREE.Vector2();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObject(ground);
+
+            if (intersects.length > 0) {
+                const point = intersects[0].point;
+                const highlight = document.getElementById("highlight");
+                highlight.style.left = `${event.clientX - 15}px`;
+                highlight.style.top = `${event.clientY - 15}px`;
+                highlight.style.display = 'block';
             }
         });
 
